@@ -40,3 +40,20 @@ out/
 application-db.yml
 logs/
 
+# Nuxt
+.output
+.nuxt
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+
+# Local env files
+.env.*
+!.env.example
