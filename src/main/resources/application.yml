@@ -1,7 +1,6 @@
-#GreenAca
 server:
   port : 9002
-#
+
 spring:
   profiles:
     include:
