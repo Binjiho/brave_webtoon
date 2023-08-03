@@ -1,0 +1,59 @@
+/* NotoSansCJKkr */
+@font-face {
+    font-family: "Noto Sans CJK KR";
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Light.otf")
+            format("opentype"),
+        url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Light.woff") format("woff"),
+        url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Light.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Noto Sans CJK KR";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Regular.otf")
+            format("opentype"),
+        url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Regular.woff") format("woff"),
+        url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Regular.woff2")
+            format("woff2");
+}
+
+@font-face {
+    font-family: "Noto Sans CJK KR";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Medium.otf")
+            format("opentype"),
+        url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Medium.woff") format("woff"),
+        url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Medium.woff2")
+            format("woff2");
+}
+
+@font-face {
+    font-family: "Noto Sans CJK KR";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Bold.otf")
+            format("opentype"),
+        url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Bold.woff") format("woff"),
+        url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Bold.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Noto Sans CJK KR";
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Black.otf")
+            format("opentype"),
+        url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Black.woff") format("woff"),
+        url("@/static/fonts/NotoSansCJKkr/NotoSansKR-Black.woff2") format("woff2");
+}
+
+
