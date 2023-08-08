@@ -1,0 +1,25 @@
+.container {
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  padding-bottom: 30%;
+
+  .title {
+    font-size: 10rem;
+  }
+
+  .message {
+    font-size: 2.5rem;
+    margin-top: -1.2rem;
+  }
+
+  .control-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    gap: 14px;
+  }
+}

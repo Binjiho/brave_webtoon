@@ -14,7 +14,12 @@ export default defineNuxtPlugin((app) => {
         mdi,
       },
     },
-    defaults: {},
+    defaults: {
+      VBtn: {
+        variant: "flat",
+        color: "blue-darken-2",
+      },
+    },
   });
 
   app.vueApp.use(vuetify);
