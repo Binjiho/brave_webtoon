@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+
+<div id="header" class="mob">
+  <div class="header_inner">
+    <h1>
+      <a href="#" title="">Header</a>
+    </h1>
+
+    <!-- gnb -->
+    <nav>
+      <ul class="gnb">
+
+      </ul>
+    </nav>
+    <!-- //gnb -->
+
+    <div class="area_until">
+
+    </div>
+  </div>
+  <div class="submenu_Bg"></div>
+  <div class="full_menu">
+    <div class="img"></div>
+    <div class="full_gnb"></div>
+  </div>
+</div>
+</html>
+
+  <section id="container">
+
+    <div id="login_wrap">
+      <div id="login_box">
+        <div class="login_con">
+          <div class="login_tit">
+            <h2>WEB Crawling</h2>
+            <p>환영<i>합니다!</i></p>
+          </div>
+
+          <div class="login_input">
+            <form id="saveForm" method="post" >
+              <ul>
+                <li>
+                  <label for="urlId" class="skip_info">URL주소</label>
+                  <input type="text" style="width:50%" id="urlId" name="url" placeholder="url주소를 적어주세요"/>
+                </li>
+              </ul>
+              <button type="button" onclick="savePost();" class="">전송</button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer">
+    <section class="wrapper">
+
+    </section>
+  </div>
+
+<style>
+  html,body{font-size: 6.25%;}
+  body{font-size:17rem;word-break:keep-all;overflow-y:overlay;overflow-x: hidden;}
+
+  .wrapper {position:relative; width:1400rem; max-width:92%; margin:0 auto;}
+
+  * {/* box-sizing:border-box; */}
+  body {font-family:'Noto Sans KR', Dotum, Arial, tahoma, Helvetica, sans-serif; -webkit-text-size-adjust:100%;}
+  html, body {width:100%; height:100%; font-size:14px; color:#777; line-height:1.4; letter-spacing:-0.2px;}
+  ul {list-style:none;}
+  ol {margin-left:20px;}
+  a {color:#333; text-decoration:none;}
+  /* a:hover {-webkit-transition:all 0.5s; -moz-transition:all 0.5s; -o-transition:all 0.5s; -ms-transition:all 0.5s; transition:all 0.5s;} */
+  h1, h2, h3, h4, h5, h6, address, caption {font-weight:700; color:black;word-break: keep-all;}
+  table {border-collapse:collapse; border-spacing:0;}
+
+
+  /* header */
+  #header {
+      position: relative;
+      width: 100%;
+      border-bottom: 1px solid rgba(255, 255, 255, .1);
+      z-index: 51;
+  }
+  #header .header_inner {display:flex; align-items:center; gap:0 50rem; padding:0 6rem; transition:all 0.4s ease 0s; }
+  #header h1{z-index:888;}
+  #header h1 a {display:inline-block; font-size: 4rem; color: black; text-transform: uppercase;}
+
+  #header .area_until {position:absolute; right:60rem; display:flex; align-items:center;}
+  #header .area_until ul {display:flex;}
+  #header .area_until ul > li {position:relative; padding:0 15rem;}
+  #header .area_until ul > li a {display:inline-block; font-size:14rem; color:#black; }
+  #header .area_until ul > li::before {position:absolute; left:0; top:8rem; content:''; width:1px; height:10rem; background:#black; opacity:.3;}
+  #header .area_until ul > li:first-child::before {display:none;}
+
+  header * {box-sizing:border-box;}
+  header {position:relative; z-index:1;}
+  header .head {overflow:hidden; border-bottom:3px solid rgba(67,75,83,1); padding:10px 15px; background:#fff;}
+  header .head h1 {color:#111; font-size:17px; font-weight:500; letter-spacing:0; float:left;}
+  header .head h1 i {color:#e3e3e3; font-size:12px; font-weight:400;}
+  header .head .top_menu {float:right;}
+  header .head .top_menu > div {display:inline-block; font-size:13px;}
+  header .head .top_menu > div i {font-size:12px; color:black;}
+  header .head .top_menu > div button {background:#434b53; border:0; border-radius:3px; width:28px; height:28px; padding:0;}
+  header .head .top_menu > div.login_user {margin-right:20px;}
+  header .head .top_menu > div.login_user strong, header .head .top_menu > div.login_user strong i {color:#333;}
+  header .head .top_menu > div.login_user strong i {font-size:16px; vertical-align:bottom;}
+
+  /* footer */
+  #footer {height:30px; background:#111;}
+  #footer .wrapper {display:flex;}
+</style>
+
+<script>
+  function savePost() {
+    const form = document.getElementById('saveForm');
+    form.action = '/crawlSave';
+    form.submit();
+  }
+</script>
