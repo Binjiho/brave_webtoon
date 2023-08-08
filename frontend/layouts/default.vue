@@ -2,7 +2,9 @@
   <VApp>
     <UiHeader></UiHeader>
     <VMain>
-      <slot />
+      <VContainer>
+        <slot />
+      </VContainer>
     </VMain>
   </VApp>
 </template>
