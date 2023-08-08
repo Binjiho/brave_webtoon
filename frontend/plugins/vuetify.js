@@ -1,10 +1,21 @@
-import Vue from "vue";
-import Vuetify from "vuetify/lib";
+import { createVuetify } from "vuetify";
+import { mdi } from "vuetify/iconsets/mdi";
+import * as components from "vuetify/components";
+import * as directives from "vuetify/directives";
 
-import "assets/scss/index.scss";
+export default defineNuxtPlugin((app) => {
+  const vuetify = createVuetify({
+    ssr: true,
+    components,
+    directives,
+    icons: {
+      defaultSet: "mdi",
+      sets: {
+        mdi,
+      },
+    },
+    defaults: {},
+  });
 
-Vue.use(Vuetify);
-
-export default new Vuetify({
-  icons: {},
+  app.vueApp.use(vuetify);
 });
