@@ -57,7 +57,9 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@import "@/assets/scss/variables.scss";',
+          additionalData:
+            '@import "@/assets/scss/vuetify/variables.scss";' +
+            '@import "@/assets/scss/vuetify/reset.scss";',
         },
       },
     },

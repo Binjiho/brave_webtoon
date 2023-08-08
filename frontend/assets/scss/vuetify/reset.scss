@@ -1,9 +1,9 @@
 /*******************************************************************
-// 위치 : src/assets/scss/vuetify-reset.scss
+// 위치 : src/assets/scss/vuetify/vuetify-reset.scss
 // 설명 : vuetify 클래스를 수정 할 경우 사용
-         index.scss에 import하여 사용
+         nuxt.config.ts에 import하여 사용
 ********************************************************************/
 
-.container {
+.v-container {
   min-width: 375px;
 }
