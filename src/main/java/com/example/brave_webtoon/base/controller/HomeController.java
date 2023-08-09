@@ -22,7 +22,7 @@ public class HomeController {
     }
 
     @PostMapping("/crawlSave")
-    public String saveCrawl(@RequestParam String url, Model model) throws IOException {
+    public String saveCrawl(@RequestParam String url) throws IOException {
         webCrawlService.crawl(url);
         return "redirect:/";
     }
