@@ -14,6 +14,7 @@ springboot 설정:
 * [ vue --version ]
 * [ npm init nuxt-app frontend ]
 * [ cd frontend ]
+* [ npm install ] (기존 PC 아닌경우)
 * [ npm run dev ]
 
 [//]: # (* [ npm i @nuxtjs/axios ])
