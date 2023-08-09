@@ -8,5 +8,8 @@ export default {
   components: {
     Main,
   },
+  mounted() {
+    this.$api.get(`/api/helloworld`);
+  },
 };
 </script>
