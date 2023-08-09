@@ -3,40 +3,26 @@ import vuetify from "vite-plugin-vuetify";
 import svgLoader from "vite-svg-loader";
 
 export default defineNuxtConfig({
-  server: {
-    port: 9001,
-  },
-  axios: {
-    proxy: true,
-  },
-  proxy: {
-    "/api": {
-      target: "http://localhost:9002/",
-      changeOrigin: true, // cross origin 허용
-    },
-  },
-  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
-
-  // Target: https://go.nuxtjs.dev/config-target
-  target: "static",
-
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: "%s - frontend",
     title: "frontend",
-    htmlAttrs: {
-      lang: "en",
-    },
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { hid: "description", name: "description", content: "" },
+      { name: "title", content: "웹툰 가상 캐스팅" },
+      {
+        name: "keywords",
+        content: "웹툰,캐스팅,가상캐스팅,닮은연예인,웹툰가상캐스팅",
+      },
       { name: "format-detection", content: "telephone=no" },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
-  // Global CSS: https://go.nuxtjs.dev/config-css
+  devServer: {
+    port: 9001,
+  },
+  ssr: false,
+  target: "static",
   css: ["@/static/fonts/font.css", "@/assets/scss/index.scss"],
   build: { transpile: ["vuetify"] },
   modules: [
@@ -47,11 +33,6 @@ export default defineNuxtConfig({
       );
     },
   ],
-  runtimeConfig: {
-    public: {
-      baseURL: "https://localhost:9001",
-    },
-  },
   vite: {
     plugins: [svgLoader()],
     css: {
@@ -60,6 +41,14 @@ export default defineNuxtConfig({
           additionalData:
             '@import "@/assets/scss/vuetify/variables.scss";' +
             '@import "@/assets/scss/vuetify/reset.scss";',
+        },
+      },
+    },
+    server: {
+      proxy: {
+        "/api": {
+          target: "http://localhost:9002/",
+          changeOrigin: true,
         },
       },
     },
