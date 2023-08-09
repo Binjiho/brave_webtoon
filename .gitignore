@@ -38,6 +38,7 @@ out/
 
 # ignore properties file
 application-db.yml
+application-env.yml
 logs/
 
 # Nuxt
