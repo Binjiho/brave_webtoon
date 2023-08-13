@@ -1,5 +1,7 @@
 package com.example.brave_webtoon.security.service;
 
+import com.example.brave_webtoon.security.dto.MemberDto;
+import com.example.brave_webtoon.security.dto.UserDetailsDto;
 import com.example.brave_webtoon.security.entity.MemberEntity;
 import com.example.brave_webtoon.security.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,11 +31,12 @@ public class MemberLoginService implements UserDetailsService {
         log.info("================================================");
         log.info(memberEntity);
 
-        return User.builder()
-                .username(memberEntity.getUserId())
-                .password(memberEntity.getUserPw())
-                .roles(memberEntity.getRole().toString())
-                .build();
-//        return new MyUserDetails(memberEntity);
+//        return User.builder()
+//                .username(memberEntity.getUserId())
+//                .password(memberEntity.getUserPw())
+//                .roles(memberEntity.getRole().toString())
+//                .build();
+
+        return new UserDetailsDto(memberEntity);
     }
 }

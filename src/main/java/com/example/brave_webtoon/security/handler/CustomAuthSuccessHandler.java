@@ -1,8 +1,11 @@
 package com.example.brave_webtoon.security.handler;
 
 import com.example.brave_webtoon.base.util.ConvertUtil;
+import com.example.brave_webtoon.security.constant.AuthConstants;
 import com.example.brave_webtoon.security.dto.MemberDto;
 import com.example.brave_webtoon.security.dto.UserDetailsDto;
+import com.example.brave_webtoon.security.entity.MemberEntity;
+import com.example.brave_webtoon.security.util.TokenUtil;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONObject;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +31,20 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
         log.debug("3.CustomLoginSuccessHandler");
 
         // [STEP1] 사용자와 관련된 정보를 모두 조회합니다.
-        MemberDto memberDto = ((UserDetailsDto) authentication.getPrincipal()).getMemberDto();
+        MemberEntity memberEntity = ((UserDetailsDto) authentication.getPrincipal()).getMemberEntity();
+        MemberDto memberDto = MemberDto
+                .builder()
+                .id(memberEntity.getId())
+                .userId(memberEntity.getUserId())
+                .userPw(memberEntity.getUserPw())
+                .name(memberEntity.getName())
+                .htel(memberEntity.getHtel())
+                .role(memberEntity.getRole())
+                .fromSocial(memberEntity.getFromSocial())
+                .deleteYn(memberEntity.getDeleteYn())
+                .createdDate(memberEntity.getCreatedDate())
+                .modifiedDate(memberEntity.getModifiedDate())
+                .build();
 
         // [STEP2] 조회한 데이터를 JSONObject 형태로 파싱을 수행합니다.
         JSONObject userVoObj = (JSONObject) ConvertUtil.convertObjectToJsonObject(memberDto);
@@ -54,10 +70,10 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
             responseMap.put("failMsg", null);
             jsonObject = new JSONObject(responseMap);
 
-            // TODO: 추후 JWT 발급에 사용 할 예정
-            // String token = TokenUtils.generateJwtToken(userVo);
-            // jsonObject.put("token", token);
-            // response.addHeader(AuthConstants.AUTH_HEADER, AuthConstants.TOKEN_TYPE + " " + token);
+            // JWT 발급
+             String token = TokenUtil.generateJwtToken(memberDto);
+             jsonObject.put("token", token);
+             response.addHeader(AuthConstants.AUTH_HEADER, AuthConstants.TOKEN_TYPE + " " + token);
         }
 
         // [STEP4] 구성한 응답 값을 전달합니다.

@@ -32,7 +32,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         // 1. 토큰이 필요하지 않은 API URL에 대해서 배열로 구성합니다.
         List<String> list = Arrays.asList(
+                "/",
+                "/swagger-ui/**",
                 "/api/login",
+                "/api/signIn",
                 "/api/generateToken"
 //                "api/v1/code/codeList"
         );

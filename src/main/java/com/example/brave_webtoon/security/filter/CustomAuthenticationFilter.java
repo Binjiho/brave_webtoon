@@ -55,6 +55,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
      */
     private UsernamePasswordAuthenticationToken getAuthRequest(HttpServletRequest request) throws Exception {
         try {
+            System.out.println(request);
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
             MemberDto user = objectMapper.readValue(request.getInputStream(), MemberDto.class);

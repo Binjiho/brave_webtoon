@@ -3,6 +3,11 @@ package com.example.brave_webtoon.security.util;
 import com.example.brave_webtoon.security.dto.MemberDto;
 import io.jsonwebtoken.*;
 
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
@@ -10,11 +15,22 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+@PropertySource("classpath:application-env.yml")
+@Log4j2
+@Component
 public class TokenUtil {
 
-    //    @Value(value = "${custom.jwt-secret-key}")
-    private static final String jwtSecretKey = "exampleSecretKey";
+    private static String jwtSecretKey;
+    private static int expirationHours;
+
+    @Value("${env.jwt.mySecretKey}")
+    public void setJwtSecretKey (String mySecretKey) {
+        jwtSecretKey = mySecretKey;
+    }
+    @Value("${env.jwt.expireH}")
+    public void setJwtSecretKey (int expireH) {
+        expirationHours = expireH;
+    }
 
     /**
      * 사용자 정보를 기반으로 토큰을 생성하여 반환 해주는 메서드
@@ -27,8 +43,8 @@ public class TokenUtil {
         JwtBuilder builder = Jwts.builder()
                 .setHeader(createHeader())                              // Header 구성
                 .setClaims(createClaims(memberDto))                       // Payload - Claims 구성
-                .setSubject(String.valueOf(memberDto.getId()))        // Payload - Subject 구성
-                .signWith(SignatureAlgorithm.HS256, createSignature())  // Signature 구성
+                .setSubject(String.valueOf(memberDto.getId()))        // Payload - Subject 구성 // JWT 토큰 제목
+                .signWith(SignatureAlgorithm.HS256, createSignature())  // Signature 구성 // HS256 알고리즘을 사용하여 secretKey를 이용해 서명
                 .setExpiration(createExpiredDate());                    // Expired Date 구성
         return builder.compact();
     }
@@ -57,9 +73,9 @@ public class TokenUtil {
         try {
             Claims claims = getClaimsFormToken(token);
 
-//            log.info("expireTime :" + claims.getExpiration());
-//            log.info("userId :" + claims.get("userId"));
-//            log.info("userNm :" + claims.get("userNm"));
+            log.info("expireTime :" + claims.getExpiration());
+            log.info("userId :" + claims.get("userId"));
+            log.info("name :" + claims.get("name"));
 
             return true;
         } catch (ExpiredJwtException exception) {
@@ -92,7 +108,7 @@ public class TokenUtil {
     private static Date createExpiredDate() {
         // 토큰 만료시간은 30일으로 설정
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.HOUR, 8);     // 8시간
+        c.add(Calendar.HOUR, expirationHours);     // 8시간
         // c.add(Calendar.DATE, 1);         // 1일
         return c.getTime();
     }
@@ -121,8 +137,8 @@ public class TokenUtil {
         // 공개 클레임에 사용자의 이름과 이메일을 설정하여 정보를 조회할 수 있다.
         Map<String, Object> claims = new HashMap<>();
 
-//        log.info("userId :" + memberDto.getUserId());
-//        log.info("userNm :" + memberDto.getName());
+        log.info("userId :" + memberDto.getUserId());
+        log.info("userNm :" + memberDto.getName());
 
         claims.put("userId", memberDto.getUserId());
         claims.put("userNm", memberDto.getName());

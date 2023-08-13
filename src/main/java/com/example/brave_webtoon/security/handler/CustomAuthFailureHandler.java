@@ -46,6 +46,8 @@ public class CustomAuthFailureHandler implements AuthenticationFailureHandler {
 
         } else if (exception instanceof CredentialsExpiredException) {
             failMsg = "로그인 정보가 일치하지 않습니다.";
+        } else if (exception instanceof AuthenticationException) {
+            failMsg = "로그인 정보가 일치하지 않습니다.";
         }
         // [STEP4] 응답 값을 구성하고 전달합니다.
         response.setCharacterEncoding("UTF-8");

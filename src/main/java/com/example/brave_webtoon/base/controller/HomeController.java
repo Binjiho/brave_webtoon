@@ -21,6 +21,11 @@ public class HomeController {
         return "main";
     }
 
+    @GetMapping("/api/login")
+    public String openLoginPage() {
+        return "admin/login";
+    }
+
     @PostMapping("/crawlSave")
     public String saveCrawl(@RequestParam String url) throws IOException {
         webCrawlService.crawl(url);
