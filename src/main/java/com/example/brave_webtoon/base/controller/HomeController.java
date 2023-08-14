@@ -26,7 +26,7 @@ public class HomeController {
         return "admin/login";
     }
 
-    @PostMapping("/crawlSave")
+    @PostMapping("/crawl/save")
     public String saveCrawl(@RequestParam String url) throws IOException {
         webCrawlService.crawl(url);
         return "redirect:/";

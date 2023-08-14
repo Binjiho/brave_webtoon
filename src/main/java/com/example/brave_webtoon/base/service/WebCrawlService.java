@@ -43,7 +43,7 @@ public class WebCrawlService {
         String title = webtoonNmText.replaceAll(stateText,"");
         System.out.println(title);
 
-        Element titleImg = doc.select("img[src]").first();
+        Elements titleImg = doc.select("div.swiper-wrapper > div > div > div > img[src]");
         String titleImgSrc = titleImg.attr("src").trim();
 
         try {
@@ -73,6 +73,9 @@ public class WebCrawlService {
 
             Elements role = el.select("div.people_role");
             String roleText = role.text().trim();
+            if(roleText.equals("특별출연")){
+                return;
+            }
             System.out.println(roleText);
 
             Elements name = el.select("div.people_name > a");

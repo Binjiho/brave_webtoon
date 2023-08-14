@@ -57,7 +57,7 @@ springdoc:
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
   swagger-ui:
-    path: swagger.html            # Swagger UI 경로 => localhost:9000/swagger.html
+    path: swagger-ui.html            # Swagger UI 경로 => localhost:9000/swagger.html
     tags-sorter: alpha            # alpha: 알파벳 순 태그 정렬, method: HTTP Method 순 정렬
     operations-sorter: alpha
     doc-expansion: none

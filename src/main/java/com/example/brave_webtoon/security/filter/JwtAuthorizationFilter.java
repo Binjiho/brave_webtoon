@@ -33,18 +33,23 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         // 1. 토큰이 필요하지 않은 API URL에 대해서 배열로 구성합니다.
         List<String> list = Arrays.asList(
                 "/",
-                "/swagger-ui/**",
+                "/swagger",
+                "/crawl",
                 "/api/login",
                 "/api/signIn",
-                "/api/generateToken"
-//                "api/v1/code/codeList"
+                "m.chuing.net/db/webtoon/view/people.php" //crawllingSiteUrl
         );
 
         // 2. 토큰이 필요하지 않은 API URL의 경우 => 로직 처리 없이 다음 필터로 이동
-        if (list.contains(request.getRequestURI())) {
+        if (list.stream().anyMatch(obj -> request.getRequestURI().contains(obj)) ) {
             chain.doFilter(request, response);
             return;
         }
+
+//        if (list.contains(request.getRequestURI())) {
+//            chain.doFilter(request, response);
+//            return;
+//        }
 
         // 3. OPTIONS 요청일 경우 => 로직 처리 없이 다음 필터로 이동
         if (request.getMethod().equalsIgnoreCase("OPTIONS")) {
