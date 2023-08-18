@@ -19,15 +19,10 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api")
 @Tag(name="Webtoon-API", description = "웹툰 API Document")
-public class RestApiController {
+public class WebtoonController {
 
     private final WebtoonService webtoonService;
-
-    @GetMapping("/helloworld")
-    public String helloWorld(){
-        return "HelloWorld!";
-    }
-
+  
     @GetMapping("/webtoonList")
     @Operation(summary = "웹툰 리스트 화면", description = "웹툰 리스트를 화면에 출력")
     @ResponseBody

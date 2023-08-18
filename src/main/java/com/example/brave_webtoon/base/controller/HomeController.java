@@ -16,6 +16,11 @@ import java.io.IOException;
 public class HomeController {
 
     private final WebCrawlService webCrawlService;
+
+    @GetMapping("/helloworld")
+    public String helloWorld(){
+        return "HelloWorld!";
+    }
     @GetMapping({"/","main"})
     public String openMainPage(){
         return "main";
