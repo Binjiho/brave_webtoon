@@ -1,6 +1,6 @@
-package com.example.brave_webtoon.base.dto;
+package com.example.brave_webtoon.webtoon.dto;
 
-import com.example.brave_webtoon.base.entity.WebtoonEntity;
+import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
 import lombok.*;
 
 @Builder

@@ -1,9 +1,7 @@
-package com.example.brave_webtoon.base.repository;
+package com.example.brave_webtoon.webtoon.repository.impl;
 
-import com.example.brave_webtoon.base.entity.WebtoonRoleEntity;
+import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 
 public interface WebtoonRoleRepositoryImpl extends JpaRepository<WebtoonRoleEntity, Long> {
 }

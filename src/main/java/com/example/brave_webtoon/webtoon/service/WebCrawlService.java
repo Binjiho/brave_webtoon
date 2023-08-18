@@ -1,15 +1,14 @@
-package com.example.brave_webtoon.base.service;
+package com.example.brave_webtoon.webtoon.service;
 
-import com.example.brave_webtoon.base.entity.WebtoonEntity;
-import com.example.brave_webtoon.base.entity.WebtoonRoleEntity;
-import com.example.brave_webtoon.base.repository.WebtoonRepositoryImpl;
-import com.example.brave_webtoon.base.repository.WebtoonRoleRepositoryImpl;
+import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
+import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
+import com.example.brave_webtoon.webtoon.repository.impl.WebtoonRepositoryImpl;
+import com.example.brave_webtoon.webtoon.repository.impl.WebtoonRoleRepositoryImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.*;

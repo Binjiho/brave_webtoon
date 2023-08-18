@@ -1,7 +1,6 @@
-package com.example.brave_webtoon.base.dto;
+package com.example.brave_webtoon.webtoon.dto;
 
-import com.example.brave_webtoon.base.entity.WebtoonEntity;
-import com.example.brave_webtoon.base.entity.WebtoonRoleEntity;
+import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 

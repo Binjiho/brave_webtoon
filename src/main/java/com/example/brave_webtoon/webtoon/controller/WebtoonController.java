@@ -1,10 +1,10 @@
-package com.example.brave_webtoon.base.controller;
+package com.example.brave_webtoon.webtoon.controller;
 
-import com.example.brave_webtoon.base.dto.WebtoonDto;
-import com.example.brave_webtoon.base.dto.WebtoonRoleDto;
-import com.example.brave_webtoon.base.entity.WebtoonEntity;
-import com.example.brave_webtoon.base.entity.WebtoonRoleEntity;
-import com.example.brave_webtoon.base.service.WebtoonService;
+import com.example.brave_webtoon.webtoon.dto.VoteDto;
+import com.example.brave_webtoon.webtoon.dto.WebtoonDto;
+import com.example.brave_webtoon.webtoon.dto.WebtoonRoleDto;
+import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
+import com.example.brave_webtoon.webtoon.service.WebtoonService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -43,7 +43,7 @@ public class WebtoonController {
         return result;
     }
 
-    @GetMapping("/webtoonList/detail/{id}")
+    @GetMapping("/webtoonRoleList/{id}")
     @Operation(summary = "웹툰 캐릭터 상세 화면", description = "웹툰 캐릭터중 한명을 화면에 출력")
     @Parameters({
             @Parameter(name="id", description = "webtoonRoleId", required = true)
@@ -54,18 +54,27 @@ public class WebtoonController {
         return result;
     }
 
-//    @PostMapping("/webtoonList/detail")
-//    @Operation(summary = "웹툰 캐릭터 상세화면 투표하기", description = "웹툰 캐릭터중 한명과 연예인을 투표하기")
-//    @Parameters({
+    @PostMapping("/webtoonRoleList")
+    @Operation(summary = "웹툰 캐릭터 상세화면 투표하기", description = "웹툰 캐릭터중 한명과 연예인을 투표하기")
+    @Parameters({
 //            @Parameter(name="webtoon_id", description = "webtoonId", required = true),
-//            @Parameter(name="webtoon_role_id", description = "webtoonRoleId", required = true),
-//            @Parameter(name="person_name", description = "personName", required = true),
-//            @Parameter(name="person_url", description = "personUrl", required = true)
+            @Parameter(name="webtoon_role_id", description = "webtoonRoleId", required = true),
+            @Parameter(name="person_name", description = "personName", required = true),
+            @Parameter(name="person_url", description = "personUrl", required = true)
+    })
+    @ResponseBody
+    public void postWebtoonRoleDetail(@RequestBody VoteDto voteDto){
+        webtoonService.saveVote(voteDto);
+    }
+
+//    @GetMapping("/webtoonList/result/{id}")
+//    @Operation(summary = "웹툰 캐릭터 투표 결과 화면", description = "웹툰 캐릭터중 한명의 투표결과를 화면에 출력")
+//    @Parameters({
+//            @Parameter(name="id", description = "webtoonRoleId", required = true)
 //    })
 //    @ResponseBody
-//    public List<WebtoonRoleDto> postWebtoonRoleDetail(@PathVariable Long id){
-//        List<WebtoonRoleEntity> list = webtoonService.findAllWebtoonRoleList(id);
-//        List<WebtoonRoleDto> result = list.stream().map(WebtoonRoleDto::toDto).collect(Collectors.toList());
+//    public List<WebtoonRoleDto> findVoteByWebtoonRoleId(@PathVariable Long id){
+//        List<WebtoonRoleDto> result = webtoonService.findByWebtoonRoleId(id);
 //        return result;
 //    }
 }

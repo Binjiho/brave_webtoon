@@ -1,12 +1,13 @@
-package com.example.brave_webtoon.base.repository;
+package com.example.brave_webtoon.webtoon.repository;
 
-import com.example.brave_webtoon.base.entity.WebtoonEntity;
+import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
-import static com.example.brave_webtoon.base.entity.QWebtoonEntity.webtoonEntity;
+import static com.example.brave_webtoon.webtoon.entity.QWebtoonEntity.webtoonEntity;
 
 @RequiredArgsConstructor
 @Repository

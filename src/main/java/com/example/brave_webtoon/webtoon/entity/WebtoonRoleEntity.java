@@ -1,4 +1,4 @@
-package com.example.brave_webtoon.base.entity;
+package com.example.brave_webtoon.webtoon.entity;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -14,21 +14,29 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 @ToString
-@Table(name = "webtoon")
-public class WebtoonEntity {
+@Table(name = "webtoon_role")
+public class WebtoonRoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "webtoon_id")
+    private WebtoonEntity webtoonEntity;
+
     @Column(name= "title", length = 50, nullable = false)
     private String title;
 
-//    @Column(columnDefinition = "TEXT", nullable = false)
-//    private String content;
+    @Column(name= "role", length = 50, nullable = false)
+    private String role;
 
     @Column(name = "delete_yn" , columnDefinition = "tinyint(1)")
     @ColumnDefault("0")
-    private Integer deleteYn;
+    private int deleteYn;
+
+    @Column(name = "hit" , columnDefinition = "tinyint(1)")
+    @ColumnDefault("0")
+    private int hit;
 
     @Column(name="save_name", nullable = false)
     private String saveName;

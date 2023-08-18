@@ -1,6 +1,6 @@
 package com.example.brave_webtoon.base.controller;
 
-import com.example.brave_webtoon.base.service.WebCrawlService;
+import com.example.brave_webtoon.webtoon.service.WebCrawlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
