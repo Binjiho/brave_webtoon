@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class WebtoonController {
 
     private final WebtoonService webtoonService;
-  
+
     @GetMapping("/webtoonList")
     @Operation(summary = "웹툰 리스트 화면", description = "웹툰 리스트를 화면에 출력")
     @ResponseBody
@@ -38,9 +38,34 @@ public class WebtoonController {
             @Parameter(name="id", description = "webtoonId", required = true)
     })
     @ResponseBody
-    public List<WebtoonRoleDto> getWebtoonList(@PathVariable Long id){
-        List<WebtoonRoleEntity> list = webtoonService.findAllWebtoonRoleList(id);
-        List<WebtoonRoleDto> result = list.stream().map(WebtoonRoleDto::toDto).collect(Collectors.toList());
+    public List<WebtoonRoleDto> getWebtoonRoleList(@PathVariable Long id){
+        List<WebtoonRoleDto> result = webtoonService.findAllWebtoonRoleList(id);
         return result;
     }
+
+    @GetMapping("/webtoonList/detail/{id}")
+    @Operation(summary = "웹툰 캐릭터 상세 화면", description = "웹툰 캐릭터중 한명을 화면에 출력")
+    @Parameters({
+            @Parameter(name="id", description = "webtoonRoleId", required = true)
+    })
+    @ResponseBody
+    public List<WebtoonRoleDto> findByWebtoonRoleId(@PathVariable Long id){
+        List<WebtoonRoleDto> result = webtoonService.findByWebtoonRoleId(id);
+        return result;
+    }
+
+//    @PostMapping("/webtoonList/detail")
+//    @Operation(summary = "웹툰 캐릭터 상세화면 투표하기", description = "웹툰 캐릭터중 한명과 연예인을 투표하기")
+//    @Parameters({
+//            @Parameter(name="webtoon_id", description = "webtoonId", required = true),
+//            @Parameter(name="webtoon_role_id", description = "webtoonRoleId", required = true),
+//            @Parameter(name="person_name", description = "personName", required = true),
+//            @Parameter(name="person_url", description = "personUrl", required = true)
+//    })
+//    @ResponseBody
+//    public List<WebtoonRoleDto> postWebtoonRoleDetail(@PathVariable Long id){
+//        List<WebtoonRoleEntity> list = webtoonService.findAllWebtoonRoleList(id);
+//        List<WebtoonRoleDto> result = list.stream().map(WebtoonRoleDto::toDto).collect(Collectors.toList());
+//        return result;
+//    }
 }

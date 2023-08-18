@@ -1,10 +1,26 @@
 package com.example.brave_webtoon.base.repository;
 
 import com.example.brave_webtoon.base.entity.WebtoonEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+import java.util.List;
 
-import java.util.Optional;
+import static com.example.brave_webtoon.base.entity.QWebtoonEntity.webtoonEntity;
 
-public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long> {
-    Optional<WebtoonEntity> findByTitle(String title);
+@RequiredArgsConstructor
+@Repository
+public class WebtoonRepository {
+    private final JPAQueryFactory queryFactory;
+
+    public List<WebtoonEntity> findAll() {
+        return queryFactory.selectFrom(webtoonEntity)
+                .fetchAll().fetch();
+    }
+
+    public List<WebtoonEntity> findByTitle(String title) {
+        return queryFactory.selectFrom(webtoonEntity)
+                .where(webtoonEntity.title.eq(title))
+                .fetch();
+    }
 }

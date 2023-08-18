@@ -2,10 +2,9 @@ package com.example.brave_webtoon.base.service;
 
 import com.example.brave_webtoon.base.entity.WebtoonEntity;
 import com.example.brave_webtoon.base.entity.WebtoonRoleEntity;
-import com.example.brave_webtoon.base.repository.WebtoonRepository;
-import com.example.brave_webtoon.base.repository.WebtoonRoleRepository;
+import com.example.brave_webtoon.base.repository.WebtoonRepositoryImpl;
+import com.example.brave_webtoon.base.repository.WebtoonRoleRepositoryImpl;
 import lombok.RequiredArgsConstructor;
-import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Service;
 
 import org.jsoup.Jsoup;
@@ -21,8 +20,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class WebCrawlService {
 
-    private final WebtoonRepository webtoonRepository;
-    private final WebtoonRoleRepository webtoonRoleRepository;
+    private final WebtoonRepositoryImpl webtoonRepositoryImpl;
+    private final WebtoonRoleRepositoryImpl webtoonRoleRepositoryImpl;
 
     static String folderDir = "C:\\dev\\brave";
     static String addUrl = "https://m.chuing.net/";
@@ -51,13 +50,13 @@ public class WebCrawlService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Optional<WebtoonEntity> webtoonEntityOptional = webtoonRepository.findByTitle(title);
+        Optional<WebtoonEntity> webtoonEntityOptional = webtoonRepositoryImpl.findByTitle(title);
 
 
         if(webtoonEntityOptional.isPresent()){
             webtoonId = webtoonEntityOptional.get().getId();
         }else{
-            webtoonId = webtoonRepository.save(WebtoonEntity
+            webtoonId = webtoonRepositoryImpl.save(WebtoonEntity
                     .builder()
                     .title(title)
                     .saveName(title)
@@ -92,9 +91,10 @@ public class WebCrawlService {
                 throw new RuntimeException(e);
             }
 
-            webtoonRoleRepository.save(WebtoonRoleEntity
+            webtoonRoleRepositoryImpl.save(WebtoonRoleEntity
                     .builder()
-                    .webtoonId(webtoonId)
+                    .webtoonEntity(WebtoonEntity.builder().id(webtoonId).build())
+//                    .webtoonId(webtoonId)
                     .title(nameText)
                     .role(roleText)
                     .saveName(nameText)

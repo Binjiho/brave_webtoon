@@ -20,8 +20,9 @@ public class WebtoonRoleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "webtoon_id", nullable = false)
-    private Long webtoonId;
+    @ManyToOne
+    @JoinColumn(name = "webtoon_id")
+    private WebtoonEntity webtoonEntity;
 
     @Column(name= "title", length = 50, nullable = false)
     private String title;

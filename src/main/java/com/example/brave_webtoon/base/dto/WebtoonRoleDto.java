@@ -2,6 +2,7 @@ package com.example.brave_webtoon.base.dto;
 
 import com.example.brave_webtoon.base.entity.WebtoonEntity;
 import com.example.brave_webtoon.base.entity.WebtoonRoleEntity;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 
 @Builder
@@ -18,11 +19,23 @@ public class WebtoonRoleDto {
     private String saveName;
     private String uploadPath;
 
+    @QueryProjection
+    public WebtoonRoleDto(Long id, Long webtoonId, String title, String role, int deleteYn, String saveName, String uploadPath) {
+        this.id = id;
+        this.webtoonId = webtoonId;
+        this.title = title;
+        this.role = role;
+        this.deleteYn = deleteYn;
+        this.saveName = saveName;
+        this.uploadPath = uploadPath;
+    }
+
     public static WebtoonRoleDto toDto(final WebtoonRoleEntity webtoonRoleEntity){
         return WebtoonRoleDto
                 .builder()
                 .id(webtoonRoleEntity.getId())
-                .webtoonId(webtoonRoleEntity.getWebtoonId())
+                .webtoonId(webtoonRoleEntity.getWebtoonEntity().getId())
+//                .webtoonId(webtoonRoleEntity.getWebtoonId())
                 .title(webtoonRoleEntity.getTitle())
                 .role(webtoonRoleEntity.getRole())
                 .deleteYn(webtoonRoleEntity.getDeleteYn())
