@@ -1,8 +1,13 @@
 package com.example.brave_webtoon.webtoon.repository;
 
 import com.example.brave_webtoon.webtoon.dto.QWebtoonRoleDto;
+import com.example.brave_webtoon.webtoon.dto.VoteDto;
 import com.example.brave_webtoon.webtoon.dto.WebtoonRoleDto;
+
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
+import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
+import com.querydsl.core.group.GroupBy;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -10,6 +15,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.example.brave_webtoon.webtoon.entity.QWebtoonRoleEntity.webtoonRoleEntity;
+import static com.example.brave_webtoon.webtoon.entity.QVoteEntity.voteEntity;
+import static com.querydsl.core.group.GroupBy.groupBy;
+import static com.querydsl.core.group.GroupBy.list;
+
 
 @RequiredArgsConstructor
 @Repository
@@ -30,7 +39,9 @@ public class WebtoonRoleRepository {
                         webtoonRoleEntity.role,
                         webtoonRoleEntity.deleteYn,
                         webtoonRoleEntity.saveName,
-                        webtoonRoleEntity.uploadPath)
+                        webtoonRoleEntity.uploadPath,
+                        webtoonRoleEntity.voteEntityList
+                        )
                 )
                 .from(webtoonRoleEntity)
                 .where(webtoonRoleEntity.webtoonEntity.eq(WebtoonEntity.builder().id(webtoonId).build()))
@@ -44,24 +55,32 @@ public class WebtoonRoleRepository {
 //    }
 
     public List<WebtoonRoleDto> findByWebtoonRoleId(Long webtoonRoleId) {
-        return queryFactory.select(
-                        new QWebtoonRoleDto(
-                                webtoonRoleEntity.id,
-                                webtoonRoleEntity.webtoonEntity.id,
-                                webtoonRoleEntity.title,
-                                webtoonRoleEntity.role,
-                                webtoonRoleEntity.deleteYn,
-                                webtoonRoleEntity.saveName,
-                                webtoonRoleEntity.uploadPath)
-                )
-                .from(webtoonRoleEntity)
+        return queryFactory.selectFrom(webtoonRoleEntity)
+                .leftJoin(webtoonRoleEntity.voteEntityList, voteEntity)
                 .where(webtoonRoleEntity.id.eq(webtoonRoleId))
-                .fetch();
+                .transform(
+                        groupBy(webtoonRoleEntity.id).list(
+                                Projections.constructor(WebtoonRoleDto.class,
+                                        webtoonRoleEntity.id,
+                                        webtoonRoleEntity.webtoonEntity.id,
+                                        webtoonRoleEntity.title,
+                                        webtoonRoleEntity.role,
+                                        webtoonRoleEntity.deleteYn,
+                                        webtoonRoleEntity.saveName,
+                                        webtoonRoleEntity.uploadPath,
+                                        list(
+                                                Projections.constructor(VoteDto.class,
+                                                        voteEntity.id,
+                                                        voteEntity.webtoonEntity.id,
+                                                        voteEntity.webtoonRoleEntity.id,
+                                                        voteEntity.personName,
+                                                        voteEntity.personUrl,
+                                                        voteEntity.deleteYn)
+                                        )
+                                )
+                        )
+                );
+
     }
 
-//    public List<WebtoonRoleEntity> findByWebtoonRoleId(Long webtoonRoleId) {
-//        return queryFactory.selectFrom(webtoonRoleEntity)
-//                .where(webtoonRoleEntity.id.eq(webtoonRoleId))
-//                .fetch();
-//    }
 }

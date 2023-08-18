@@ -12,18 +12,20 @@ import java.time.LocalDateTime;
 @ToString
 public class VoteDto {
     private Long id;
+    private Long webtoonId;
     private Long webtoonRoleId;
-    private String person_name;
-    private String person_url;
+    private String personName;
+    private String personUrl;
     private int deleteYn;
     private LocalDateTime createdDate;
 
     @QueryProjection
-    public VoteDto(Long id, Long webtoonRoleId, String person_name, String person_url, int deleteYn) {
+    public VoteDto(Long id, Long webtoonId, Long webtoonRoleId, String personName, String personUrl, int deleteYn) {
         this.id = id;
+        this.webtoonId = webtoonId;
         this.webtoonRoleId = webtoonRoleId;
-        this.person_name = person_name;
-        this.person_url = person_url;
+        this.personName = personName;
+        this.personUrl = personUrl;
         this.deleteYn = deleteYn;
     }
 

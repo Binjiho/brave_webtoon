@@ -28,7 +28,7 @@ public class WebtoonEntity {
 
     @Column(name = "delete_yn" , columnDefinition = "tinyint(1)")
     @ColumnDefault("0")
-    private int deleteYn;
+    private Integer deleteYn;
 
     @Column(name = "hit" , columnDefinition = "tinyint(1)")
     @ColumnDefault("0")

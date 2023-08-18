@@ -1,12 +1,15 @@
 package com.example.brave_webtoon.webtoon.entity;
 
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -23,6 +26,9 @@ public class WebtoonRoleEntity {
     @ManyToOne
     @JoinColumn(name = "webtoon_id")
     private WebtoonEntity webtoonEntity;
+
+    @OneToMany(mappedBy = "webtoonRoleEntity")
+    private List<VoteEntity> voteEntityList;
 
     @Column(name= "title", length = 50, nullable = false)
     private String title;

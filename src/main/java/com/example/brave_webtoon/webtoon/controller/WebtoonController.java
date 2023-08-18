@@ -4,6 +4,7 @@ import com.example.brave_webtoon.webtoon.dto.VoteDto;
 import com.example.brave_webtoon.webtoon.dto.WebtoonDto;
 import com.example.brave_webtoon.webtoon.dto.WebtoonRoleDto;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
+import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
 import com.example.brave_webtoon.webtoon.service.WebtoonService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -43,27 +44,27 @@ public class WebtoonController {
         return result;
     }
 
-    @GetMapping("/webtoonRoleList/{id}")
+    @GetMapping("/webtoonVote/{id}")
     @Operation(summary = "웹툰 캐릭터 상세 화면", description = "웹툰 캐릭터중 한명을 화면에 출력")
     @Parameters({
             @Parameter(name="id", description = "webtoonRoleId", required = true)
     })
     @ResponseBody
-    public List<WebtoonRoleDto> findByWebtoonRoleId(@PathVariable Long id){
-        List<WebtoonRoleDto> result = webtoonService.findByWebtoonRoleId(id);
+    public List<WebtoonRoleDto> openVoteWebtoonDetailPage(@PathVariable Long id){
+        List<WebtoonRoleDto > result = webtoonService.findByWebtoonRoleId(id);
         return result;
     }
 
-    @PostMapping("/webtoonRoleList")
+    @PostMapping("/webtoonVote")
     @Operation(summary = "웹툰 캐릭터 상세화면 투표하기", description = "웹툰 캐릭터중 한명과 연예인을 투표하기")
     @Parameters({
-//            @Parameter(name="webtoon_id", description = "webtoonId", required = true),
-            @Parameter(name="webtoon_role_id", description = "webtoonRoleId", required = true),
+            @Parameter(name="webtoonId", description = "webtoonId", required = true),
+            @Parameter(name="webtoonRoleId", description = "webtoonRoleId", required = true),
             @Parameter(name="person_name", description = "personName", required = true),
             @Parameter(name="person_url", description = "personUrl", required = true)
     })
     @ResponseBody
-    public void postWebtoonRoleDetail(@RequestBody VoteDto voteDto){
+    public void postVoteWebtoonRole(@RequestBody VoteDto voteDto){
         webtoonService.saveVote(voteDto);
     }
 

@@ -20,11 +20,11 @@ public class VoteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "webtoon_id")
-//    private WebtoonEntity webtoonEntity;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "webtoon_id")
+    private WebtoonEntity webtoonEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "webtoon_role_id")
     private WebtoonRoleEntity webtoonRoleEntity;
 
@@ -36,7 +36,7 @@ public class VoteEntity {
 
     @Column(name = "delete_yn" , columnDefinition = "tinyint(1)")
     @ColumnDefault("0")
-    private Integer deleteYn;
+    private int deleteYn;
 
     @CreationTimestamp
     @Column(name="created_date", updatable=false)
