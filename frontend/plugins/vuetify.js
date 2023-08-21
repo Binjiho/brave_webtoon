@@ -16,12 +16,7 @@ export default defineNuxtPlugin((app) => {
         custom: customSVGs,
       },
     },
-    defaults: {
-      VBtn: {
-        variant: "flat",
-        color: "blue-darken-2",
-      },
-    },
+    defaults: {},
   });
 
   app.vueApp.use(vuetify);
