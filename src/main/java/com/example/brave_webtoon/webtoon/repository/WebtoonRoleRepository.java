@@ -1,19 +1,9 @@
 package com.example.brave_webtoon.webtoon.repository;
 
-import com.example.brave_webtoon.webtoon.dto.QVoteDto;
-import com.example.brave_webtoon.webtoon.dto.QWebtoonRoleDto;
-import com.example.brave_webtoon.webtoon.dto.VoteDto;
-import com.example.brave_webtoon.webtoon.dto.WebtoonRoleDto;
+import com.example.brave_webtoon.webtoon.dto.*;
 
-import com.example.brave_webtoon.webtoon.entity.QVoteEntity;
-import com.example.brave_webtoon.webtoon.entity.VoteEntity;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
-import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
-import com.querydsl.core.Tuple;
-import com.querydsl.core.group.GroupBy;
-import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -75,8 +65,7 @@ public class WebtoonRoleRepository {
                         voteEntity.deleteYn)
                 .from(webtoonRoleEntity)
                 .leftJoin(webtoonRoleEntity.voteEntityList, voteEntity)
-                .where(webtoonRoleEntity.id.eq(webtoonRoleId))
-
+                .where(webtoonRoleEntity.id.eq(webtoonRoleId), webtoonRoleEntity.deleteYn.lt(1))
                 .transform(
                         groupBy(webtoonRoleEntity.id).list(
                                 Projections.constructor(WebtoonRoleDto.class,
@@ -101,24 +90,31 @@ public class WebtoonRoleRepository {
                 );
     }
 
-
-//    public List<WebtoonRoleDto> findByWebtoonRoleId(Long webtoonRoleId) {
-//        return queryFactory
-//                .select(new QWebtoonRoleDto(
-//                                webtoonRoleEntity.id,
-//                                webtoonRoleEntity.webtoonEntity.id,
-//                                webtoonRoleEntity.title,
-//                                webtoonRoleEntity.role,
-//                                webtoonRoleEntity.deleteYn,
-//                                webtoonRoleEntity.saveName,
-//                                webtoonRoleEntity.uploadPath,
-//                                list(voteEntity)
-//                        )
-//                )
-//                .from(webtoonRoleEntity)
-//                .leftJoin(webtoonRoleEntity.voteEntityList, voteEntity)
-//                .where(webtoonRoleEntity.id.eq(webtoonRoleId))
-//                .fetch();
-//    }
+    public List<VoteResultDto> findResultByWebtoonRoleId(Long webtoonRoleId) {
+        return queryFactory
+                .selectFrom(webtoonRoleEntity)
+                .leftJoin(webtoonRoleEntity.voteEntityList, voteEntity)
+                .where(webtoonRoleEntity.id.eq(webtoonRoleId), webtoonRoleEntity.deleteYn.lt(1))
+                .groupBy(voteEntity.personName)
+                .transform(groupBy(webtoonRoleEntity.id).list(
+                            Projections.constructor(
+                                    VoteResultDto.class,
+                                    webtoonRoleEntity.id,
+                                    webtoonRoleEntity.webtoonEntity.id,
+                                    webtoonRoleEntity.title,
+                                    webtoonRoleEntity.saveName,
+                                    webtoonRoleEntity.uploadPath,
+                                    list(
+                                            Projections.constructor(
+                                                    VoteResultListDto.class,
+                                                    voteEntity.personName.count().as("cnt"),
+                                                    voteEntity.personName,
+                                                    voteEntity.personUrl
+                                            )
+                                    )
+                            )
+                )
+            );
+    }
 
 }

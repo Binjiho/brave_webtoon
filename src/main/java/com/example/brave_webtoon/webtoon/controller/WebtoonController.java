@@ -1,10 +1,7 @@
 package com.example.brave_webtoon.webtoon.controller;
 
-import com.example.brave_webtoon.webtoon.dto.VoteDto;
-import com.example.brave_webtoon.webtoon.dto.WebtoonDto;
-import com.example.brave_webtoon.webtoon.dto.WebtoonRoleDto;
+import com.example.brave_webtoon.webtoon.dto.*;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
-import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
 import com.example.brave_webtoon.webtoon.service.WebtoonService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -74,8 +71,8 @@ public class WebtoonController {
             @Parameter(name="id", description = "webtoonRoleId", required = true)
     })
     @ResponseBody
-    public List<WebtoonRoleDto> findVoteResultByWebtoonRoleId(@PathVariable Long id){
-        List<WebtoonRoleDto> result = webtoonService.findResultByWebtoonRoleId(id);
+    public List<VoteResultDto> findVoteResultByWebtoonRoleId(@PathVariable Long id){
+        List<VoteResultDto> result = webtoonService.findResultByWebtoonRoleId(id);
         return result;
     }
 }
