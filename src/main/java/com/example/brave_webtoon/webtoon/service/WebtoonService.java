@@ -62,4 +62,8 @@ public class WebtoonService {
         Long voteId = voteRepository.save(voteEntity).getId();
     }
 
+    public List<WebtoonRoleDto> findResultByWebtoonRoleId(Long webtoonRoleId){
+        List<WebtoonRoleDto> result = webtoonRoleRepository.findByWebtoonRoleId(webtoonRoleId);
+        return result;
+    }
 }

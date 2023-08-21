@@ -68,14 +68,14 @@ public class WebtoonController {
         webtoonService.saveVote(voteDto);
     }
 
-//    @GetMapping("/webtoonList/result/{id}")
-//    @Operation(summary = "웹툰 캐릭터 투표 결과 화면", description = "웹툰 캐릭터중 한명의 투표결과를 화면에 출력")
-//    @Parameters({
-//            @Parameter(name="id", description = "webtoonRoleId", required = true)
-//    })
-//    @ResponseBody
-//    public List<WebtoonRoleDto> findVoteByWebtoonRoleId(@PathVariable Long id){
-//        List<WebtoonRoleDto> result = webtoonService.findByWebtoonRoleId(id);
-//        return result;
-//    }
+    @GetMapping("/webtoonVote/result/{id}")
+    @Operation(summary = "웹툰 캐릭터 투표 결과 화면", description = "웹툰 캐릭터중 한명의 투표결과를 화면에 출력")
+    @Parameters({
+            @Parameter(name="id", description = "webtoonRoleId", required = true)
+    })
+    @ResponseBody
+    public List<WebtoonRoleDto> findVoteResultByWebtoonRoleId(@PathVariable Long id){
+        List<WebtoonRoleDto> result = webtoonService.findResultByWebtoonRoleId(id);
+        return result;
+    }
 }
