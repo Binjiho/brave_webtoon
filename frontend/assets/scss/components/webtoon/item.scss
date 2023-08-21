@@ -1,0 +1,75 @@
+.webtoon-item {
+  width: 100%;
+
+  &__link {
+    color: #000;
+    text-decoration-line: none;
+  }
+
+  &__thumbnail {
+    display: flex;
+    width: 100%;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #464646;
+    color: #fff;
+    position: relative;
+    font-size: 12px;
+    font-weight: 400;
+
+    &::after {
+      display: block;
+      content: "/";
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      color: #fff;
+    }
+  }
+
+  &__title {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 4px 0;
+  }
+}
+
+.character {
+  width: 100%;
+  &__img-wrap {
+    display: flex;
+    height: 95px;
+    width: 100%;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  p {
+    text-align: center;
+    height: 20px;
+  }
+}
+
+.btn-box {
+  display: flex;
+  justify-content: space-between;
+
+  li {
+    display: flex;
+  }
+
+  .v-btn {
+    box-shadow: none;
+    font-size: 10px;
+    color: #aaa;
+    height: unset;
+    --v-btn-height: 5px;
+    line-height: 10px;
+    min-width: unset;
+  }
+}

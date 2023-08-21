@@ -13,6 +13,8 @@ import arrowLeftLine from "assets/iconsets/icons/system/arrow-left-line.vue";
 import infoLine from "assets/iconsets/icons/system/info-line.vue";
 import shareLine from "assets/iconsets/icons/system/share-line.vue";
 import search from "assets/iconsets/icons/system/search.vue";
+import checkLine from "assets/iconsets/icons/system/check-line.vue";
+import rankingLine from "assets/iconsets/icons/system/ranking-line.vue";
 
 const customSvgNameToComponent: any = {
   colorLogo,
@@ -24,6 +26,8 @@ const customSvgNameToComponent: any = {
   infoLine,
   shareLine,
   search,
+  checkLine,
+  rankingLine,
 };
 
 const customSVGs: IconSet = {
