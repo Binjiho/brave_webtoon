@@ -1,15 +1,11 @@
+<script setup lang="ts">
+import Main from "~/pages/main";
+
+definePageMeta({
+  layout: "main",
+});
+</script>
+
 <template>
   <Main></Main>
 </template>
-
-<script>
-import Main from "~/pages/main";
-export default {
-  components: {
-    Main,
-  },
-  mounted() {
-    this.$api.get(`/api/helloworld`);
-  },
-};
-</script>

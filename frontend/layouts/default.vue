@@ -1,6 +1,6 @@
 <template>
   <VApp>
-    <UiHeader></UiHeader>
+    <slot name="header"></slot>
     <VMain>
       <VContainer>
         <slot />
@@ -8,11 +8,3 @@
     </VMain>
   </VApp>
 </template>
-
-<script>
-export default {
-  data() {
-    return {};
-  },
-};
-</script>
