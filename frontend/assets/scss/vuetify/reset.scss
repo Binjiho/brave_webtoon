@@ -6,5 +6,32 @@
 
 .v-container {
   min-width: 375px;
-  padding: 0 20px;
+  padding: 20px !important;
+  margin: 0 auto !important;
+}
+
+.v-input--density-default,
+.v-input--density-default .v-field--variant-filled {
+  --v-input-control-height: 20px;
+  --v-input-padding-top: 0px;
+}
+
+.--v-field-padding-bottom,
+.v-input--density-default .v-field--no-label {
+  --v-field-padding-bottom: 0px;
+}
+
+.v-text-field {
+  .v-field__overlay {
+    display: none;
+  }
+  .v-field__input {
+    padding: 0;
+  }
+
+  .v-field__outline {
+    &::before {
+      display: none;
+    }
+  }
 }

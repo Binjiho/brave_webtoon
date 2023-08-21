@@ -7,8 +7,10 @@
          이 파일은 nuxt.config.ts에 설정되면 됨
 ********************************************************************/
 
+$family: "Noto Sans CJK KR";
+
 @use "vuetify" with (
   $utilities: false,
-  $color-pack: true,
-  $reset: false
+  $body-font-family: $family,
+  $color-pack: true
 );

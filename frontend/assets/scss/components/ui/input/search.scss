@@ -1,0 +1,34 @@
+.search-btn-input {
+  border-radius: 20px;
+  border: 1px solid #f1f1f1;
+  transition: border 0.3s;
+  padding: 9px 16px;
+
+  &.focus {
+    border-color: #000;
+  }
+
+  .v-field__outline {
+    display: none;
+  }
+
+  .v-input__details {
+    display: none;
+  }
+
+  input {
+    border: none;
+    font-size: 15px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .v-btn--icon.v-btn--density-default {
+    width: 24px;
+    height: 24px;
+  }
+
+  .v-btn__content {
+    font-size: 1rem;
+  }
+}

@@ -4,7 +4,14 @@
   <header class="header">
     <VContainer class="header__inner">
       <h1 class="logo">
-        <VBtn variant="text" height="20" :ripple="false" to="/" :active="false">
+        <VBtn
+          variant="text"
+          width="77"
+          height="20"
+          :ripple="false"
+          to="/"
+          :active="false"
+        >
           <VIcon icon="custom:colorLogo"></VIcon>
         </VBtn>
       </h1>
