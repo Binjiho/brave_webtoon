@@ -1,0 +1,52 @@
+.header {
+  border-bottom: 1px solid #f1f1f1;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+
+  &__inner {
+    height: 60px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__left-area {
+    position: absolute;
+    left: 20px;
+  }
+
+  &__center-area {
+    margin: 0 auto;
+  }
+
+  &__right-area {
+    position: absolute;
+    right: 20px;
+  }
+
+  &.transparent {
+    color: #fff;
+    background: transparent;
+    border-bottom: unset;
+  }
+}
+
+.logo {
+  font-size: unset;
+  display: flex;
+
+  .v-btn {
+    padding: 0;
+  }
+  svg {
+    width: 100%;
+    height: 20px;
+  }
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 400;
+}

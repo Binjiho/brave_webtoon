@@ -8,3 +8,9 @@
     </VMain>
   </VApp>
 </template>
+
+<style scoped>
+.v-main {
+  padding-top: 60px;
+}
+</style>

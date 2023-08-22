@@ -20,5 +20,5 @@
 </template>
 
 <style scoped lang="scss">
-@import "@/assets/scss/components/ui/header/main";
+@import "assets/scss/components/ui/header";
 </style>

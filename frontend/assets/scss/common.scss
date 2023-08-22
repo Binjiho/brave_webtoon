@@ -2,3 +2,42 @@
 // 위치 : src/assets/scss/common.scss
 // 설명 : 공통 클래스 정의
 ********************************************************************/
+
+@mixin btn24() {
+  width: 24px;
+  height: 24px !important;
+  min-width: unset;
+  padding: 0;
+  box-shadow: none;
+  background: transparent;
+
+  &:hover,
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.v-btn.prev-btn {
+  @include btn24();
+
+  .v-btn__content {
+    &::after {
+      content: "";
+      @include maskIcon(
+        "~/assets/iconsets/svg/system/arrow-left-line.svg",
+        24px
+      );
+    }
+  }
+}
+
+.v-btn.share-btn {
+  @include btn24();
+
+  .v-btn__content {
+    &::after {
+      content: "";
+      @include maskIcon("~/assets/iconsets/svg/system/share-line.svg", 24px);
+    }
+  }
+}

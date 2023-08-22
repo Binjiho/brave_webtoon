@@ -11,6 +11,11 @@
   max-width: 768px;
 }
 
+.v-main {
+  position: relative;
+  z-index: 1;
+}
+
 .v-input--density-default,
 .v-input--density-default .v-field--variant-filled {
   --v-input-control-height: 20px;
