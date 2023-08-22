@@ -36,8 +36,8 @@ public class WebtoonController {
             @Parameter(name="id", description = "webtoonId", required = true)
     })
     @ResponseBody
-    public List<WebtoonRoleListDto> getWebtoonRoleList(@PathVariable Long id){
-        List<WebtoonRoleListDto> result = webtoonService.findAllWebtoonRoleList(id);
+    public List<WebtoonDto> getWebtoonRoleList(@PathVariable Long id){
+        List<WebtoonDto> result = webtoonService.findAllWebtoonRoleList(id);
         return result;
     }
 

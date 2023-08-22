@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -23,8 +24,8 @@ public class WebtoonEntity {
     @Column(name= "title", length = 50, nullable = false)
     private String title;
 
-//    @Column(columnDefinition = "TEXT", nullable = false)
-//    private String content;
+    @OneToMany(mappedBy = "webtoonEntity")
+    private List<WebtoonRoleEntity> webtoonRoleEntityList;
 
     @Column(name = "delete_yn" , columnDefinition = "tinyint(1)")
     @ColumnDefault("0")
