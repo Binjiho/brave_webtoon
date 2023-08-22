@@ -26,26 +26,38 @@ public class WebtoonRoleRepository {
      * @param webtoonId
      * @return
      */
-    public List<WebtoonRoleDto> findAllByWebtoonId(Long webtoonId) {
-        return queryFactory.select(
-                new QWebtoonRoleDto(
-                        webtoonRoleEntity.id,
-                        webtoonRoleEntity.webtoonEntity.id,
-                        webtoonRoleEntity.title,
-                        webtoonRoleEntity.role,
-                        webtoonRoleEntity.deleteYn,
-                        webtoonRoleEntity.saveName,
-                        webtoonRoleEntity.uploadPath,
-                        webtoonRoleEntity.voteEntityList
-                        )
-                )
-                .from(webtoonRoleEntity)
+    public List<WebtoonRoleListDto> findAllRoleByWebtoonId(Long webtoonId) {
+        return queryFactory
+                .selectFrom(webtoonRoleEntity)
                 .where(webtoonRoleEntity.webtoonEntity.eq(WebtoonEntity.builder().id(webtoonId).build()))
-                .fetchAll().fetch();
+                .transform(
+                        groupBy(webtoonRoleEntity.id).list(
+                                Projections.constructor(WebtoonRoleListDto.class,
+                                        webtoonRoleEntity.id,
+                                        webtoonRoleEntity.webtoonEntity.id,
+                                        webtoonRoleEntity.title,
+                                        webtoonRoleEntity.role,
+                                        webtoonRoleEntity.deleteYn,
+                                        webtoonRoleEntity.saveName,
+                                        webtoonRoleEntity.uploadPath
+                                )
+                        )
+                );
     }
-
-//    public List<WebtoonRoleEntity> findAllByWebtoonId(Long webtoonId) {
-//        return queryFactory.selectFrom(webtoonRoleEntity)
+//    public List<WebtoonRoleDto> findAllByWebtoonId(Long webtoonId) {
+//        return queryFactory.select(
+//                new QWebtoonRoleDto(
+//                        webtoonRoleEntity.id,
+//                        webtoonRoleEntity.webtoonEntity.id,
+//                        webtoonRoleEntity.title,
+//                        webtoonRoleEntity.role,
+//                        webtoonRoleEntity.deleteYn,
+//                        webtoonRoleEntity.saveName,
+//                        webtoonRoleEntity.uploadPath,
+//                        webtoonRoleEntity.voteEntityList.as("voteEntityList")
+//                        )
+//                )
+//                .from(webtoonRoleEntity)
 //                .where(webtoonRoleEntity.webtoonEntity.eq(WebtoonEntity.builder().id(webtoonId).build()))
 //                .fetchAll().fetch();
 //    }
