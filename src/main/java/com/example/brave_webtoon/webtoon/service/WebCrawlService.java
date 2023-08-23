@@ -1,5 +1,6 @@
 package com.example.brave_webtoon.webtoon.service;
 
+import com.example.brave_webtoon.base.util.S3Uploader;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
 import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
 import com.example.brave_webtoon.webtoon.repository.impl.WebtoonRepositoryImpl;
@@ -21,6 +22,7 @@ public class WebCrawlService {
 
     private final WebtoonRepositoryImpl webtoonRepositoryImpl;
     private final WebtoonRoleRepositoryImpl webtoonRoleRepositoryImpl;
+    private final S3Uploader s3Uploader;
 
     static String folderDir = "C:\\dev\\brave";
     static String addUrl = "https://m.chuing.net/";
@@ -93,7 +95,6 @@ public class WebCrawlService {
             webtoonRoleRepositoryImpl.save(WebtoonRoleEntity
                     .builder()
                     .webtoonEntity(WebtoonEntity.builder().id(webtoonId).build())
-//                    .webtoonId(webtoonId)
                     .title(nameText)
                     .role(roleText)
                     .saveName(nameText)
@@ -106,8 +107,9 @@ public class WebCrawlService {
     }
 
 
-    static void saveWebtoonToLocal(String title, String imgSrc) throws Exception {
+    public void saveWebtoonToLocal(String title, String imgSrc) throws Exception {
 
+//        s3Uploader.upload(image,"images");
         URL url = new URL(addUrl+imgSrc);
 
         BufferedInputStream bis = new BufferedInputStream(url.openStream());
