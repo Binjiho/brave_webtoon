@@ -29,18 +29,6 @@ export default {
   </div>
 </template>
 
-<style lang="scss">
-.list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  flex-wrap: wrap;
-  padding-top: 20px;
-  gap: 22px 10px;
-}
-
-@media all and (min-width: 500px) {
-  .list {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
+<style lang="scss" scoped>
+@import "@/assets/scss/page/webtoon/index";
 </style>

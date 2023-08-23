@@ -12,12 +12,19 @@ export default {
       type: String,
       default: "타이틀",
     },
+    isUnderLine: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
 
 <template>
-  <header class="header" :class="{ transparent: isTransparent }">
+  <header
+    class="header"
+    :class="{ transparent: isTransparent, underline: isUnderLine }"
+  >
     <VContainer class="header__inner">
       <div class="header__left-area">
         <VBtn class="prev-btn" @click="$router.back()"></VBtn>

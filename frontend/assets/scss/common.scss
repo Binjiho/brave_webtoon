@@ -3,6 +3,11 @@
 // 설명 : 공통 클래스 정의
 ********************************************************************/
 
+.text-main-color {
+  color: $main-color !important;
+}
+
+//btn
 @mixin btn24() {
   width: 24px;
   height: 24px !important;
@@ -39,5 +44,40 @@
       content: "";
       @include maskIcon("~/assets/iconsets/svg/system/share-line.svg", 24px);
     }
+  }
+}
+
+.bottom-big-btn {
+  background: $main-color !important;
+  color: #fff !important;
+  width: 100%;
+  position: fixed !important;
+  left: 0;
+  bottom: 0;
+  height: 60px !important;
+  border-radius: 0 !important;
+  font-size: 15px !important;
+
+  &.v-btn--disabled {
+    background: #dfe3e7 !important;
+
+    .v-btn__overlay {
+      display: none;
+    }
+  }
+}
+
+.divider {
+  border: none;
+  height: 10px !important;
+  position: relative;
+
+  &::after {
+    content: "";
+    @include divider();
+    width: calc(100% + 40px);
+    position: absolute;
+    left: -20px;
+    top: 0;
   }
 }

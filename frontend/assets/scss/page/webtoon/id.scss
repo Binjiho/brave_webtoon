@@ -1,0 +1,80 @@
+.back-img {
+  background: gray;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1024px;
+  height: 218px;
+  z-index: -1;
+}
+
+.webtoon-info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 12px;
+  margin-bottom: 21px;
+  grid-template-areas:
+    "a b"
+    "a c"
+    "a ."
+    "a d";
+
+  &__img {
+    grid-area: a;
+  }
+
+  &__label {
+    grid-area: b;
+  }
+
+  &__title {
+    grid-area: c;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  &__text {
+    grid-area: d;
+    color: #fff;
+    font-size: 12px;
+  }
+}
+
+.character-list {
+  display: grid;
+  padding-top: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  li {
+    font-size: 12px;
+    cursor: pointer;
+    width: 100%;
+
+    &:hover {
+      p {
+        font-weight: bold;
+      }
+    }
+
+    p {
+      margin-top: 2px;
+      @include textOverflow(100%, 1);
+    }
+  }
+}
+
+@media all and (min-width: 500px) {
+  .character-list {
+    gap: 16px;
+    display: flex;
+
+    li {
+      width: 84px;
+    }
+  }
+}

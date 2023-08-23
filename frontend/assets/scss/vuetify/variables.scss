@@ -12,26 +12,9 @@ $family: "Noto Sans CJK KR";
 @use "vuetify" with (
   $utilities: false,
   $body-font-family: $family,
-  $color-pack: true
+  $color-pack: false
 );
 
-@mixin maskIcon($root, $size, $color: currentColor) {
-  -webkit-mask-image: url($root);
-  mask-image: url($root);
-  background-color: $color;
-  -webkit-mask-size: $size;
-  width: $size;
-  height: $size;
-  -webkit-mask-repeat: no-repeat;
-}
+$main-color: #9747fe;
 
-@mixin textOverflow($width: 100%, $max: 2) {
-  width: $width;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  display: block;
-  display: -webkit-box;
-  -webkit-line-clamp: $max; // 원하는 라인수
-  -webkit-box-orient: vertical;
-  white-space: unset;
-}
+@import "assets/scss/variables.scss";

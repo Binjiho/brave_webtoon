@@ -9,7 +9,13 @@ export default {
   data() {
     return {
       isFocused: false,
+      searchValue: "",
     };
+  },
+  methods: {
+    search() {
+      this.$emit("search", this.searchValue);
+    },
   },
 };
 </script>
@@ -20,9 +26,11 @@ export default {
     :placeholder="placeholder"
     @update:focused="isFocused = !isFocused"
     :class="{ focus: isFocused }"
+    v-model="searchValue"
+    @keyup.enter="search"
   >
     <template #append>
-      <v-btn icon="custom:search" variant="text"></v-btn>
+      <v-btn icon="custom:search" variant="text" @click="search"></v-btn>
     </template>
   </v-text-field>
 </template>

@@ -1,0 +1,61 @@
+.webtoon-info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 12px;
+  margin-bottom: 21px;
+  grid-template-areas:
+    "a b"
+    "a c"
+    "a ."
+    "a d";
+
+  &__img {
+    grid-area: a;
+  }
+
+  &__title {
+    grid-area: b;
+    font-size: 12px;
+    font-weight: 500;
+    color: #999;
+  }
+
+  &__character {
+    grid-area: c;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: -3px;
+  }
+
+  &__text {
+    grid-area: d;
+    font-size: 10px;
+    color: #868686;
+  }
+}
+
+.celebrity-wrap {
+  padding: 23px 0 0 0;
+}
+
+.celebrity-search {
+  &__title {
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 9px;
+  }
+}
+
+.celebrity-list {
+  display: grid;
+  margin-bottom: 20px;
+  gap: 12px;
+  flex-wrap: wrap;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+@media all and (min-width: 500px) {
+  .celebrity-list {
+    display: flex;
+  }
+}

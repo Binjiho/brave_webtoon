@@ -1,15 +1,19 @@
 .header {
-  border-bottom: 1px solid #f1f1f1;
   position: fixed;
   left: 0;
   top: 0;
   width: 100%;
   z-index: 10;
 
+  &.underline {
+    border-bottom: 1px solid #f1f1f1;
+  }
+
   &__inner {
     height: 60px;
     display: flex;
     align-items: center;
+    position: relative;
   }
 
   &__left-area {
@@ -29,7 +33,6 @@
   &.transparent {
     color: #fff;
     background: transparent;
-    border-bottom: unset;
   }
 }
 

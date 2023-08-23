@@ -5,7 +5,7 @@ import layout from "./default.vue";
 <template>
   <layout>
     <template #header>
-      <ui-header-main></ui-header-main>
+      <ui-header-main isUnderLine></ui-header-main>
     </template>
     <slot></slot>
   </layout>

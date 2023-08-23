@@ -1,8 +1,17 @@
-<script setup lang="ts"></script>
+<script lang="ts">
+export default {
+  props: {
+    img: {
+      type: String,
+      default: "",
+    },
+  },
+};
+</script>
 
 <template>
   <div class="webtoon-character">
-    <img src="https://via.placeholder.com/225x350" alt="" />
+    <img :src="img" alt="" />
   </div>
 </template>
 

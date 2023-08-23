@@ -1,7 +1,18 @@
-<script setup></script>
+<script>
+import router from "#app/plugins/router";
+
+export default {
+  props: {
+    isUnderLine: {
+      type: Boolean,
+      default: false,
+    },
+  },
+};
+</script>
 
 <template>
-  <header class="header">
+  <header class="header" :class="{ underline: isUnderLine }">
     <VContainer class="header__inner">
       <h1 class="logo">
         <VBtn
