@@ -5,15 +5,16 @@
 ********************************************************************/
 
 .v-container {
-  min-width: 375px;
+  min-width: $min-layout;
   padding: 20px !important;
   margin: 0 auto !important;
-  max-width: 768px;
+  max-width: $max-layout;
 }
 
 .v-main {
   position: relative;
   z-index: 1;
+  padding-bottom: 80px;
 }
 
 .v-input--density-default,
@@ -27,6 +28,20 @@
   --v-field-padding-bottom: 0px;
 }
 
+.v-theme--light {
+  --v-high-emphasis-opacity: 1; //텍스트 opacity 설정
+  --v-medium-emphasis-opacity: 1; //폼 텍스트 opacity 설정
+}
+
+.v-selection-control--density-default {
+  --v-selection-control-size: unset; //폼 아이콘 범위
+}
+
+.v-selection-control--disabled {
+  opacity: 1;
+}
+
+//input
 .v-text-field {
   .v-field__overlay {
     display: none;
@@ -38,6 +53,53 @@
   .v-field__outline {
     &::before {
       display: none;
+    }
+  }
+}
+
+//radio
+.v-radio {
+  gap: 8px;
+
+  .v-icon--size-default {
+    font-size: 16px;
+  }
+
+  .v-label {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .v-selection-control__wrapper {
+    width: 16px;
+  }
+}
+
+//checkbox
+.v-checkbox {
+  .v-checkbox-btn {
+    gap: 8px;
+  }
+
+  .v-icon--size-default {
+    font-size: 18px;
+  }
+
+  .v-selection-control {
+    min-height: unset;
+  }
+
+  .v-selection-control__wrapper {
+    width: 18px;
+  }
+
+  .v-label {
+    font-size: 14px;
+    line-height: 21px;
+  }
+  .v-selection-control__input {
+    &::before {
+      border-radius: 0;
     }
   }
 }

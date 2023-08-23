@@ -16,6 +16,14 @@ import search from "assets/iconsets/icons/system/search.vue";
 import checkLine from "assets/iconsets/icons/system/check-line.vue";
 import rankingLine from "assets/iconsets/icons/system/ranking-line.vue";
 
+//vuetify
+import radioOff from "assets/iconsets/icons/vuetify/radio-off.vue";
+import radioOn from "assets/iconsets/icons/vuetify/radio-on.vue";
+import checkOn from "assets/iconsets/icons/vuetify/check-on.vue";
+import checkOff from "assets/iconsets/icons/vuetify/check-off.vue";
+import ratingOff from "assets/iconsets/icons/vuetify/rating-off.vue";
+import ratingOn from "assets/iconsets/icons/vuetify/rating-on.vue";
+
 const customSvgNameToComponent: any = {
   colorLogo,
   arrowDownSLine,
@@ -28,6 +36,12 @@ const customSvgNameToComponent: any = {
   search,
   checkLine,
   rankingLine,
+  ratingOff,
+  ratingOn,
+  checkOn,
+  checkOff,
+  radioOff,
+  radioOn,
 };
 
 const customSVGs: IconSet = {
