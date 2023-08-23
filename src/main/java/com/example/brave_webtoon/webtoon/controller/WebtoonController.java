@@ -39,12 +39,12 @@ public class WebtoonController {
             @Parameter(name="offset", description = "페이징 시작 index", required = false)
     })
     @ResponseBody
-    public Slice<WebtoonDto> getWebtoonRoleList(
+    public List<WebtoonDto> getWebtoonRoleList(
             @RequestParam(value="id") Long id,
             @RequestParam(value="pageSize") int pageSize,
             @RequestParam(value="offset", required = false, defaultValue="0") int offset
     ){
-        Slice<WebtoonDto> result = webtoonService.findAllWebtoonRoleList(id, pageSize, offset);
+        List<WebtoonDto> result = webtoonService.findAllWebtoonRoleList(id, pageSize, offset);
         return result;
     }
 

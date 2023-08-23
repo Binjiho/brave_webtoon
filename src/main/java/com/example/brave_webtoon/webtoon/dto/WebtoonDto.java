@@ -19,6 +19,8 @@ public class WebtoonDto {
     private String saveName;
     private String uploadPath;
     private List<WebtoonRoleEntity> webtoonRoleEntityList;
+    private boolean hasNext;
+    private int lastOffset;
 
     @QueryProjection
     public WebtoonDto(String title, String saveName, String uploadPath, List<WebtoonRoleEntity> webtoonRoleEntityList) {

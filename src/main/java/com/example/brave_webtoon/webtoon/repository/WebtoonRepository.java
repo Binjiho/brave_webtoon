@@ -42,7 +42,7 @@ public class WebtoonRepository {
      * @param webtoonId
      * @return
      */
-    public Slice<WebtoonDto> findAllRoleByWebtoonId(Long webtoonId, int pageSize, int offset) {
+    public List<WebtoonDto> findAllRoleByWebtoonId(Long webtoonId, int pageSize, int offset) {
         List<WebtoonDto> content = queryFactory
                 .select(
                         webtoonEntity.title,
@@ -84,13 +84,9 @@ public class WebtoonRepository {
                                 )
                         )
                 );
-//        List<WebtoonDto> content = new ArrayList<>();
-//        for (WebtoonDto dto: webtoonDtoList) {
-//            content.add(dto);
-//        }
         return checkLastPage(content,pageSize,offset);
     }
-    private Slice<WebtoonDto> checkLastPage(List<WebtoonDto> content, int pageSize, int offset) {
+    private List<WebtoonDto> checkLastPage(List<WebtoonDto> content, int pageSize, int offset) {
 
         boolean hasNext = false;
         Pageable pageable = PageRequest.of(offset,pageSize);
@@ -101,7 +97,19 @@ public class WebtoonRepository {
             content.get(0).getWebtoonRoleEntityList().remove(pageSize);
         }
 
-        return new SliceImpl<>(content, pageable, hasNext);
+        List<WebtoonDto> result = new ArrayList<>();
+        result.add(WebtoonDto.builder()
+                        .id(content.get(0).getId())
+                        .title(content.get(0).getTitle())
+                        .deleteYn(content.get(0).getDeleteYn())
+                        .saveName(content.get(0).getSaveName())
+                        .uploadPath(content.get(0).getUploadPath())
+                        .webtoonRoleEntityList(content.get(0).getWebtoonRoleEntityList())
+                        .hasNext(hasNext)
+                        .lastOffset(offset)
+                .build());
+        return result;
+//        return new List<WebtoonDto>(content, pageable, hasNext);
     }
 
     private BooleanExpression noOffsetBuilder(int offset) {
@@ -110,46 +118,5 @@ public class WebtoonRepository {
         }
         return webtoonRoleEntity.id.gt(offset);
     }
-
-//    public List<WebtoonDto> findAllRoleByWebtoonId(Long webtoonId) {
-//        return queryFactory
-//                .select(
-//                        webtoonEntity.title,
-//                        webtoonEntity.saveName,
-//                        webtoonEntity.uploadPath,
-//                        webtoonRoleEntity.id,
-//                        webtoonRoleEntity.webtoonEntity.id,
-//                        webtoonRoleEntity.title,
-//                        webtoonRoleEntity.role,
-//                        webtoonRoleEntity.deleteYn,
-//                        webtoonRoleEntity.saveName,
-//                        webtoonRoleEntity.uploadPath
-//                )
-//                .from(webtoonEntity)
-//                .leftJoin(webtoonEntity.webtoonRoleEntityList, webtoonRoleEntity)
-//                .where(webtoonEntity.id.eq(webtoonId))
-//                .offset(0)
-//                .limit(5)
-//                .transform(
-//                        groupBy(webtoonEntity.id).list(
-//                                Projections.constructor(WebtoonDto.class,
-//                                        webtoonEntity.title,
-//                                        webtoonEntity.saveName,
-//                                        webtoonEntity.uploadPath,
-//                                        list(
-//                                                Projections.constructor(WebtoonRoleListDto.class,
-//                                                        webtoonRoleEntity.id,
-//                                                        webtoonRoleEntity.webtoonEntity.id,
-//                                                        webtoonRoleEntity.title,
-//                                                        webtoonRoleEntity.role,
-//                                                        webtoonRoleEntity.deleteYn,
-//                                                        webtoonRoleEntity.saveName,
-//                                                        webtoonRoleEntity.uploadPath
-//                                                )
-//                                        )
-//                                )
-//                        )
-//                );
-//    }
 
 }

@@ -30,8 +30,8 @@ public class WebtoonService {
         return result;
     }
 
-    public Slice<WebtoonDto> findAllWebtoonRoleList(Long webtoonId, int pageSize, int offset){
-        Slice<WebtoonDto> result = webtoonRepository.findAllRoleByWebtoonId(webtoonId,pageSize,offset);
+    public List<WebtoonDto> findAllWebtoonRoleList(Long webtoonId, int pageSize, int offset){
+        List<WebtoonDto> result = webtoonRepository.findAllRoleByWebtoonId(webtoonId,pageSize,offset);
         return result;
     }
 
