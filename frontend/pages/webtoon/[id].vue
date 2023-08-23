@@ -19,7 +19,7 @@ export default {
           },
         })
         .then((response) => {
-          let result = response.data.content[0];
+          let result = response.data[0];
           this.webtoonTitle = result.title;
           this.webToonImg = result.uploadPath;
           this.characterList = result.webtoonRoleEntityList;
