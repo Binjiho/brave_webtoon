@@ -10,6 +10,7 @@ import com.example.brave_webtoon.webtoon.repository.impl.VoteRepositoryImpl;
 import com.example.brave_webtoon.webtoon.repository.impl.WebtoonRepositoryImpl;
 import com.example.brave_webtoon.webtoon.repository.impl.WebtoonRoleRepositoryImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -29,8 +30,8 @@ public class WebtoonService {
         return result;
     }
 
-    public List<WebtoonDto> findAllWebtoonRoleList(Long webtoonId){
-        List<WebtoonDto> result = webtoonRepository.findAllRoleByWebtoonId(webtoonId);
+    public Slice<WebtoonDto> findAllWebtoonRoleList(Long webtoonId, int pageSize, int offset){
+        Slice<WebtoonDto> result = webtoonRepository.findAllRoleByWebtoonId(webtoonId,pageSize,offset);
         return result;
     }
 
@@ -52,7 +53,7 @@ public class WebtoonService {
         //vote 저장
         VoteEntity voteEntity = VoteEntity.builder()
                 .webtoonEntity(WebtoonEntity.builder().id(voteDto.getWebtoonId()).build())
-                .webtoonRoleEntity(WebtoonRoleEntity.builder().id(voteDto.getWebtoonId()).build())
+                .webtoonRoleEntity(WebtoonRoleEntity.builder().id(voteDto.getWebtoonRoleId()).build())
                 .personName(voteDto.getPersonName())
                 .personUrl(voteDto.getPersonUrl())
                 .deleteYn(0)

@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,14 +31,20 @@ public class WebtoonController {
         return result;
     }
 
-    @GetMapping("/webtoonList/{id}")
+    @GetMapping("/webtoonRoleList")
     @Operation(summary = "웹툰 캐릭터 리스트 화면", description = "웹툰 캐릭터 리스트를 화면에 출력")
     @Parameters({
-            @Parameter(name="id", description = "webtoonId", required = true)
+            @Parameter(name="id", description = "webtoonId", required = true),
+            @Parameter(name="pageSize", description = "페이징 사이즈", required = true),
+            @Parameter(name="offset", description = "페이징 시작 index", required = false)
     })
     @ResponseBody
-    public List<WebtoonDto> getWebtoonRoleList(@PathVariable Long id){
-        List<WebtoonDto> result = webtoonService.findAllWebtoonRoleList(id);
+    public Slice<WebtoonDto> getWebtoonRoleList(
+            @RequestParam(value="id") Long id,
+            @RequestParam(value="pageSize") int pageSize,
+            @RequestParam(value="offset", required = false, defaultValue="0") int offset
+    ){
+        Slice<WebtoonDto> result = webtoonService.findAllWebtoonRoleList(id, pageSize, offset);
         return result;
     }
 
@@ -55,10 +62,10 @@ public class WebtoonController {
     @PostMapping("/webtoonVote")
     @Operation(summary = "웹툰 캐릭터 상세화면 투표하기", description = "웹툰 캐릭터중 한명과 연예인을 투표하기")
     @Parameters({
-            @Parameter(name="webtoonId", description = "webtoonId", required = true),
-            @Parameter(name="webtoonRoleId", description = "webtoonRoleId", required = true),
-            @Parameter(name="person_name", description = "personName", required = true),
-            @Parameter(name="person_url", description = "personUrl", required = true)
+            @Parameter(name="webtoonId", description="webtoonId", required = true),
+            @Parameter(name="webtoonRoleId", description="webtoonRoleId", required = true),
+            @Parameter(name="personName", description="인물이름", required = true),
+            @Parameter(name="personUrl", description="인물검색API URL결과값", required = true)
     })
     @ResponseBody
     public void postVoteWebtoonRole(@RequestBody VoteDto voteDto){
