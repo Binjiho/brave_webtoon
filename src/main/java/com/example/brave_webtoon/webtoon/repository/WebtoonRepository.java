@@ -13,6 +13,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.brave_webtoon.webtoon.entity.QWebtoonEntity.webtoonEntity;
@@ -83,7 +84,10 @@ public class WebtoonRepository {
                                 )
                         )
                 );
-//        return content;
+//        List<WebtoonDto> content = new ArrayList<>();
+//        for (WebtoonDto dto: webtoonDtoList) {
+//            content.add(dto);
+//        }
         return checkLastPage(content,pageSize,offset);
     }
     private Slice<WebtoonDto> checkLastPage(List<WebtoonDto> content, int pageSize, int offset) {
@@ -92,9 +96,9 @@ public class WebtoonRepository {
         Pageable pageable = PageRequest.of(offset,pageSize);
 
         // 조회한 결과 개수가 요청한 페이지 사이즈보다 크면 뒤에 더 있음, next = true
-        if (content.size() > pageSize) {
+        if (content.get(0).getWebtoonRoleEntityList().size() > pageSize) {
             hasNext = true;
-            content.remove(pageable.getPageSize());
+            content.get(0).getWebtoonRoleEntityList().remove(pageSize);
         }
 
         return new SliceImpl<>(content, pageable, hasNext);
