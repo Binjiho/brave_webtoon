@@ -50,6 +50,7 @@ public class WebtoonRepository {
                         webtoonRoleEntity.id,
                         webtoonRoleEntity.webtoonEntity.id,
                         webtoonRoleEntity.title,
+                        webtoonRoleEntity.name,
                         webtoonRoleEntity.role,
                         webtoonRoleEntity.deleteYn,
                         webtoonRoleEntity.uploadPath
@@ -71,7 +72,7 @@ public class WebtoonRepository {
                                                 Projections.constructor(WebtoonRoleListDto.class,
                                                         webtoonRoleEntity.id,
                                                         webtoonRoleEntity.webtoonEntity.id,
-                                                        webtoonRoleEntity.title,
+                                                        webtoonRoleEntity.name,
                                                         webtoonRoleEntity.role,
                                                         webtoonRoleEntity.deleteYn,
                                                         webtoonRoleEntity.uploadPath

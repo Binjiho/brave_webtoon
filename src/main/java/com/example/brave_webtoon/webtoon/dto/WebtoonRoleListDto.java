@@ -15,16 +15,16 @@ import java.util.List;
 public class WebtoonRoleListDto {
     private Long id;
     private Long webtoonId;
-    private String title;
+    private String name;
     private String role;
     private Integer deleteYn;
     private String uploadPath;
 
     @QueryProjection
-    public WebtoonRoleListDto(Long id, Long webtoonId, String title, String role, int deleteYn, String uploadPath) {
+    public WebtoonRoleListDto(Long id, Long webtoonId, String name, String role, int deleteYn, String uploadPath) {
         this.id = id;
         this.webtoonId = webtoonId;
-        this.title = title;
+        this.name = name;
         this.role = role;
         this.deleteYn = deleteYn;
         this.uploadPath = uploadPath;
