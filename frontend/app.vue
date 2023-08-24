@@ -1,9 +1,16 @@
-<script setup lang="ts"></script>
+<script lang="ts">
+export default {
+  mounted() {
+    this.$root.vtoast = this.$refs.vtoast;
+  },
+};
+</script>
 
 <template>
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+  <ui-snackbar-info ref="vtoast"></ui-snackbar-info>
 </template>
 
 <style lang="scss">

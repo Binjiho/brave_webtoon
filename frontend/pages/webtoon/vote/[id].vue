@@ -7,7 +7,7 @@ export default {
       webtoonTitle: "",
       characterName: "",
       characterImg: "",
-      voteList: [],
+      voteList: null,
       newCelebrity: null,
       activeCelebrity: "",
     };
@@ -25,7 +25,7 @@ export default {
       this.$api.get("/api/person/" + person).then((response) => {
         let result = response.data.items[0];
         this.newCelebrity = {
-          personUrl: result.link,
+          personUrl: result.thumbnail,
           personName: person,
         };
       });
@@ -33,7 +33,6 @@ export default {
     postVote() {
       if (typeof this.activeCelebrity === "boolean") {
         this.newVote();
-        console.log("?");
         return;
       }
 
@@ -41,20 +40,30 @@ export default {
         (v) => v.id === this.activeCelebrity
       );
 
-      this.$api.post("/api/webtoonVote", {
-        webtoonId: this.webtoonId,
-        webtoonRoleId: this.characterId,
-        personName: findCelebrity.personName,
-        personUrl: findCelebrity.personUrl,
-      });
+      this.$api
+        .post("/api/webtoonVote", {
+          webtoonId: this.webtoonId,
+          webtoonRoleId: this.characterId,
+          personName: findCelebrity.personName,
+          personUrl: findCelebrity.personUrl,
+        })
+        .then((response) => {
+          this.$root.vtoast.show({ message: "투표가 완료되었습니다" });
+          this.$router.replace("/webtoon/result/" + this.characterId);
+        });
     },
     newVote() {
-      this.$api.post("/api/webtoonVote", {
-        webtoonId: this.webtoonId,
-        webtoonRoleId: this.characterId,
-        personName: this.newCelebrity.personName,
-        personUrl: this.newCelebrity.personUrl,
-      });
+      this.$api
+        .post("/api/webtoonVote", {
+          webtoonId: this.webtoonId,
+          webtoonRoleId: this.characterId,
+          personName: this.newCelebrity.personName,
+          personUrl: this.newCelebrity.personUrl,
+        })
+        .then((response) => {
+          this.$root.vtoast.show({ message: "투표가 완료되었습니다" });
+          this.$router.replace("/webtoon/result/" + this.characterId);
+        });
     },
   },
   created() {
@@ -79,13 +88,17 @@ export default {
       {{ characterName }}
     </h3>
     <p class="webtoon-info__text">
-      아래 이미지에서 가장 잘 어울리는 사람 1명을<br />
-      투표해주세요
+      아래 이미지에서 가장 잘 어울리는 사람<br />
+      1명을 투표해주세요
     </p>
   </div>
   <hr class="divider" />
   <div class="celebrity-wrap">
-    <v-radio-group v-model="activeCelebrity">
+    <v-radio-group
+      v-model="activeCelebrity"
+      v-if="voteList?.[0].id"
+      hide-details
+    >
       <div class="celebrity-list">
         <webtoon-person-select
           v-for="item in voteList"
@@ -107,13 +120,10 @@ export default {
         v-if="newCelebrity"
       ></webtoon-person-select>
     </v-radio-group>
-    <v-btn
-      @click="postVote()"
-      class="bottom-big-btn"
-      :disabled="!activeCelebrity"
-      >투표완료</v-btn
-    >
   </div>
+  <v-btn @click="postVote()" class="bottom-big-btn" :disabled="!activeCelebrity"
+    >투표완료</v-btn
+  >
 </template>
 
 <style scoped lang="scss">
