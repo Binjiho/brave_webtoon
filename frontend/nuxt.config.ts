@@ -32,7 +32,11 @@ export default defineNuxtConfig({
         config.plugins.push(vuetify())
       );
     },
+    "@pinia/nuxt",
   ],
+  imports: {
+    dirs: ["./store"],
+  },
   vite: {
     plugins: [svgLoader()],
     css: {
