@@ -83,3 +83,30 @@
     top: 0;
   }
 }
+
+.block-tab {
+  height: 52px;
+
+  .v-slide-group__container {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding-left: 20px !important;
+    border-bottom: 1px solid #eee;
+  }
+
+  &.v-tabs--density-default {
+    --v-tabs-height: 52px;
+  }
+
+  .v-tab {
+    font-size: 14px;
+    color: #999 !important;
+    margin: 0 6px !important;
+    min-width: unset !important;
+
+    &.v-tab--selected {
+      color: #000 !important;
+    }
+  }
+}

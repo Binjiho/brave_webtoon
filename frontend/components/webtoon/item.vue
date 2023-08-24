@@ -10,6 +10,9 @@ export default {
     votePageUrl() {
       return "/webtoon/" + this.item.id;
     },
+    rankPageUrl() {
+      return `/webtoon/result?webtoon=${this.item.id}`;
+    },
   },
 };
 </script>
@@ -40,7 +43,9 @@ export default {
         >
       </li>
       <li>
-        <v-btn prepend-icon="custom:rankingLine">랭킹보기</v-btn>
+        <v-btn prepend-icon="custom:rankingLine" :to="rankPageUrl"
+          >랭킹보기</v-btn
+        >
       </li>
       <li>
         <v-btn prepend-icon="custom:shareLine">공유하기</v-btn>

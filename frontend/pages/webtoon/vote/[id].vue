@@ -65,7 +65,7 @@ export default {
         .then((response) => {
           this.$root.vtoast.show({ message: "투표가 완료되었습니다" });
           this.$router.replace(
-            `/webtoon/result?character=${this.characterInfo.id}`
+            `/webtoon/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`
           );
         });
     },
@@ -80,7 +80,7 @@ export default {
         .then((response) => {
           this.$root.vtoast.show({ message: "투표가 완료되었습니다" });
           this.$router.replace(
-            `/webtoon/result?character=${this.characterInfo.id}`
+            `/webtoon/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`
           );
         });
     },

@@ -3,11 +3,11 @@ export default {
   data() {
     return {
       characterInfo: {
-        id: this.$route.query.character,
+        id: Number(this.$route.query.character),
         name: "",
       },
       webtoonInfo: {
-        id: this.$route.query.webtoon,
+        id: Number(this.$route.query.webtoon),
         title: "",
       },
       mostVote: {},
@@ -25,8 +25,8 @@ export default {
     },
   },
   methods: {
-    getWebtoonResult() {
-      this.$api
+    async getWebtoonResult() {
+      const response = await this.$api
         .get("/api/webtoonVote/result/" + this.characterInfo.id)
         .then((response) => {
           let result = response.data[0];
@@ -50,13 +50,10 @@ export default {
           this.mostVote = first;
           this.restVoteList = rest;
           return result;
-        })
-        .then((response) => {
-          this.getWebtoonCharacter();
         });
     },
-    getWebtoonCharacter() {
-      this.$api
+    async getWebtoonCharacter() {
+      const response = await this.$api
         .get("/api/webtoonRoleList", {
           params: {
             id: this.webtoonInfo.id,
@@ -66,24 +63,60 @@ export default {
         })
         .then((response) => {
           let result = response.data[0];
+          let { title, uploadPath: img } = result;
+          this.webtoonInfo = { ...this.webtoonInfo, title, img };
           this.characterList = result.webtoonRoleEntityList;
+          return result;
         });
+
+      return response;
     },
     goVotePage(id) {
       this.$router.push("/webtoon/vote/" + id);
     },
+    changeCharacterId() {
+      this.$router.replace(
+        `/webtoon/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`
+      );
+      this.getWebtoonResult();
+    },
   },
   created() {
-    this.getWebtoonResult();
+    this.getWebtoonCharacter().then((response) => {
+      if (!this.characterInfo.id) {
+        this.characterInfo.id = response.webtoonRoleEntityList[0].id;
+      }
+      this.getWebtoonResult();
+    });
   },
 };
 </script>
 
 <template>
-  <ui-header-prev-title title="투표결과">
+  <ui-header-prev-title isTransparent title="랭킹보기">
     <VBtn class="share-btn"></VBtn>
   </ui-header-prev-title>
-  <div v-if="webtoonInfo.id"></div>
+  <div class="back-img"></div>
+  <div class="webtoon-info">
+    <webtoon-character class="webtoon-info__img" :img="webtoonInfo.img">
+    </webtoon-character>
+    <ui-label-play-type class="webtoon-info__label"> </ui-label-play-type>
+    <h3 class="webtoon-info__title">{{ webtoonInfo.title }}</h3>
+    <p class="webtoon-info__text">하단의 캐릭터를 선택하여<br />확인해주세요</p>
+  </div>
+  <!--1. start 캐릭터 리스트-->
+  <div>
+    <v-tabs
+      v-model="characterInfo.id"
+      class="block-tab"
+      @update:modelValue="changeCharacterId"
+    >
+      <v-tab v-for="item in characterList" :key="item.i" :value="item.id">
+        {{ item.name }}
+      </v-tab>
+    </v-tabs>
+  </div>
+  <!--1. end 캐릭터 리스트-->
   <!--2. start 가상캐스팅 투표 1위-->
   <div class="vote-result">
     <strong class="vote-result__percent">{{ mostVote.percent || 0 }}%</strong>
