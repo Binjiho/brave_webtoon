@@ -12,5 +12,7 @@
 <style scoped lang="scss">
 .v-container {
   min-height: calc(100vh - $header-height);
+  padding-top: $header-height + 20px !important;
+  padding-bottom: 100px !important;
 }
 </style>
