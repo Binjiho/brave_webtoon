@@ -49,9 +49,7 @@ export default {
   </div>
   <ul class="character-list">
     <li v-for="item in characterList" @click="goVotePage(item.id)">
-      <webtoon-character
-        :img="item.uploadPath + item.title + '.jpg'"
-      ></webtoon-character>
+      <webtoon-character :img="item.uploadPath"></webtoon-character>
       <p>{{ item.title }}</p>
     </li>
   </ul>

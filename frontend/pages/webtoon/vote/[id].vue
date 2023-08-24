@@ -2,11 +2,15 @@
 export default {
   data() {
     return {
-      characterId: this.$route.params.id,
-      webtoonId: "",
-      webtoonTitle: "",
-      characterName: "",
-      characterImg: "",
+      characterInfo: {
+        id: this.$route.params.id,
+        name: "",
+        img: "",
+      },
+      webtoonInfo: {
+        id: "",
+        title: "",
+      },
       voteList: null,
       newCelebrity: null,
       activeCelebrity: "",
@@ -14,12 +18,23 @@ export default {
   },
   methods: {
     getWebtoonCharacter() {
-      this.$api.get("/api/webtoonVote/" + this.characterId).then((response) => {
-        let result = response.data[0];
-        this.characterName = result.title;
-        this.webtoonId = result.webtoonId;
-        this.voteList = result.voteEntityList;
-      });
+      this.$api
+        .get("/api/webtoonVote/" + this.characterInfo.id)
+        .then((response) => {
+          let result = response.data[0];
+          this.characterInfo = {
+            ...this.characterInfo,
+            name: result.name,
+            img: result.uploadPath,
+          };
+
+          this.webtoonInfo = {
+            id: result.webtoonId,
+            title: result.title,
+          };
+
+          this.voteList = result.voteEntityList;
+        });
     },
     searchCelebrity(person) {
       this.$api.get("/api/person/" + person).then((response) => {
@@ -42,27 +57,31 @@ export default {
 
       this.$api
         .post("/api/webtoonVote", {
-          webtoonId: this.webtoonId,
-          webtoonRoleId: this.characterId,
+          webtoonId: this.webtoonInfo.id,
+          webtoonRoleId: this.characterInfo.id,
           personName: findCelebrity.personName,
           personUrl: findCelebrity.personUrl,
         })
         .then((response) => {
           this.$root.vtoast.show({ message: "투표가 완료되었습니다" });
-          this.$router.replace("/webtoon/result/" + this.characterId);
+          this.$router.replace(
+            `/webtoon/result?character=${this.characterInfo.id}`
+          );
         });
     },
     newVote() {
       this.$api
         .post("/api/webtoonVote", {
-          webtoonId: this.webtoonId,
-          webtoonRoleId: this.characterId,
+          webtoonId: this.webtoonInfo.id,
+          webtoonRoleId: this.characterInfo.id,
           personName: this.newCelebrity.personName,
           personUrl: this.newCelebrity.personUrl,
         })
         .then((response) => {
           this.$root.vtoast.show({ message: "투표가 완료되었습니다" });
-          this.$router.replace("/webtoon/result/" + this.characterId);
+          this.$router.replace(
+            `/webtoon/result?character=${this.characterInfo.id}`
+          );
         });
     },
   },
@@ -79,13 +98,13 @@ export default {
   <div class="webtoon-info">
     <webtoon-character
       class="webtoon-info__img"
-      :img="characterImg"
+      :img="characterInfo.img"
     ></webtoon-character>
     <span class="webtoon-info__title">
-      {{ webtoonTitle }}
+      {{ webtoonInfo.title }}
     </span>
     <h3 class="webtoon-info__character">
-      {{ characterName }}
+      {{ characterInfo.name }}
     </h3>
     <p class="webtoon-info__text">
       아래 이미지에서 가장 잘 어울리는 사람<br />
