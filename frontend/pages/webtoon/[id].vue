@@ -2,9 +2,11 @@
 export default {
   data() {
     return {
-      webtoonId: this.$route.params.id,
-      webtoonTitle: "",
-      webToonImg: "",
+      webtoonInfo: {
+        id: this.$route.params.id,
+        title: "",
+        img: "",
+      },
       characterList: [],
     };
   },
@@ -13,15 +15,20 @@ export default {
       this.$api
         .get("/api/webtoonRoleList", {
           params: {
-            id: this.webtoonId,
+            id: this.webtoonInfo.id,
             pageSize: 20,
             offset: 0,
           },
         })
         .then((response) => {
           let result = response.data[0];
-          this.webtoonTitle = result.title;
-          this.webToonImg = result.uploadPath;
+
+          this.webtoonInfo = {
+            ...this.webtoonInfo,
+            title: result.title,
+            img: result.uploadPath,
+          };
+
           this.characterList = result.webtoonRoleEntityList;
         });
     },
@@ -41,16 +48,16 @@ export default {
   </ui-header-prev-title>
   <div class="back-img"></div>
   <div class="webtoon-info">
-    <webtoon-character class="webtoon-info__img" :img="webToonImg">
+    <webtoon-character class="webtoon-info__img" :img="webtoonInfo.img">
     </webtoon-character>
     <ui-label-play-type class="webtoon-info__label"> </ui-label-play-type>
-    <h3 class="webtoon-info__title">{{ webtoonTitle }}</h3>
+    <h3 class="webtoon-info__title">{{ webtoonInfo.title }}</h3>
     <p class="webtoon-info__text">하단의 캐릭터를 선택하여<br />투표해주세요</p>
   </div>
   <ul class="character-list">
     <li v-for="item in characterList" @click="goVotePage(item.id)">
       <webtoon-character :img="item.uploadPath"></webtoon-character>
-      <p>{{ item.title }}</p>
+      <p>{{ item.name }}</p>
     </li>
   </ul>
 </template>
