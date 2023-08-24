@@ -33,6 +33,9 @@ public class WebtoonRoleEntity {
     @Column(name= "title", length = 50, nullable = false)
     private String title;
 
+    @Column(name= "name", length = 50, nullable = false)
+    private String name;
+
     @Column(name= "role", length = 50, nullable = false)
     private String role;
 
@@ -43,9 +46,6 @@ public class WebtoonRoleEntity {
     @Column(name = "hit" , columnDefinition = "tinyint(1)")
     @ColumnDefault("0")
     private int hit;
-
-    @Column(name="save_name", nullable = false)
-    private String saveName;
 
     @Column(name="upload_path", nullable = false)
     private String uploadPath;

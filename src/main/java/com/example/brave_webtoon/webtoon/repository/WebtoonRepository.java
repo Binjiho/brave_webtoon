@@ -46,14 +46,12 @@ public class WebtoonRepository {
         List<WebtoonDto> content = queryFactory
                 .select(
                         webtoonEntity.title,
-                        webtoonEntity.saveName,
                         webtoonEntity.uploadPath,
                         webtoonRoleEntity.id,
                         webtoonRoleEntity.webtoonEntity.id,
                         webtoonRoleEntity.title,
                         webtoonRoleEntity.role,
                         webtoonRoleEntity.deleteYn,
-                        webtoonRoleEntity.saveName,
                         webtoonRoleEntity.uploadPath
                 )
                 .from(webtoonEntity)
@@ -68,7 +66,6 @@ public class WebtoonRepository {
                         groupBy(webtoonEntity.id).list(
                                 Projections.constructor(WebtoonDto.class,
                                         webtoonEntity.title,
-                                        webtoonEntity.saveName,
                                         webtoonEntity.uploadPath,
                                         list(
                                                 Projections.constructor(WebtoonRoleListDto.class,
@@ -77,7 +74,6 @@ public class WebtoonRepository {
                                                         webtoonRoleEntity.title,
                                                         webtoonRoleEntity.role,
                                                         webtoonRoleEntity.deleteYn,
-                                                        webtoonRoleEntity.saveName,
                                                         webtoonRoleEntity.uploadPath
                                                 )
                                         )
@@ -102,7 +98,6 @@ public class WebtoonRepository {
                         .id(content.get(0).getId())
                         .title(content.get(0).getTitle())
                         .deleteYn(content.get(0).getDeleteYn())
-                        .saveName(content.get(0).getSaveName())
                         .uploadPath(content.get(0).getUploadPath())
                         .webtoonRoleEntityList(content.get(0).getWebtoonRoleEntityList())
                         .hasNext(hasNext)

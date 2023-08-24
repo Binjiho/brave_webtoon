@@ -29,29 +29,19 @@ public class WebtoonRoleRepository {
      */
     public List<WebtoonRoleDto> findByWebtoonRoleId(Long webtoonRoleId) {
         return queryFactory
-                .select(webtoonRoleEntity.id,
-                        webtoonRoleEntity.webtoonEntity.id,
-                        webtoonRoleEntity.title,
-                        webtoonRoleEntity.role,
-                        webtoonRoleEntity.deleteYn,
-                        webtoonRoleEntity.saveName,
-                        webtoonRoleEntity.uploadPath,
-                        voteEntity.id,
-                        voteEntity.personName,
-                        voteEntity.personUrl,
-                        voteEntity.deleteYn)
-                .from(webtoonRoleEntity)
+                .selectFrom(webtoonRoleEntity)
                 .leftJoin(webtoonRoleEntity.voteEntityList, voteEntity)
                 .where(webtoonRoleEntity.id.eq(webtoonRoleId), webtoonRoleEntity.deleteYn.lt(1))
+                .groupBy(webtoonRoleEntity.id, voteEntity.personName)
                 .transform(
                         groupBy(webtoonRoleEntity.id).list(
                                 Projections.constructor(WebtoonRoleDto.class,
                                         webtoonRoleEntity.id,
                                         webtoonRoleEntity.webtoonEntity.id,
                                         webtoonRoleEntity.title,
+                                        webtoonRoleEntity.name,
                                         webtoonRoleEntity.role,
                                         webtoonRoleEntity.deleteYn,
-                                        webtoonRoleEntity.saveName,
                                         webtoonRoleEntity.uploadPath,
                                         list(
                                                 Projections.constructor(VoteDto.class,
@@ -79,7 +69,6 @@ public class WebtoonRoleRepository {
                                     webtoonRoleEntity.id,
                                     webtoonRoleEntity.webtoonEntity.id,
                                     webtoonRoleEntity.title,
-                                    webtoonRoleEntity.saveName,
                                     webtoonRoleEntity.uploadPath,
                                     list(
                                             Projections.constructor(

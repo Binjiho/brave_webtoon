@@ -16,16 +16,14 @@ public class WebtoonDto {
     private Long id;
     private String title;
     private Integer deleteYn;
-    private String saveName;
     private String uploadPath;
     private List<WebtoonRoleEntity> webtoonRoleEntityList;
     private boolean hasNext;
     private int lastOffset;
 
     @QueryProjection
-    public WebtoonDto(String title, String saveName, String uploadPath, List<WebtoonRoleEntity> webtoonRoleEntityList) {
+    public WebtoonDto(String title, String uploadPath, List<WebtoonRoleEntity> webtoonRoleEntityList) {
         this.title = title;
-        this.saveName = saveName;
         this.uploadPath = uploadPath;
         this.webtoonRoleEntityList = webtoonRoleEntityList;
     }
@@ -36,8 +34,7 @@ public class WebtoonDto {
                 .id(webtoonEntity.getId())
                 .title(webtoonEntity.getTitle())
                 .deleteYn(webtoonEntity.getDeleteYn())
-                .saveName(webtoonEntity.getSaveName())
-                .uploadPath(webtoonEntity.getSaveName())
+                .uploadPath(webtoonEntity.getUploadPath())
                 .build();
     }
 }

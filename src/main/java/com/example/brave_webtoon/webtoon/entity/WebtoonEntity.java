@@ -35,9 +35,6 @@ public class WebtoonEntity {
     @ColumnDefault("0")
     private int hit;
 
-    @Column(name="save_name", nullable = false)
-    private String saveName;
-
     @Column(name="upload_path", nullable = false)
     private String uploadPath;
 
