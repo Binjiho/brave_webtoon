@@ -31,9 +31,9 @@ public class WebtoonRepository {
                 .fetchAll().fetch();
     }
 
-    public List<WebtoonEntity> findByTitle(String title) {
+    public List<WebtoonEntity> findMainWebtoonList(String title) {
         return queryFactory.selectFrom(webtoonEntity)
-                .where(webtoonEntity.title.eq(title))
+                .where(titleBuilder(title))
                 .fetch();
     }
 
@@ -105,9 +105,14 @@ public class WebtoonRepository {
                         .lastOffset(offset)
                 .build());
         return result;
-//        return new List<WebtoonDto>(content, pageable, hasNext);
     }
 
+    private BooleanExpression titleBuilder(String title) {
+        if (title == null) {
+            return null; // BooleanExpression 자리에 null이 반환되면 조건문에서 자동으로 제거된다
+        }
+        return webtoonEntity.title.contains(title);
+    }
     private BooleanExpression noOffsetBuilder(int offset) {
         if (offset == 0) {
             return null; // BooleanExpression 자리에 null이 반환되면 조건문에서 자동으로 제거된다

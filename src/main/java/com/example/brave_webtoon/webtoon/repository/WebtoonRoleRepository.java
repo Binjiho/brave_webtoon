@@ -69,6 +69,7 @@ public class WebtoonRoleRepository {
                                     webtoonRoleEntity.id,
                                     webtoonRoleEntity.webtoonEntity.id,
                                     webtoonRoleEntity.title,
+                                    webtoonRoleEntity.name,
                                     webtoonRoleEntity.uploadPath,
                                     list(
                                             Projections.constructor(

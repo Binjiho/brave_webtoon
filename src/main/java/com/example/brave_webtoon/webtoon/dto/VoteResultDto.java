@@ -13,7 +13,7 @@ public class VoteResultDto {
     private Long id;
     private Long webtoonId;
     private String title;
-//    private String saveName;
+    private String name;
     private String uploadPath;
     private List<VoteResultListDto> voteResultListDtoList;
 }

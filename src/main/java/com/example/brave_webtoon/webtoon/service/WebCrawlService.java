@@ -50,6 +50,7 @@ public class WebCrawlService {
         Elements webtoonNm = doc.select("div.view_head_font");
         Elements state = doc.select("div.view_head_font > span");
         String webtoonNmText = webtoonNm.text().trim();
+        webtoonNmText = webtoonNmText.replaceAll(" ","");
         String stateText = state.text().trim();
 
         String title = webtoonNmText.replaceAll(stateText,"");
