@@ -30,8 +30,8 @@ public class WebtoonService {
         return result;
     }
 
-    public List<WebtoonEntity> findMainWebtoonList(String title){
-        List<WebtoonEntity> result = webtoonRepository.findMainWebtoonList(title);
+    public List<MainDto> findMainWebtoonList(String title){
+        List<MainDto> result = webtoonRepository.findMainWebtoonList(title);
         return result;
     }
 

@@ -34,9 +34,8 @@ public class WebtoonController {
     @GetMapping("/webtoonList")
     @Operation(summary = "웹툰 리스트 화면", description = "웹툰 리스트를 화면에 출력")
     @ResponseBody
-    public List<WebtoonDto> getWebtoonList(@RequestParam(value="title", required = false) String title){
-        List<WebtoonEntity> list = webtoonService.findMainWebtoonList(title);
-        List<WebtoonDto> result = list.stream().map(WebtoonDto::toDto).collect(Collectors.toList());
+    public List<MainDto> getWebtoonList(@RequestParam(value="title", required = false) String title){
+        List<MainDto> result = webtoonService.findMainWebtoonList(title);
         return result;
     }
 
