@@ -1,6 +1,6 @@
 package com.example.brave_webtoon.webtoon.service;
 
-import com.example.brave_webtoon.base.util.S3Uploader;
+import com.example.brave_webtoon.base.util.S3Util;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
 import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
 import com.example.brave_webtoon.webtoon.repository.impl.WebtoonRepositoryImpl;
@@ -10,11 +10,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.io.*;
 import java.net.URL;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,12 +24,24 @@ public class WebCrawlService {
 
     private final WebtoonRepositoryImpl webtoonRepositoryImpl;
     private final WebtoonRoleRepositoryImpl webtoonRoleRepositoryImpl;
-    private final S3Uploader s3Uploader;
+    private final S3Util s3Util;
 
     static String folderDir = "C:\\dev\\brave";
     static String addUrl = "https://m.chuing.net/";
-    static Long webtoonId = 0L;
+    static Long webtoonId = 1L;
 
+    /**
+     *
+     * @param targetUrl
+     * @var
+     * title = 웹툰제목
+     * state = 연재중,완결
+     * uploadedTitleImageUrl = s3에 업로드된 타이틀 이미지 URL
+     * role = 웹툰 캐릭터 역할 주연,조연,특별출연
+     * name = 웹툰 캐릭터 이름
+     * uploadedRoleImageUrl = s3에 업로드된 웹툰 캐릭터 이미지 URL
+     * @throws IOException
+     */
     @Transactional
     public void crawl(String targetUrl) throws IOException {
 
@@ -35,33 +49,35 @@ public class WebCrawlService {
 
         Elements webtoonNm = doc.select("div.view_head_font");
         Elements state = doc.select("div.view_head_font > span");
-        System.out.println(state);
         String webtoonNmText = webtoonNm.text().trim();
         String stateText = state.text().trim();
-        System.out.println(stateText);
 
         String title = webtoonNmText.replaceAll(stateText,"");
         System.out.println(title);
+        System.out.println(stateText);
 
         Elements titleImg = doc.select("div.swiper-wrapper > div > div > div > img[src]");
         String titleImgSrc = titleImg.attr("src").trim();
 
-        try {
-                saveWebtoonToLocal(title,titleImgSrc);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         Optional<WebtoonEntity> webtoonEntityOptional = webtoonRepositoryImpl.findByTitle(title);
-
-
         if(webtoonEntityOptional.isPresent()){
             webtoonId = webtoonEntityOptional.get().getId();
         }else{
-            webtoonId = webtoonRepositoryImpl.save(WebtoonEntity
+            String uploadedTitleImageUrl="";
+            try {
+                //image generate
+                File titleFile = saveWebtoonToLocal(title,titleImgSrc);
+                //image save to S3
+                uploadedTitleImageUrl = s3Util.upload(titleFile,"webtoon"+"/"+webtoonId);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+            //webtoon DB Insert
+            webtoonId=webtoonRepositoryImpl.save(WebtoonEntity
                     .builder()
                     .title(title)
-                    .saveName(title)
-                    .uploadPath(folderDir+"\\"+title+"\\")
+                    .uploadPath(uploadedTitleImageUrl)
                     .deleteYn(0)
                     .build()).getId();
         }
@@ -86,19 +102,24 @@ public class WebCrawlService {
             String imgSrc = img.attr("src").trim();
             System.out.println(imgSrc);
 
+            String uploadedRoleImageUrl="";
             try {
-                saveRoleToLocal(title,nameText,imgSrc);
+                //image generate
+                File roleFile = saveRoleToLocal(title,nameText,imgSrc);
+                //image save to S3
+                uploadedRoleImageUrl = s3Util.upload(roleFile,"webtoon"+"/"+webtoonId);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
+            //webtoonRole DB Insert
             webtoonRoleRepositoryImpl.save(WebtoonRoleEntity
                     .builder()
                     .webtoonEntity(WebtoonEntity.builder().id(webtoonId).build())
-                    .title(nameText)
+                    .title(title)
+                    .name(nameText)
                     .role(roleText)
-                    .saveName(nameText)
-                    .uploadPath(folderDir+"\\"+title+"\\")
+                    .uploadPath(uploadedRoleImageUrl)
                     .deleteYn(0)
                     .build());
 
@@ -107,28 +128,7 @@ public class WebCrawlService {
     }
 
 
-    public void saveWebtoonToLocal(String title, String imgSrc) throws Exception {
-
-//        s3Uploader.upload(image,"images");
-        URL url = new URL(addUrl+imgSrc);
-
-        BufferedInputStream bis = new BufferedInputStream(url.openStream());
-        File folder = new File(folderDir, title);
-        if(!folder.exists()) {
-            folder.mkdirs();
-        }
-
-        File file = new File(folder, title+".jpg");
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-
-        int b = 0;
-        while((b = bis.read()) != -1) {
-            bos.write(b);
-        }
-        bos.close();
-    }
-
-    static void saveRoleToLocal(String title, String roleNm, String imgSrc) throws Exception {
+    private File saveWebtoonToLocal(String title, String imgSrc) throws Exception {
 
         URL url = new URL(addUrl+imgSrc);
 
@@ -138,13 +138,57 @@ public class WebCrawlService {
             folder.mkdirs();
         }
 
-        File file = new File(folder, roleNm+".jpg");
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+        String saveTitleName = generateSaveFilename(title);
+        File titleFile = new File(folder, saveTitleName);
+
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(titleFile));
 
         int b = 0;
         while((b = bis.read()) != -1) {
             bos.write(b);
         }
         bos.close();
+
+        return titleFile;
     }
+
+    private File saveRoleToLocal(String title, String roleNm, String imgSrc) throws Exception {
+
+        URL url = new URL(addUrl+imgSrc);
+
+        BufferedInputStream bis = new BufferedInputStream(url.openStream());
+        File folder = new File(folderDir, title);
+        if(!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        String saveRoleName = generateSaveFilename(title);
+        File roleFile = new File(folder, saveRoleName);
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(roleFile));
+
+        int b = 0;
+        while((b = bis.read()) != -1) {
+            bos.write(b);
+        }
+        bos.close();
+
+        return roleFile;
+    }
+
+    /**
+     * 저장 파일명 생성
+     * @param filename 원본 파일명
+     * @return 디스크에 저장할 파일명
+     */
+    private String generateSaveFilename(final String filename) {
+        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        String extension = "";
+        if (filename.contains(".")){
+            extension=StringUtils.getFilenameExtension(filename);
+        }else{
+            extension="jpg";
+        }
+        return uuid + "." + extension;
+    }
+
 }
