@@ -1,16 +1,31 @@
 .header {
   position: fixed;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   top: 0;
   width: 100%;
   z-index: 10;
+  background: #fff;
+  max-width: $max-layout;
+  transition: background 0.2s;
 
   &.underline {
     border-bottom: 1px solid #f1f1f1;
   }
 
+  &.transparent {
+    color: #fff;
+    background: transparent;
+  }
+
+  &.is-scroll {
+    background: #fff;
+    color: #000;
+    border-bottom: 1px solid #f1f1f1;
+  }
+
   &__inner {
-    height: 60px;
+    height: $header-height;
     display: flex;
     align-items: center;
     position: relative;
@@ -28,11 +43,6 @@
   &__right-area {
     position: absolute;
     right: 20px;
-  }
-
-  &.transparent {
-    color: #fff;
-    background: transparent;
   }
 }
 

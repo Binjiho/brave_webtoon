@@ -1,8 +1,5 @@
 <script lang="ts">
-import router from "#app/plugins/router";
-
 export default {
-  methods: { router },
   props: {
     isTransparent: {
       type: Boolean,
@@ -17,13 +14,28 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      windowScrollTop: 0,
+    };
+  },
+  methods: {
+    onScroll(e) {
+      this.windowScrollTop = e.target.scrollingElement.scrollTop;
+    },
+  },
 };
 </script>
 
 <template>
   <header
     class="header"
-    :class="{ transparent: isTransparent, underline: isUnderLine }"
+    :class="{
+      transparent: isTransparent,
+      underline: isUnderLine,
+      'is-scroll': windowScrollTop > 50,
+    }"
+    v-scroll="onScroll"
   >
     <VContainer class="header__inner">
       <div class="header__left-area">

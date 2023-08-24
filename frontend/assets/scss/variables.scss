@@ -1,6 +1,10 @@
 $min-layout: 375px;
 $max-layout: 1024px;
 
+$main-color: #9747fe;
+
+$header-height: 60px;
+
 @mixin maskIcon($root, $size, $color: currentColor) {
   -webkit-mask-image: url($root);
   mask-image: url($root);

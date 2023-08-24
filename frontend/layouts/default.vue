@@ -1,5 +1,5 @@
 <template>
-  <VApp>
+  <VApp id="scroll-target">
     <slot name="header"></slot>
     <VMain>
       <VContainer>
@@ -9,8 +9,8 @@
   </VApp>
 </template>
 
-<style scoped>
-.v-main {
-  padding-top: 60px;
+<style scoped lang="scss">
+.v-container {
+  min-height: calc(100vh - $header-height);
 }
 </style>
