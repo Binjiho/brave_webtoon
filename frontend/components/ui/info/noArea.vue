@@ -20,7 +20,7 @@ export default {
 <template>
   <div class="no-area" :style="{ height: height + 'px' }">
     <v-icon icon="custom:infoLine"></v-icon>
-    <p v-html="message"></p>
+    <p v-text="message"></p>
     <v-btn v-if="btnText" @click="$emit('btn-click')">{{ btnText }}</v-btn>
   </div>
 </template>
