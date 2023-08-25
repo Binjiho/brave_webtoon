@@ -15,6 +15,7 @@ import shareLine from "assets/iconsets/icons/system/share-line.vue";
 import search from "assets/iconsets/icons/system/search.vue";
 import checkLine from "assets/iconsets/icons/system/check-line.vue";
 import rankingLine from "assets/iconsets/icons/system/ranking-line.vue";
+import personFill from "assets/iconsets/icons/system/person-fill.vue";
 
 //vuetify
 import radioOff from "assets/iconsets/icons/vuetify/radio-off.vue";
@@ -25,6 +26,7 @@ import ratingOff from "assets/iconsets/icons/vuetify/rating-off.vue";
 import ratingOn from "assets/iconsets/icons/vuetify/rating-on.vue";
 
 const customSvgNameToComponent: any = {
+  personFill,
   colorLogo,
   arrowDownSLine,
   arrowLeftSLine,

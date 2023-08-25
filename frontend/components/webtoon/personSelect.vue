@@ -17,11 +17,8 @@ export default {
       trueIcon="custom:checkOn"
       falseIcon="custom:checkOff"
     ></v-radio>
-    <img
-      :src="item.personUrl"
-      :alt="item.personName"
-      class="person-select__img"
-    />
+    <img :src="item.personUrl" class="person-select__img" />
+    <v-icon icon="custom:personFill" class="person-select__icon"></v-icon>
     <div class="person-select__name">
       <p>{{ item.personName }}</p>
     </div>
@@ -52,6 +49,16 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  &__icon {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    z-index: -1;
+    color: #999;
   }
 
   &__name {

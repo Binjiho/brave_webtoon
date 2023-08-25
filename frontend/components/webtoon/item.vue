@@ -11,7 +11,7 @@ export default {
       return "/webtoon/" + this.item.id;
     },
     rankPageUrl() {
-      return `/webtoon/result?webtoon=${this.item.id}`;
+      return `/webtoon/vote/result?webtoon=${this.item.id}`;
     },
   },
 };

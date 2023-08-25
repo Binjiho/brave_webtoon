@@ -65,7 +65,7 @@ export default {
         .then((response) => {
           this.$root.vtoast.show({ message: "투표가 완료되었습니다" });
           this.$router.replace(
-            `/webtoon/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`
+            `/webtoon/vote/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`
           );
         });
     },
@@ -80,7 +80,7 @@ export default {
         .then((response) => {
           this.$root.vtoast.show({ message: "투표가 완료되었습니다" });
           this.$router.replace(
-            `/webtoon/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`
+            `/webtoon/vote/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`
           );
         });
     },
@@ -92,9 +92,7 @@ export default {
 </script>
 
 <template>
-  <ui-header-prev-title title="투표하기">
-    <VBtn class="share-btn"></VBtn>
-  </ui-header-prev-title>
+  <ui-header-share-title title="투표하기"></ui-header-share-title>
   <div class="webtoon-info">
     <webtoon-character
       class="webtoon-info__img"
@@ -126,7 +124,10 @@ export default {
       </div>
     </v-radio-group>
     <div class="celebrity-search">
-      <p class="celebrity-search__title">찾는 연예인이 없다면?</p>
+      <p class="celebrity-search__title" v-if="voteList?.[0].id">
+        찾는 연예인이 없다면?
+      </p>
+      <p class="celebrity-search__title" v-else>연예인 이름을 검색해주세요</p>
       <ui-input-search
         placeholder="연예인 이름 입력"
         @search="searchCelebrity"

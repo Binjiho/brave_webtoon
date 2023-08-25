@@ -10,7 +10,9 @@ export default {
         id: Number(this.$route.query.webtoon),
         title: "",
       },
-      mostVote: {},
+      mostVote: {
+        cnt: 0,
+      },
       restVoteList: [],
       isAllVote: false,
       characterList: [],
@@ -57,7 +59,7 @@ export default {
         .get("/api/webtoonRoleList", {
           params: {
             id: this.webtoonInfo.id,
-            pageSize: 20,
+            pageSize: 100,
             offset: 0,
           },
         })
@@ -76,7 +78,7 @@ export default {
     },
     changeCharacterId() {
       this.$router.replace(
-        `/webtoon/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`
+        `/webtoon/vote/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`
       );
       this.getWebtoonResult();
     },
@@ -93,10 +95,14 @@ export default {
 </script>
 
 <template>
-  <ui-header-prev-title isTransparent title="랭킹보기">
-    <VBtn class="share-btn"></VBtn>
-  </ui-header-prev-title>
-  <div class="back-img"></div>
+  <ui-header-share-title isTransparent title="랭킹보기">
+  </ui-header-share-title>
+  <div class="back-bg">
+    <div
+      class="back-bg__img"
+      :style="{ 'background-image': `url(${webtoonInfo.img})` }"
+    ></div>
+  </div>
   <div class="webtoon-info">
     <webtoon-character class="webtoon-info__img" :img="webtoonInfo.img">
     </webtoon-character>
@@ -118,7 +124,7 @@ export default {
   </div>
   <!--1. end 캐릭터 리스트-->
   <!--2. start 가상캐스팅 투표 1위-->
-  <div class="vote-result">
+  <div class="vote-result" v-if="mostVote.cnt">
     <strong class="vote-result__percent">{{ mostVote.percent || 0 }}%</strong>
     <p class="vote-result__text">
       <b>{{ this.webtoonInfo.title }}</b> 가상캐스팅 투표 1위
@@ -160,7 +166,7 @@ export default {
       class="all-vote-btn"
       height="14"
       @click="isAllVote = !isAllVote"
-      v-if="votePagingList.length"
+      v-if="restVoteList.length > 4"
       >전체 순위 {{ isAllVote ? "닫기" : "확인하기" }}
       <v-icon
         :icon="isAllVote ? 'custom:arrowUpSLine' : 'custom:arrowDownSLine'"
@@ -169,7 +175,15 @@ export default {
     </v-btn>
   </div>
   <!--2. end 가상캐스팅 투표 1위-->
-  <!--3. start 다른 캐릭터 투표-->
+  <!--3. start 가상캐스팅 투표 없음-->
+  <ui-info-no-area
+    v-else
+    message="투표 내용이 없습니다"
+    btnText="투표하러 가기"
+    @btn-click="goVotePage(characterInfo.id)"
+  ></ui-info-no-area>
+  <!--3. end 가상캐스팅 투표 없음-->
+  <!--4. start 다른 캐릭터 투표-->
   <div class="character-vote">
     <p class="character-vote__title">
       ‘{{ webtoonInfo.title }}’의<br />다른 캐릭터를 투표해보세요
@@ -181,8 +195,9 @@ export default {
       </li>
     </ul>
   </div>
+  <!--4. end 다른 캐릭터 투표-->
 </template>
 
 <style scoped lang="scss">
-@import "assets/scss/page/webtoon/result";
+@import "@/assets/scss/page/webtoon/vote/result";
 </style>

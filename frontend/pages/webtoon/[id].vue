@@ -16,7 +16,7 @@ export default {
         .get("/api/webtoonRoleList", {
           params: {
             id: this.webtoonInfo.id,
-            pageSize: 20,
+            pageSize: 100,
             offset: 0,
           },
         })
@@ -43,10 +43,16 @@ export default {
 </script>
 
 <template>
-  <ui-header-prev-title isTransparent title="캐릭터 선택">
-    <VBtn class="share-btn"></VBtn>
-  </ui-header-prev-title>
-  <div class="back-img"></div>
+  <ui-header-share-title
+    title="캐릭터 선택"
+    isTransparent
+  ></ui-header-share-title>
+  <div class="back-bg">
+    <div
+      class="back-bg__img"
+      :style="{ 'background-image': `url(${webtoonInfo.img})` }"
+    ></div>
+  </div>
   <div class="webtoon-info">
     <webtoon-character class="webtoon-info__img" :img="webtoonInfo.img">
     </webtoon-character>
