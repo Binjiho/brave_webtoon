@@ -3,3 +3,9 @@ ul {
     list-style: none;
   }
 }
+
+button,
+input,
+a {
+  letter-spacing: -0.002em !important;
+}
