@@ -33,16 +33,5 @@ public class WebtoonRoleDto {
         this.uploadPath = uploadPath;
         this.voteEntityList = voteEntityList;
     }
-
-//    public static WebtoonRoleDto toDto(final WebtoonRoleEntity webtoonRoleEntity){
-//        return WebtoonRoleDto
-//                .builder()
-//                .id(webtoonRoleEntity.getId())
-//                .webtoonId(webtoonRoleEntity.getWebtoonEntity().getId())
-//                .title(webtoonRoleEntity.getTitle())
-//                .role(webtoonRoleEntity.getRole())
-//                .deleteYn(webtoonRoleEntity.getDeleteYn())
-//                .uploadPath(webtoonRoleEntity.getUploadPath())
-//                .build();
-//    }
+    
 }

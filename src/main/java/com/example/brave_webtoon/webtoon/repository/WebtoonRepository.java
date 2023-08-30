@@ -1,7 +1,6 @@
 package com.example.brave_webtoon.webtoon.repository;
 
-import com.example.brave_webtoon.webtoon.dto.WebtoonDto;
-import com.example.brave_webtoon.webtoon.dto.WebtoonRoleListDto;
+import com.example.brave_webtoon.webtoon.dto.*;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -9,13 +8,12 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.brave_webtoon.webtoon.entity.QVoteEntity.voteEntity;
 import static com.example.brave_webtoon.webtoon.entity.QWebtoonEntity.webtoonEntity;
 import static com.example.brave_webtoon.webtoon.entity.QWebtoonRoleEntity.webtoonRoleEntity;
 import static com.querydsl.core.group.GroupBy.groupBy;
@@ -31,10 +29,63 @@ public class WebtoonRepository {
                 .fetchAll().fetch();
     }
 
-    public List<WebtoonEntity> findMainWebtoonList(String title) {
-        return queryFactory.selectFrom(webtoonEntity)
-                .where(titleBuilder(title))
-                .fetch();
+    /**
+     SELECT
+         wr.title,
+         wr.name,
+         wr.role,
+         wr.upload_path,
+         aa.webtoon_role_id,
+         aa.person_name,
+         aa.person_url
+     FROM
+        webtoon_role wr
+     INNER JOIN
+     (
+         SELECT
+             wv.webtoon_id,
+             wv.webtoon_role_id,
+             wv.person_name,
+             wv.person_url,
+             COUNT(wv.person_name) AS cnt
+         FROM
+            webtoon_vote wv
+         WHERE
+            wv.webtoon_id = 1
+         GROUP BY wv.person_name
+         ORDER BY cnt DESC
+     ) aa
+        ON (wr.id = aa.webtoon_role_id)
+     WHERE
+        wr.delete_yn < 1
+     GROUP BY aa.webtoon_role_id
+     */
+    public List<MainDto> findMainWebtoonList(String title) {
+        return queryFactory.select(
+                        webtoonRoleEntity.title,
+                        webtoonRoleEntity.name,
+                        webtoonRoleEntity.role,
+                        webtoonRoleEntity.uploadPath
+                )
+                .from(webtoonRoleEntity)
+                .leftJoin(webtoonRoleEntity.voteEntityList, voteEntity)
+                .where(webtoonRoleEntity.deleteYn.lt(1),titleBuilder(title))
+                .groupBy(webtoonRoleEntity.id, voteEntity.personName)
+                .orderBy(voteEntity.personName.count().desc())
+                .transform(groupBy(webtoonRoleEntity.webtoonEntity.id).list(
+                                Projections.constructor(
+                                        MainDto.class,
+                                        webtoonRoleEntity.webtoonEntity.id.as("webtoonId"),
+                                        webtoonRoleEntity.title,
+                                        webtoonRoleEntity.name,
+                                        webtoonRoleEntity.role,
+                                        webtoonRoleEntity.uploadPath,
+                                        voteEntity.personName.count().as("cnt"),
+                                        voteEntity.personName,
+                                        voteEntity.personUrl
+                                )
+                        )
+                );
     }
 
     /**
@@ -111,7 +162,7 @@ public class WebtoonRepository {
         if (title == null) {
             return null; // BooleanExpression 자리에 null이 반환되면 조건문에서 자동으로 제거된다
         }
-        return webtoonEntity.title.contains(title);
+        return webtoonRoleEntity.title.contains(title);
     }
     private BooleanExpression noOffsetBuilder(int offset) {
         if (offset == 0) {
