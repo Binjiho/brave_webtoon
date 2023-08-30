@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -34,8 +36,8 @@ public class WebtoonService {
     public List<MainDto> findMainWebtoonList(String title){
         List<MainDto> result = new ArrayList<>();
         List<WebtoonEntity> list = webtoonRepository.findWebtoonIdList(title);
-        list.stream().filter(Objects::nonNull).forEach(obj-> result.add(getWebtoonDto(obj.getId())));
-//        List<MainDto> result = webtoonRepository.findWebtoonListWithVote(title);
+        list.stream().forEach(obj-> result.add(getWebtoonDto(obj.getId())));
+//        result.removeIf(Objects::isNull); //투표가 없어도 웹툰리스트를 불러와야함
         return result;
     }
 

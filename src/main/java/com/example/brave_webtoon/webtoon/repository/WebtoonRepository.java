@@ -82,7 +82,7 @@ public class WebtoonRepository {
                         )
                 )
                 .from(webtoonRoleEntity)
-                .innerJoin(webtoonRoleEntity.voteEntityList, voteEntity)
+                .leftJoin(webtoonRoleEntity.voteEntityList, voteEntity)
                 .where(webtoonRoleEntity.deleteYn.lt(1),webtoonRoleEntity.webtoonEntity.id.eq(id))
                 .groupBy(webtoonRoleEntity.id, voteEntity.personName)
                 .orderBy(voteEntity.personName.count().desc())
