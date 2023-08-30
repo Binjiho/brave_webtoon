@@ -10,11 +10,12 @@ import com.example.brave_webtoon.webtoon.repository.impl.VoteRepositoryImpl;
 import com.example.brave_webtoon.webtoon.repository.impl.WebtoonRepositoryImpl;
 import com.example.brave_webtoon.webtoon.repository.impl.WebtoonRoleRepositoryImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
@@ -31,7 +32,19 @@ public class WebtoonService {
     }
 
     public List<MainDto> findMainWebtoonList(String title){
-        List<MainDto> result = webtoonRepository.findMainWebtoonList(title);
+        List<MainDto> result = new ArrayList<>();
+        List<WebtoonEntity> list = webtoonRepository.findWebtoonIdList(title);
+        list.stream().filter(Objects::nonNull).forEach(obj-> result.add(getWebtoonDto(obj.getId())));
+//        List<MainDto> result = webtoonRepository.findWebtoonListWithVote(title);
+        return result;
+    }
+
+    public MainDto getWebtoonDto(Long id){
+        MainDto result = null;
+        List<MainDto> list = webtoonRepository.findWebtoonListWithVote(id);
+        if (!list.isEmpty()){
+            result = list.get(0);
+        }
         return result;
     }
 

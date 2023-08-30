@@ -2,6 +2,7 @@ package com.example.brave_webtoon.webtoon.repository;
 
 import com.example.brave_webtoon.webtoon.dto.*;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -60,32 +61,33 @@ public class WebtoonRepository {
         wr.delete_yn < 1
      GROUP BY aa.webtoon_role_id
      */
-    public List<MainDto> findMainWebtoonList(String title) {
+    public List<WebtoonEntity> findWebtoonIdList(String title) {
+        return queryFactory.selectFrom(webtoonEntity)
+                .where(webtoonEntity.deleteYn.lt(1),titleBuilder(title))
+                .fetch();
+    }
+
+    public List<MainDto> findWebtoonListWithVote(Long id) {
         return queryFactory.select(
-                        webtoonRoleEntity.title,
-                        webtoonRoleEntity.name,
-                        webtoonRoleEntity.role,
-                        webtoonRoleEntity.uploadPath
+                        Projections.constructor(
+                                MainDto.class,
+                                webtoonRoleEntity.webtoonEntity.id.as("webtoonId"),
+                                webtoonRoleEntity.title,
+                                webtoonRoleEntity.name,
+                                webtoonRoleEntity.role,
+                                webtoonRoleEntity.uploadPath,
+                                voteEntity.personName.count().as("cnt"),
+                                voteEntity.personName,
+                                voteEntity.personUrl
+                        )
                 )
                 .from(webtoonRoleEntity)
-                .leftJoin(webtoonRoleEntity.voteEntityList, voteEntity)
-                .where(webtoonRoleEntity.deleteYn.lt(1),titleBuilder(title))
+                .innerJoin(webtoonRoleEntity.voteEntityList, voteEntity)
+                .where(webtoonRoleEntity.deleteYn.lt(1),webtoonRoleEntity.webtoonEntity.id.eq(id))
                 .groupBy(webtoonRoleEntity.id, voteEntity.personName)
                 .orderBy(voteEntity.personName.count().desc())
-                .transform(groupBy(webtoonRoleEntity.webtoonEntity.id).list(
-                                Projections.constructor(
-                                        MainDto.class,
-                                        webtoonRoleEntity.webtoonEntity.id.as("webtoonId"),
-                                        webtoonRoleEntity.title,
-                                        webtoonRoleEntity.name,
-                                        webtoonRoleEntity.role,
-                                        webtoonRoleEntity.uploadPath,
-                                        voteEntity.personName.count().as("cnt"),
-                                        voteEntity.personName,
-                                        voteEntity.personUrl
-                                )
-                        )
-                );
+                .limit(1)
+                .fetch();
     }
 
     /**
