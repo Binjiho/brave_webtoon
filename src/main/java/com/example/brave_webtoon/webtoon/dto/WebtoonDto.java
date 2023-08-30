@@ -5,6 +5,7 @@ import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
@@ -15,11 +16,13 @@ import java.util.List;
 public class WebtoonDto {
     private Long id;
     private String title;
+    private Integer hit;
     private Integer deleteYn;
     private String uploadPath;
     private List<WebtoonRoleEntity> webtoonRoleEntityList;
     private boolean hasNext;
-    private int lastOffset;
+    private Integer lastOffset;
+    private LocalDateTime createdDate;
 
     @QueryProjection
     public WebtoonDto(String title, String uploadPath, List<WebtoonRoleEntity> webtoonRoleEntityList) {
@@ -33,8 +36,10 @@ public class WebtoonDto {
                 .builder()
                 .id(webtoonEntity.getId())
                 .title(webtoonEntity.getTitle())
+                .hit(webtoonEntity.getHit())
                 .deleteYn(webtoonEntity.getDeleteYn())
                 .uploadPath(webtoonEntity.getUploadPath())
+                .createdDate(webtoonEntity.getCreatedDate())
                 .build();
     }
 }

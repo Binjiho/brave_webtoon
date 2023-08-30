@@ -2,6 +2,7 @@ package com.example.brave_webtoon.webtoon.repository;
 
 import com.example.brave_webtoon.webtoon.dto.*;
 
+import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static com.example.brave_webtoon.webtoon.entity.QWebtoonEntity.webtoonEntity;
 import static com.example.brave_webtoon.webtoon.entity.QWebtoonRoleEntity.webtoonRoleEntity;
 import static com.example.brave_webtoon.webtoon.entity.QVoteEntity.voteEntity;
 import static com.querydsl.core.group.GroupBy.groupBy;
@@ -80,6 +82,15 @@ public class WebtoonRoleRepository {
                             )
                     )
                 );
+    }
+
+    /**
+     * Admin
+     */
+    public List<WebtoonRoleEntity> findAllWebtoonRole(Long id) {
+        return queryFactory.selectFrom(webtoonRoleEntity)
+                .where(webtoonRoleEntity.webtoonEntity.id.eq(id), webtoonRoleEntity.deleteYn.lt(1))
+                .fetch();
     }
 
 }

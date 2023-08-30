@@ -13,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -27,11 +24,6 @@ public class WebtoonService {
     private final WebtoonRepositoryImpl webtoonRepositoryImp;
     private final WebtoonRoleRepositoryImpl webtoonRoleRepositoryImp;
     private final VoteRepositoryImpl voteRepository;
-
-    public List<WebtoonEntity> findAllWebtoonList(){
-        List<WebtoonEntity> result = webtoonRepository.findAll();
-        return result;
-    }
 
     public List<MainDto> findMainWebtoonList(String title){
         List<MainDto> result = new ArrayList<>();
@@ -86,4 +78,57 @@ public class WebtoonService {
         List<VoteResultDto> result = webtoonRoleRepository.findResultByWebtoonRoleId(webtoonRoleId);
         return result;
     }
+
+    /**
+     * Admin Webtoon
+     * @return
+     */
+    public List<WebtoonEntity> findAllWebtoonList(){
+        List<WebtoonEntity> result = webtoonRepository.findAllWebtoon();
+        return result;
+    }
+
+    @Transactional
+    public Long transWebtoonDeleteYN(Long id, int deleteYn){
+        Long result = 0L;
+        Optional<WebtoonEntity> optionalWebtoonEntity = Optional.ofNullable(webtoonRepositoryImp.findById(id).orElseThrow(() -> {
+            return new IllegalArgumentException("ID에 해당하는 웹툰이 존재하지 않습니다");
+        }));
+        if (optionalWebtoonEntity.isPresent()){
+            WebtoonEntity webtoonEntity = WebtoonEntity.builder()
+                    .id(optionalWebtoonEntity.get().getId())
+                    .title(optionalWebtoonEntity.get().getTitle())
+                    .uploadPath(optionalWebtoonEntity.get().getUploadPath())
+                    .deleteYn(deleteYn)
+                    .build();
+            result = webtoonRepositoryImp.save(webtoonEntity).getId();
+        }
+        return result;
+    }
+
+    public List<WebtoonRoleEntity> findAllWebtoonRoleList(Long id){
+        List<WebtoonRoleEntity> result = webtoonRoleRepository.findAllWebtoonRole(id);
+        return result;
+    }
+
+    @Transactional
+    public Long transWebtoonRoleDeleteYN(Long id, int deleteYn){
+        Long result = 0L;
+        Optional<WebtoonRoleEntity> optionalWebtoonRoleEntity = Optional.ofNullable(webtoonRoleRepositoryImp.findById(id).orElseThrow(() -> {
+            return new IllegalArgumentException("ID에 해당하는 웹툰Role이 존재하지 않습니다");
+        }));
+        if (optionalWebtoonRoleEntity.isPresent()){
+            WebtoonRoleEntity webtoonRoleEntity = WebtoonRoleEntity.builder()
+                    .id(optionalWebtoonRoleEntity.get().getId())
+                    .title(optionalWebtoonRoleEntity.get().getTitle())
+                    .name(optionalWebtoonRoleEntity.get().getName())
+                    .role(optionalWebtoonRoleEntity.get().getRole())
+                    .uploadPath(optionalWebtoonRoleEntity.get().getUploadPath())
+                    .deleteYn(deleteYn)
+                    .build();
+            result = webtoonRoleRepositoryImp.save(webtoonRoleEntity).getId();
+        }
+        return result;
+    }
+
 }
