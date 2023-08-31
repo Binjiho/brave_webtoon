@@ -28,7 +28,7 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
-        log.debug("3.CustomLoginSuccessHandler");
+        log.info("3.CustomLoginSuccessHandler");
 
         // [STEP1] 사용자와 관련된 정보를 모두 조회합니다.
         MemberEntity memberEntity = ((UserDetailsDto) authentication.getPrincipal()).getMemberEntity();
@@ -40,10 +40,10 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
                 .name(memberEntity.getName())
                 .htel(memberEntity.getHtel())
                 .role(memberEntity.getRole())
-                .fromSocial(memberEntity.getFromSocial())
-                .deleteYn(memberEntity.getDeleteYn())
-                .createdDate(memberEntity.getCreatedDate())
-                .modifiedDate(memberEntity.getModifiedDate())
+//                .fromSocial(memberEntity.getFromSocial())
+//                .deleteYn(memberEntity.getDeleteYn())
+//                .createdDate(memberEntity.getCreatedDate())
+//                .modifiedDate(memberEntity.getModifiedDate())
                 .build();
 
         // [STEP2] 조회한 데이터를 JSONObject 형태로 파싱을 수행합니다.

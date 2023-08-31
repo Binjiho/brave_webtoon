@@ -18,7 +18,6 @@ public class MemberDto {
     private String name;
     private String htel;
     private Role role;
-    private int fromSocial;
     private int deleteYn;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
