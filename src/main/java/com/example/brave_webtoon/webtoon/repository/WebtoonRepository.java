@@ -25,9 +25,14 @@ import static com.querydsl.core.group.GroupBy.list;
 public class WebtoonRepository {
     private final JPAQueryFactory queryFactory;
 
-    public List<WebtoonEntity> findWebtoonIdList(String title) {
+    public List<WebtoonEntity> findWebtoonIdList(int pageSize, int offset, String title) {
         return queryFactory.selectFrom(webtoonEntity)
-                .where(webtoonEntity.deleteYn.lt(1),titleBuilder(title))
+                .where(
+                        noOffsetBuilder(offset, "w"),
+                        webtoonEntity.deleteYn.lt(1),
+                        titleBuilder(title,"w")
+                )
+                .limit(pageSize)
                 .fetch();
     }
 
@@ -75,7 +80,7 @@ public class WebtoonRepository {
                 .from(webtoonEntity)
                 .leftJoin(webtoonEntity.webtoonRoleEntityList, webtoonRoleEntity)
                 .where(
-                        noOffsetBuilder(offset),
+                        noOffsetBuilder(offset, "wr"),
                         webtoonEntity.id.eq(webtoonId)
                 )
                 .orderBy(webtoonRoleEntity.id.asc())
@@ -124,17 +129,27 @@ public class WebtoonRepository {
         return result;
     }
 
-    private BooleanExpression titleBuilder(String title) {
+    private BooleanExpression titleBuilder(String title, String condition) {
         if (title == null) {
             return null; // BooleanExpression 자리에 null이 반환되면 조건문에서 자동으로 제거된다
+        }else{
+            if(condition.equals("wr")){
+                return webtoonRoleEntity.title.contains(title);
+            }else{
+                return webtoonEntity.title.contains(title);
+            }
         }
-        return webtoonRoleEntity.title.contains(title);
     }
-    private BooleanExpression noOffsetBuilder(int offset) {
+    private BooleanExpression noOffsetBuilder(int offset, String condition) {
         if (offset == 0) {
             return null; // BooleanExpression 자리에 null이 반환되면 조건문에서 자동으로 제거된다
+        }else{
+            if(condition.equals("wr")){
+                return webtoonRoleEntity.id.gt(offset);
+            }else{
+                return webtoonEntity.id.gt(offset);
+            }
         }
-        return webtoonRoleEntity.id.gt(offset);
     }
 
     /**
