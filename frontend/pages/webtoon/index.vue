@@ -19,7 +19,9 @@ export default {
 </script>
 
 <template>
-  <ui-input-search placeholder="웹툰명 입력"></ui-input-search>
+  <div class="search-wrap">
+    <ui-input-search placeholder="웹툰명 입력"></ui-input-search>
+  </div>
   <div class="list">
     <webtoon-item
       v-for="item in webtoonList"

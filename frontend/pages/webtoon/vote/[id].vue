@@ -141,9 +141,15 @@ export default {
       ></webtoon-person-select>
     </v-radio-group>
   </div>
-  <v-btn @click="postVote()" class="bottom-big-btn" :disabled="!activeCelebrity"
-    >투표완료</v-btn
-  >
+  <div class="bottom-fixed">
+    <v-btn
+      @click="postVote()"
+      block
+      class="main-btn-50"
+      :disabled="!activeCelebrity"
+      >투표완료</v-btn
+    >
+  </div>
 </template>
 
 <style scoped lang="scss">

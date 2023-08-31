@@ -111,7 +111,7 @@ export default {
     <p class="webtoon-info__text">하단의 캐릭터를 선택하여<br />확인해주세요</p>
   </div>
   <!--1. start 캐릭터 리스트-->
-  <div>
+  <div class="webtoon-tab">
     <v-tabs
       v-model="characterInfo.id"
       class="block-tab"

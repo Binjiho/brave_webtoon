@@ -29,6 +29,8 @@
     display: flex;
     align-items: center;
     position: relative;
+    padding: 0 20px;
+    max-width: 100% !important;
   }
 
   &__left-area {
@@ -62,4 +64,26 @@
 .title {
   font-size: 15px;
   font-weight: 400;
+}
+
+.account-wrap {
+  margin-left: auto;
+  display: flex;
+  gap: 20px;
+
+  .v-btn {
+    font-size: 14px;
+    color: #333;
+    padding: 0 !important;
+    min-width: unset !important;
+  }
+}
+
+.user-info {
+  .v-icon {
+    width: 24px;
+    height: 24px;
+    color: #ddd;
+    margin-right: 5px;
+  }
 }

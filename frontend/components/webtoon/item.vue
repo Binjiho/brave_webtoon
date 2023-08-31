@@ -8,10 +8,29 @@ export default {
   },
   computed: {
     votePageUrl() {
-      return "/webtoon/" + this.item.id;
+      return "/webtoon/" + this.item.webtoonId;
     },
     rankPageUrl() {
-      return `/webtoon/vote/result?webtoon=${this.item.id}`;
+      return `/webtoon/vote/result?webtoon=${this.item.webtoonId}`;
+    },
+  },
+  methods: {
+    sharePage() {
+      const shareObject = {
+        title: this.item.title,
+        text: "webtoon.com",
+        url: window.location.href + "webtoon/" + this.item.webtoonId,
+      };
+
+      if (!navigator.share) {
+        // navigator를 지원하지 않는 경우
+        this.$root.vtoast.show({ message: "페이지 공유를 지원하지 않습니다." });
+        return;
+      }
+
+      navigator.share(shareObject).catch((error) => {
+        this.$root.vtoast.show({ message: "공유할 수 없는 페이지입니다." });
+      });
     },
   },
 };
@@ -23,15 +42,15 @@ export default {
       <ul class="webtoon-item__thumbnail">
         <li class="character">
           <div class="character__img-wrap">
-            <img src="https://via.placeholder.com/225x350" alt="" />
+            <webtoon-character :img="item.uploadPath"> </webtoon-character>
           </div>
-          <p>청명</p>
+          <p>{{ item.name }}</p>
         </li>
         <li class="character">
           <div class="character__img-wrap">
-            <img src="https://via.placeholder.com/225x350" alt="" />
+            <webtoon-character :img="item.personUrl"> </webtoon-character>
           </div>
-          <p>이도현</p>
+          <p>{{ item.personName }}</p>
         </li>
       </ul>
       <h2 class="webtoon-item__title">{{ item.title }}</h2>
@@ -48,7 +67,9 @@ export default {
         >
       </li>
       <li>
-        <v-btn prepend-icon="custom:shareLine">공유하기</v-btn>
+        <v-btn prepend-icon="custom:shareLine" @click="sharePage()"
+          >공유하기</v-btn
+        >
       </li>
     </ul>
   </div>

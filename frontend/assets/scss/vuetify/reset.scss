@@ -4,28 +4,6 @@
          nuxt.config.ts에 import하여 사용
 ********************************************************************/
 
-.v-container {
-  min-width: $min-layout;
-  padding: 20px !important;
-  margin: 0 auto !important;
-  max-width: $max-layout;
-}
-
-.v-application {
-  background: #f2f5f7;
-}
-
-.v-main {
-  position: relative;
-  z-index: 1;
-  padding-bottom: 80px;
-  padding-top: $header-height;
-  max-width: $max-layout;
-  background: #fff;
-  margin: 0 auto !important;
-  width: 100%;
-}
-
 .v-input--density-default,
 .v-input--density-default .v-field--variant-filled {
   --v-input-control-height: 20px;
@@ -52,6 +30,46 @@
 
 //input
 .v-text-field {
+  //우측 아이콘
+  .v-field__append-inner {
+    display: flex;
+    align-items: center;
+    padding: 0;
+
+    .v-icon {
+      width: 20px;
+      height: 20px;
+      color: #000;
+      opacity: 1;
+      margin-left: 10px;
+    }
+  }
+
+  //x 표시
+  .v-field__clearable {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    margin: 0;
+
+    .v-icon {
+      width: 20px;
+      height: 20px;
+      color: #000;
+      opacity: 1;
+    }
+  }
+
+  &.v-input--error {
+    .v-input__details {
+      padding: 6px 0 0 0 !important;
+    }
+
+    .v-messages {
+      color: #ff6651 !important;
+    }
+  }
+
   .v-field__overlay {
     display: none;
   }
@@ -62,6 +80,62 @@
   .v-field__outline {
     &::before {
       display: none;
+    }
+  }
+
+  .v-field--variant-outlined {
+    .v-field__outline__start,
+    .v-field__outline__end {
+      border-color: #eaedf0;
+    }
+
+    .v-field__outline {
+      --v-field-border-opacity: 1;
+    }
+
+    &.v-field--focused {
+      .v-field__outline {
+        --v-field-border-width: 1px;
+      }
+    }
+
+    input {
+      &::placeholder {
+        color: #aeb3b7;
+        opacity: 1;
+        font-weight: 400;
+      }
+    }
+
+    &.v-field--error {
+      border: 1px solid $red_primary;
+    }
+  }
+
+  &.v-input--disabled {
+    background: #f5f7f8;
+    color: #aeb3b7;
+
+    .v-field--disabled {
+      opacity: 1;
+    }
+  }
+}
+
+//input details & error message
+.v-input {
+  .v-input__details {
+    min-height: unset;
+    padding-top: 0;
+
+    .v-messages {
+      min-height: unset;
+    }
+  }
+
+  &.v-input--error {
+    .v-input__details {
+      padding-top: 6px;
     }
   }
 }
@@ -110,5 +184,28 @@
     &::before {
       border-radius: 0;
     }
+  }
+}
+
+.v-btn {
+  box-shadow: none;
+  border-radius: 3px;
+
+  .v-btn__overlay {
+    display: none;
+  }
+
+  &--icon.v-btn--density-compact {
+    width: unset;
+    height: unset;
+  }
+
+  &.v-btn--elevated:hover,
+  &.v-btn--elevated:focus {
+    box-shadow: none;
+  }
+
+  &__content {
+    width: 100%;
   }
 }

@@ -1,0 +1,44 @@
+@import "../common";
+
+.account-layout {
+  min-height: calc(100vh - $header-height);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 30px;
+
+  label {
+    margin-bottom: 8px;
+    display: block;
+  }
+}
+
+.logo {
+  .v-btn {
+    padding: 0;
+  }
+  svg {
+    width: 90px;
+    height: 23px;
+  }
+}
+
+.no-account {
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: 40px;
+
+  p {
+    font-size: 14px;
+    color: #aaa;
+  }
+
+  .v-btn {
+    color: $main-color;
+    padding: 0 !important;
+    height: unset;
+  }
+}

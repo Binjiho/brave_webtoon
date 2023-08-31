@@ -1,0 +1,79 @@
+//btn
+@mixin btn24() {
+  width: 24px;
+  height: 24px !important;
+  min-width: unset;
+  padding: 0;
+  box-shadow: none;
+  background: transparent;
+
+  &:hover,
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.v-btn {
+  &.main-btn-60,
+  &.main-btn-50,
+  &.main-btn-40 {
+    background: $main-color !important;
+    color: #fff !important;
+    font-weight: 700;
+
+    &.v-btn--disabled {
+      background: #dfe3e7 !important;
+    }
+  }
+}
+
+.v-btn.main-btn-60 {
+  font-size: 16px;
+  height: 60px !important;
+}
+
+.v-btn.main-btn-50 {
+  font-size: 15px;
+  height: 50px !important;
+}
+
+.v-btn.main-btn-40 {
+  font-size: 14px;
+  height: 40px !important;
+}
+
+.v-btn.prev-btn {
+  @include btn24();
+
+  .v-btn__content {
+    &::after {
+      content: "";
+      @include maskIcon(
+        "~/assets/iconsets/svg/system/arrow-left-line.svg",
+        24px
+      );
+    }
+  }
+}
+
+.v-btn.share-btn {
+  @include btn24();
+
+  .v-btn__content {
+    &::after {
+      content: "";
+      @include maskIcon("~/assets/iconsets/svg/system/share-line.svg", 24px);
+    }
+  }
+}
+
+.bottom-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  padding: 20px !important;
+  background: #fff;
+  max-width: $max-layout;
+}

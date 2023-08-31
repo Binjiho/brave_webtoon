@@ -16,6 +16,10 @@ import search from "assets/iconsets/icons/system/search.vue";
 import checkLine from "assets/iconsets/icons/system/check-line.vue";
 import rankingLine from "assets/iconsets/icons/system/ranking-line.vue";
 import personFill from "assets/iconsets/icons/system/person-fill.vue";
+import hide from "assets/iconsets/icons/system/hide.vue";
+import show from "assets/iconsets/icons/system/show.vue";
+import closeCircleDelete from "assets/iconsets/icons/system/close-circle-delete.vue";
+import profileFill from "assets/iconsets/icons/system/profile-fill.vue";
 
 //vuetify
 import radioOff from "assets/iconsets/icons/vuetify/radio-off.vue";
@@ -26,6 +30,10 @@ import ratingOff from "assets/iconsets/icons/vuetify/rating-off.vue";
 import ratingOn from "assets/iconsets/icons/vuetify/rating-on.vue";
 
 const customSvgNameToComponent: any = {
+  profileFill,
+  hide,
+  show,
+  closeCircleDelete,
   personFill,
   colorLogo,
   arrowDownSLine,

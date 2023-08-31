@@ -52,6 +52,10 @@ export default defineNuxtPlugin((app) => {
           offset: "10px",
         },
       },
+      VTextField: {
+        variant: "outlined",
+        clearIcon: "custom:closeCircleDelete",
+      },
     },
   });
 

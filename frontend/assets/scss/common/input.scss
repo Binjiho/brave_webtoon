@@ -1,0 +1,32 @@
+.v-text-field {
+  &.height-50 {
+    .v-field--variant-outlined {
+      --v-input-control-height: 50px;
+
+      .v-field__input {
+        padding: 0 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      input {
+        height: 100%;
+      }
+    }
+  }
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+
+  &.required {
+    &::after {
+      content: "*";
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 21px;
+      color: $red_primary;
+    }
+  }
+}

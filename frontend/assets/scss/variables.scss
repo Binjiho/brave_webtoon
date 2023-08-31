@@ -2,6 +2,7 @@ $min-layout: 375px;
 $max-layout: 1024px;
 
 $main-color: #9747fe;
+$red_primary: #ff6651;
 
 $header-height: 60px;
 
@@ -26,10 +27,10 @@ $header-height: 60px;
   white-space: unset;
 }
 
-@mixin divider() {
-  height: 10px;
-  max-height: 10px;
-  background: #f9f9f9;
+@mixin divider($height: 10px, $color: #f9f9f9) {
+  height: $height;
+  max-height: $height;
+  background: $color;
   width: 100%;
   border: none;
   display: block;

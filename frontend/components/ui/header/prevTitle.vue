@@ -7,7 +7,7 @@ export default {
     },
     title: {
       type: String,
-      default: "타이틀",
+      default: "",
     },
     isUnderLine: {
       type: Boolean,

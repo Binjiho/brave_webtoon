@@ -1,9 +1,20 @@
+.search-wrap {
+  position: sticky;
+  top: $header-height;
+  left: 0;
+  background: #fff;
+  width: 100%;
+  z-index: 1;
+  padding: 20px 0 10px;
+}
+
 .list {
   display: grid;
   grid-template-columns: 1fr 1fr;
   flex-wrap: wrap;
-  padding-top: 20px;
   gap: 22px 10px;
+  margin-top: 10px;
+  padding-bottom: 80px;
 }
 
 @media all and (min-width: 500px) {
