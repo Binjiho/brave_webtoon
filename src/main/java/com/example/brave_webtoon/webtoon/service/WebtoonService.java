@@ -25,9 +25,11 @@ public class WebtoonService {
     private final WebtoonRoleRepositoryImpl webtoonRoleRepositoryImp;
     private final VoteRepositoryImpl voteRepository;
 
-    public List<MainDto> findMainWebtoonList(String title){
+    public List<MainDto> findMainWebtoonList(int pageSize, int page, String title){
+        int offset = pageSize * (page-1);
         List<MainDto> result = new ArrayList<>();
-        List<WebtoonEntity> list = webtoonRepository.findWebtoonIdList(title);
+
+        List<WebtoonEntity> list = webtoonRepository.findWebtoonIdList(pageSize, offset, title);
         list.stream().forEach(obj-> result.add(getWebtoonDto(obj.getId())));
 //        result.removeIf(Objects::isNull); //투표가 없어도 웹툰리스트를 불러와야함
         return result;

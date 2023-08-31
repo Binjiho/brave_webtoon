@@ -25,9 +25,18 @@ public class WebtoonController {
 
     @GetMapping("/webtoonList")
     @Operation(summary = "웹툰 리스트 화면", description = "웹툰 리스트를 화면에 출력")
+    @Parameters({
+            @Parameter(name="pageSize", description = "페이지 사이즈", required = true),
+            @Parameter(name="page", description = "페이지 번호", required = false),
+            @Parameter(name="title", description = "검색 조건 - 제목", required = false)
+    })
     @ResponseBody
-    public List<MainDto> getWebtoonList(@RequestParam(value="title", required = false) String title){
-        List<MainDto> result = webtoonService.findMainWebtoonList(title);
+    public List<MainDto> getWebtoonList(
+            @RequestParam(value="pageSize") int pageSize,
+            @RequestParam(value="page", required = false, defaultValue="1") int page,
+            @RequestParam(value="title", required = false) String title
+    ){
+        List<MainDto> result = webtoonService.findMainWebtoonList(pageSize, page, title);
         return result;
     }
 
@@ -55,7 +64,7 @@ public class WebtoonController {
     })
     @ResponseBody
     public List<WebtoonRoleDto> openVoteWebtoonDetailPage(@PathVariable Long id){
-        List<WebtoonRoleDto > result = webtoonService.findByWebtoonRoleId(id);
+        List<WebtoonRoleDto> result = webtoonService.findByWebtoonRoleId(id);
         return result;
     }
 
