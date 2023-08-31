@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,22 +25,22 @@ public class WebtoonController {
     @GetMapping("/webtoonList")
     @Operation(summary = "웹툰 리스트 화면", description = "웹툰 리스트를 화면에 출력")
     @Parameters({
-            @Parameter(name="pageSize", description = "페이지 사이즈", required = true),
-            @Parameter(name="page", description = "페이지 번호", required = false),
+            @Parameter(name="pageSize", description = "페이징 사이즈", required = true),
+            @Parameter(name="offset", description = "페이징 시작 index", required = false),
             @Parameter(name="title", description = "검색 조건 - 제목", required = false)
     })
     @ResponseBody
-    public List<MainDto> getWebtoonList(
+    public List<MainRequestDto> getWebtoonList(
             @RequestParam(value="pageSize") int pageSize,
-            @RequestParam(value="page", required = false, defaultValue="1") int page,
+            @RequestParam(value="offset", required = false, defaultValue="0") int offset,
             @RequestParam(value="title", required = false) String title
     ){
-        List<MainDto> result = webtoonService.findMainWebtoonList(pageSize, page, title);
+        List<MainRequestDto> result = webtoonService.findMainWebtoonList(pageSize, offset, title);
         return result;
     }
 
     @GetMapping("/webtoonRoleList")
-    @Operation(summary = "웹툰 캐릭터 리스트 화면", description = "웹툰 캐릭터 리스트를 화면에 출력")
+    @Operation(summary = "웹툰 캐릭터 리스트 화면", description = "웹툰 캐릭터 리스트를 화면에 출력 with 더보기")
     @Parameters({
             @Parameter(name="id", description = "webtoonId", required = true),
             @Parameter(name="pageSize", description = "페이징 사이즈", required = true),

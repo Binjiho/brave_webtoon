@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -25,19 +24,25 @@ public class WebtoonService {
     private final WebtoonRoleRepositoryImpl webtoonRoleRepositoryImp;
     private final VoteRepositoryImpl voteRepository;
 
-    public List<MainDto> findMainWebtoonList(int pageSize, int page, String title){
-        int offset = pageSize * (page-1);
-        List<MainDto> result = new ArrayList<>();
+    public List<MainRequestDto> findMainWebtoonList(int pageSize, int offset, String title){
+        List<MainResponseDto> response = new ArrayList<>();
 
-        List<WebtoonEntity> list = webtoonRepository.findWebtoonIdList(pageSize, offset, title);
-        list.stream().forEach(obj-> result.add(getWebtoonDto(obj.getId())));
+        List<MainRequestDto> list = webtoonRepository.findWebtoonIdList(pageSize, offset, title);
+        list.get(0).getWebtoonEntityList().stream().forEach(obj-> response.add(getWebtoonDto(obj.getId())));
+
+        List<MainRequestDto> result = new ArrayList<>();
+        result.add(MainRequestDto.builder()
+                        .mainResponseDtoList(response)
+                        .hasNext(list.get(0).isHasNext())
+                        .lastOffset(list.get(0).getLastOffset())
+                .build());
 //        result.removeIf(Objects::isNull); //투표가 없어도 웹툰리스트를 불러와야함
         return result;
     }
 
-    public MainDto getWebtoonDto(Long id){
-        MainDto result = null;
-        List<MainDto> list = webtoonRepository.findWebtoonListWithVote(id);
+    public MainResponseDto getWebtoonDto(Long id){
+        MainResponseDto result = null;
+        List<MainResponseDto> list = webtoonRepository.findWebtoonListWithVote(id);
         if (!list.isEmpty()){
             result = list.get(0);
         }

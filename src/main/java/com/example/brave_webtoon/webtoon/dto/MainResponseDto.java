@@ -1,17 +1,13 @@
 package com.example.brave_webtoon.webtoon.dto;
 
-import com.example.brave_webtoon.webtoon.entity.VoteEntity;
-import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
-
-import java.util.List;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @ToString
-public class MainDto {
+public class MainResponseDto {
 
     private Long webtoonId;
     private String title;

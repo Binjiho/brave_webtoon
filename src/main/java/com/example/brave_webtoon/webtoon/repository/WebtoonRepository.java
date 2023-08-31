@@ -2,7 +2,6 @@ package com.example.brave_webtoon.webtoon.repository;
 
 import com.example.brave_webtoon.webtoon.dto.*;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -25,21 +24,42 @@ import static com.querydsl.core.group.GroupBy.list;
 public class WebtoonRepository {
     private final JPAQueryFactory queryFactory;
 
-    public List<WebtoonEntity> findWebtoonIdList(int pageSize, int offset, String title) {
-        return queryFactory.selectFrom(webtoonEntity)
+    public List<MainRequestDto> findWebtoonIdList(int pageSize, int offset, String title) {
+        List<WebtoonEntity> webtoonEntityList = queryFactory.selectFrom(webtoonEntity)
                 .where(
                         noOffsetBuilder(offset, "w"),
                         webtoonEntity.deleteYn.lt(1),
                         titleBuilder(title,"w")
                 )
-                .limit(pageSize)
+                .limit(pageSize+1)
                 .fetch();
+
+        return checkMainLastPage(webtoonEntityList,pageSize,offset);
     }
 
-    public List<MainDto> findWebtoonListWithVote(Long id) {
+    private List<MainRequestDto> checkMainLastPage(List<WebtoonEntity> webtoonEntityList, int pageSize, int offset) {
+
+        boolean hasNext = false;
+
+        // 조회한 결과 개수가 요청한 페이지 사이즈보다 크면 뒤에 더 있음, next = true
+        if (webtoonEntityList.size() > pageSize) {
+            hasNext = true;
+            webtoonEntityList.remove(pageSize);
+        }
+
+        List<MainRequestDto> result = new ArrayList<>();
+        result.add(MainRequestDto.builder()
+                .webtoonEntityList(webtoonEntityList)
+                .hasNext(hasNext)
+                .lastOffset(offset)
+                .build());
+        return result;
+    }
+
+    public List<MainResponseDto> findWebtoonListWithVote(Long id) {
         return queryFactory.select(
                         Projections.constructor(
-                                MainDto.class,
+                                MainResponseDto.class,
                                 webtoonRoleEntity.webtoonEntity.id.as("webtoonId"),
                                 webtoonRoleEntity.title,
                                 webtoonRoleEntity.name,
