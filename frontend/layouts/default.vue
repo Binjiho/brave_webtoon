@@ -1,8 +1,19 @@
+<script lang="ts">
+export default {
+  props: {
+    isSidebar: {
+      type: Boolean,
+      default: false,
+    },
+  },
+};
+</script>
+
 <template>
   <VApp id="scroll-target">
     <slot name="header"></slot>
     <VMain>
-      <VContainer>
+      <VContainer :class="{ side: isSidebar }">
         <slot />
       </VContainer>
     </VMain>
@@ -33,5 +44,10 @@
   min-height: 100%;
   padding-top: $header-height !important;
   box-sizing: border-box;
+
+  &.side {
+    padding: 0 !important;
+    min-height: calc(100% - $header-height);
+  }
 }
 </style>

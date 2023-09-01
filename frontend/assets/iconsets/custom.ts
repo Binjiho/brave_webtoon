@@ -20,6 +20,8 @@ import hide from "assets/iconsets/icons/system/hide.vue";
 import show from "assets/iconsets/icons/system/show.vue";
 import closeCircleDelete from "assets/iconsets/icons/system/close-circle-delete.vue";
 import profileFill from "assets/iconsets/icons/system/profile-fill.vue";
+import movieLine from "assets/iconsets/icons/system/movie-line.vue";
+import arrowLeftMLine from "assets/iconsets/icons/system/arrow-left-m-line.vue";
 
 //vuetify
 import radioOff from "assets/iconsets/icons/vuetify/radio-off.vue";
@@ -31,6 +33,8 @@ import ratingOn from "assets/iconsets/icons/vuetify/rating-on.vue";
 
 const customSvgNameToComponent: any = {
   profileFill,
+  movieLine,
+  arrowLeftMLine,
   hide,
   show,
   closeCircleDelete,

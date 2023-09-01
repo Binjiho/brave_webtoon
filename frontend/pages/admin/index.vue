@@ -1,13 +1,13 @@
-<script setup></script>
+<script setup lang="ts">
+import Main from "@/pages/admin/webtoon/index.vue";
+
+definePageMeta({
+  layout: "admin",
+});
+</script>
 
 <template>
-  <div>
-    admin <br />
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium amet
-    aperiam corporis cupiditate esse exercitationem, explicabo fugiat ipsum
-    magni nemo neque, nihil obcaecati pariatur provident qui rerum soluta
-    temporibus ut!
-  </div>
+  <Main></Main>
 </template>
 
 <style scoped></style>
