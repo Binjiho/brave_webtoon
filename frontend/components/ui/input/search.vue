@@ -28,6 +28,7 @@ export default {
     :class="{ focus: isFocused }"
     v-model="searchValue"
     @keyup.enter="search"
+    hide-details
   >
     <template #append>
       <v-btn icon="custom:search" variant="text" @click="search"></v-btn>

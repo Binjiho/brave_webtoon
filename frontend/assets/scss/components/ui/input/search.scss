@@ -3,6 +3,12 @@
   border: 1px solid #f1f1f1;
   transition: border 0.3s;
   padding: 6px 16px !important;
+  height: 50px;
+  display: flex !important;
+
+  .v-input__control {
+    width: 100%;
+  }
 
   &.focus {
     border-color: #000;
@@ -30,5 +36,10 @@
 
   .v-btn__content {
     font-size: 1rem;
+  }
+
+  .v-field__input {
+    height: 100%;
+    min-height: unset;
   }
 }

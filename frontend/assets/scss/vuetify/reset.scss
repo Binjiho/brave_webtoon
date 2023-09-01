@@ -209,3 +209,9 @@
     width: 100%;
   }
 }
+
+.v-infinite-scroll {
+  &__side {
+    display: none;
+  }
+}

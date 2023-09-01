@@ -1,6 +1,5 @@
 {
   "name": "frontend",
-  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "nuxt dev --port 9001",
@@ -9,11 +8,11 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "axios": "^1.4.0",
+    "axios": "^1.5.0",
     "sass": "^1.62.0",
     "vite-plugin-vuetify": "^1.0.2",
     "vite-svg-loader": "^4.0.0",
-    "vuetify": "^3.1.15",
+    "vuetify": "^3.3.0",
     "pinia": "^2.1.4",
     "@pinia/nuxt": "^0.4.11"
   },

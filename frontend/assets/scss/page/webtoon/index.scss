@@ -15,6 +15,10 @@
   gap: 22px 10px;
   margin-top: 10px;
   padding-bottom: 80px;
+
+  .v-infinite-scroll__side {
+    display: none;
+  }
 }
 
 @media all and (min-width: 500px) {
