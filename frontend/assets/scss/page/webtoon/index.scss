@@ -32,3 +32,9 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
+
+@media all and (min-width: 1000px) {
+  .list {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+}
