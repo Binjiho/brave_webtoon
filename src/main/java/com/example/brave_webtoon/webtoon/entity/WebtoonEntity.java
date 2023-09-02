@@ -1,5 +1,6 @@
 package com.example.brave_webtoon.webtoon.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Getter
-@ToString
 @Table(name = "webtoon")
 public class WebtoonEntity {
     @Id
@@ -24,6 +24,7 @@ public class WebtoonEntity {
     @Column(name= "title", length = 50, nullable = false)
     private String title;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "webtoonEntity")
     private List<WebtoonRoleEntity> webtoonRoleEntityList;
 

@@ -1,6 +1,7 @@
 package com.example.brave_webtoon.webtoon.service;
 
 import com.example.brave_webtoon.webtoon.dto.*;
+import com.example.brave_webtoon.webtoon.dto.admin.WebtoonResponseDto;
 import com.example.brave_webtoon.webtoon.entity.VoteEntity;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
 import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
@@ -90,8 +91,8 @@ public class WebtoonService {
      * Admin Webtoon
      * @return
      */
-    public List<WebtoonEntity> findAllWebtoonList(){
-        List<WebtoonEntity> result = webtoonRepository.findAllWebtoon();
+    public List<WebtoonResponseDto> findAllWebtoonList(int pageSize, int page, String title){
+        List<WebtoonResponseDto> result = webtoonRepository.findAllWebtoon(pageSize, page, title);
         return result;
     }
 

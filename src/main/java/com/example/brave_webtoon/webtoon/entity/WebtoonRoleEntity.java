@@ -16,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Getter
-@ToString
 @Table(name = "webtoon_role")
 public class WebtoonRoleEntity {
     @Id

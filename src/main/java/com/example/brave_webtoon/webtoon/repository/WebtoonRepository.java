@@ -1,6 +1,7 @@
 package com.example.brave_webtoon.webtoon.repository;
 
 import com.example.brave_webtoon.webtoon.dto.*;
+import com.example.brave_webtoon.webtoon.dto.admin.WebtoonResponseDto;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -128,7 +129,6 @@ public class WebtoonRepository {
     private List<WebtoonDto> checkLastPage(List<WebtoonDto> content, int pageSize, int offset) {
 
         boolean hasNext = false;
-        Pageable pageable = PageRequest.of(offset,pageSize);
 
         // 조회한 결과 개수가 요청한 페이지 사이즈보다 크면 뒤에 더 있음, next = true
         if (content.get(0).getWebtoonRoleEntityList().size() > pageSize) {
@@ -175,10 +175,85 @@ public class WebtoonRepository {
     /**
      * Admin
      */
-    public List<WebtoonEntity> findAllWebtoon() {
-        return queryFactory.selectFrom(webtoonEntity)
-                .where(webtoonEntity.deleteYn.lt(1) )
+    public List<WebtoonResponseDto> findAllWebtoon(int pageSize, int page, String title) {
+        List<WebtoonEntity> total = null;
+        int totalRecordCount = 0;
+        total = queryFactory.selectFrom(webtoonEntity)
+                .where( titleBuilder(title, "w") )
                 .fetch();
+        if (total != null){
+            totalRecordCount = total.size();
+        }
+
+        return buildPaging(pageSize, page, totalRecordCount, title);
+    }
+
+    public List<WebtoonResponseDto> findAllWebtoonResult (int pageSize, int page, int startPage, int endPage, int offset, boolean hasNext, boolean hasPrev, String condition){
+        List<WebtoonEntity> content = queryFactory.selectFrom(webtoonEntity)
+                .where(
+                        noOffsetBuilder(offset, "w"),
+                        titleBuilder(condition, "w")
+                )
+                .limit(pageSize)
+                .fetch();
+
+        System.out.println(content);
+
+        List<WebtoonResponseDto> result = new ArrayList<>();
+        result.add(WebtoonResponseDto.builder()
+                .webtoonEntityList(content)
+                .page(page)
+                .pageSize(pageSize)
+                .startPage(startPage)
+                .endPage(endPage)
+                .hasNext(hasNext)
+                .hasPrev(hasPrev)
+                .build());
+
+        System.out.println(result);
+        return  result;
+    }
+
+    private List<WebtoonResponseDto> buildPaging(int pageSize, int page, int totalRecordCount, String condition) {
+
+        int totalPageCount;
+        int startPage;
+        int endPage;
+        int offset;
+        boolean hasNext = false;
+        boolean hasPrev = false;
+
+        // 전체 페이지 수 계산
+        totalPageCount = ((totalRecordCount - 1) / pageSize) + 1;
+
+        // 현재 페이지 번호가 전체 페이지 수보다 큰 경우, 현재 페이지 번호에 전체 페이지 수 저장
+        if (page > totalPageCount) {
+            page = totalPageCount;
+        }
+
+        // 첫 페이지 번호 계산
+        startPage = ( (page-1) / pageSize ) * pageSize + 1;
+
+        // 끝 페이지 번호 계산
+        endPage = (startPage + pageSize) - 1;
+
+        // 끝 페이지가 전체 페이지 수보다 큰 경우, 끝 페이지 전체 페이지 수 저장
+        if (endPage > totalPageCount) {
+            endPage = totalPageCount;
+        }
+
+        // OFFSET 계산
+        offset = (page-1) * pageSize;
+        // LIMIT 계산
+        // limitStart = (params.getPage() - 1) * params.getRecordSize();
+
+        // 이전 페이지 존재 여부 확인
+        hasPrev = startPage > 1;
+
+        // 다음 페이지 존재 여부 확인
+        hasNext = endPage < totalPageCount;
+
+        return findAllWebtoonResult(pageSize, page, startPage, endPage, offset,  hasNext, hasPrev, condition);
     }
 
 }

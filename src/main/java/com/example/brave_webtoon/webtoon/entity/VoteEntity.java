@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Getter
-@ToString
 @Table(name = "webtoon_vote")
 public class VoteEntity {
     @Id

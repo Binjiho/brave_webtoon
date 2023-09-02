@@ -90,46 +90,5 @@ public class WebtoonController {
         List<VoteResultDto> result = webtoonService.findResultByWebtoonRoleId(id);
         return result;
     }
-
-    @GetMapping("/admin/webtoonList")
-    @Operation(summary = "어드민 웹툰 리스트 화면", description = "어드민 웹툰 리스트를 화면에 출력")
-    @ResponseBody
-    public List<WebtoonDto> getWebtoonList(){
-        List<WebtoonEntity> list = webtoonService.findAllWebtoonList();
-        List<WebtoonDto> result = list.stream().map(WebtoonDto::toDto).collect(Collectors.toList());
-        return result;
-    }
-
-    @PostMapping("/admin/webtoonList")
-    @Operation(summary = "어드민 웹툰 리스트 노출 변경", description = "어드민 웹툰 리스트 노출 변경")
-    @Parameters({
-            @Parameter(name="id", description = "webtoonId", required = true),
-            @Parameter(name="deleteYN", description = "deleteYN(0:삭제안함, 1:삭제)", required = true)
-    })
-    public Long postWebtoonList(@RequestParam(value="id") Long id,
-                                @RequestParam(value="deleteYn") int deleteYn){
-        return webtoonService.transWebtoonDeleteYN(id, deleteYn);
-    }
-
-    @GetMapping("/admin/webtoonList/{id}")
-    @Operation(summary = "어드민 웹툰Role 리스트 화면", description = "어드민 웹툰Role 리스트를 화면에 출력")
-    @Parameters({
-            @Parameter(name="id", description = "webtoonRoleId", required = true)
-    })
-    public List<WebtoonRoleDto> getWebtoonRoleList(@PathVariable Long id){
-        List<WebtoonRoleEntity> list = webtoonService.findAllWebtoonRoleList(id);
-        List<WebtoonRoleDto> result = list.stream().map(WebtoonRoleDto::toDto).collect(Collectors.toList());
-        return result;
-    }
-
-    @PostMapping("/admin/webtoonList/{id}")
-    @Operation(summary = "어드민 웹툰Role 리스트 노출 변경", description = "어드민 웹툰Role 리스트 노출 변경")
-    @Parameters({
-            @Parameter(name="id", description = "webtoonRoleId", required = true),
-            @Parameter(name="deleteYN", description = "deleteYN(0:삭제안함, 1:삭제)", required = true)
-    })
-    public Long postWebtoonRoleList(@RequestParam(value="id") Long id,
-                                @RequestParam(value="deleteYn") int deleteYn){
-        return webtoonService.transWebtoonRoleDeleteYN(id, deleteYn);
-    }
+    
 }
