@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,15 +29,18 @@ public class AdminController {
     @Parameters({
             @Parameter(name="pageSize", description = "페이징 사이즈", required = true),
             @Parameter(name="page", description = "페이징 시작 index", required = false),
-            @Parameter(name="title", description = "검색 조건 - 제목", required = false)
+            @Parameter(name="search", description = "검색값", required = false),
+            @Parameter(name="order", description = "정렬값", required = false)
+//            @Parameter(name="title", description = "검색 조건 - 제목", required = false)
     })
     @ResponseBody
     public List<WebtoonResponseDto> getWebtoonList(
-            @RequestParam(value="pageSize") int pageSize,
+            @RequestParam(value="pageSize", defaultValue="10") int pageSize,
             @RequestParam(value="page", required = false, defaultValue="1") int page,
-            @RequestParam(value="title", required = false) String title
-    ){
-        List<WebtoonResponseDto> result = webtoonService.findAllWebtoonList(pageSize, page, title);
+            @RequestParam(value="search", required = false) String search,
+            @RequestParam(value="order", defaultValue="최신순,오래된순,투표많은순,투표낮은순", required = false) String order
+            ){
+        List<WebtoonResponseDto> result = webtoonService.findAllWebtoonList(pageSize, page, search, order);
         return result;
     }
 

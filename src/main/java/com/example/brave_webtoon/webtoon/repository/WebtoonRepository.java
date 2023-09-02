@@ -3,15 +3,20 @@ package com.example.brave_webtoon.webtoon.repository;
 import com.example.brave_webtoon.webtoon.dto.*;
 import com.example.brave_webtoon.webtoon.dto.admin.WebtoonResponseDto;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.example.brave_webtoon.webtoon.entity.QVoteEntity.voteEntity;
@@ -175,29 +180,30 @@ public class WebtoonRepository {
     /**
      * Admin
      */
-    public List<WebtoonResponseDto> findAllWebtoon(int pageSize, int page, String title) {
+    public List<WebtoonResponseDto> findAllWebtoon(int pageSize, int page, String search, String order) {
+        BooleanBuilder builder = new BooleanBuilder();
         List<WebtoonEntity> total = null;
         int totalRecordCount = 0;
         total = queryFactory.selectFrom(webtoonEntity)
-                .where( titleBuilder(title, "w") )
+                .where( titleBuilder(search,"w") )
                 .fetch();
         if (total != null){
             totalRecordCount = total.size();
         }
 
-        return buildPaging(pageSize, page, totalRecordCount, title);
+        return buildPaging(pageSize, page, totalRecordCount, search, order);
     }
 
-    public List<WebtoonResponseDto> findAllWebtoonResult (int pageSize, int page, int startPage, int endPage, int offset, boolean hasNext, boolean hasPrev, String condition){
+    public List<WebtoonResponseDto> findAllWebtoonResult (int pageSize, int page, int startPage, int endPage, int offset, boolean hasNext, boolean hasPrev, String search, String order){
+
         List<WebtoonEntity> content = queryFactory.selectFrom(webtoonEntity)
                 .where(
                         noOffsetBuilder(offset, "w"),
-                        titleBuilder(condition, "w")
+                        titleBuilder(search,"w")
                 )
+                .orderBy(orderBoolean(order), webtoonEntity.id.desc())
                 .limit(pageSize)
                 .fetch();
-
-        System.out.println(content);
 
         List<WebtoonResponseDto> result = new ArrayList<>();
         result.add(WebtoonResponseDto.builder()
@@ -205,16 +211,27 @@ public class WebtoonRepository {
                 .page(page)
                 .pageSize(pageSize)
                 .startPage(startPage)
-                .endPage(endPage)
+                 .endPage(endPage)
                 .hasNext(hasNext)
                 .hasPrev(hasPrev)
                 .build());
 
-        System.out.println(result);
         return  result;
     }
 
-    private List<WebtoonResponseDto> buildPaging(int pageSize, int page, int totalRecordCount, String condition) {
+    private OrderSpecifier<?> orderBoolean (String order) {
+        if(!order.isBlank()){
+            switch (order) {
+                case "오래된순": return new OrderSpecifier(Order.ASC, webtoonEntity.id);
+                case "투표많은순": return new OrderSpecifier(Order.DESC, webtoonEntity.hit);
+                case "투표낮은순": return new OrderSpecifier(Order.ASC, webtoonEntity.hit);
+                default: return new OrderSpecifier(Order.DESC, webtoonEntity.id);
+            }
+        }
+        return null;
+    }
+
+    private List<WebtoonResponseDto> buildPaging(int pageSize, int page, int totalRecordCount, String search, String order) {
 
         int totalPageCount;
         int startPage;
@@ -244,8 +261,6 @@ public class WebtoonRepository {
 
         // OFFSET 계산
         offset = (page-1) * pageSize;
-        // LIMIT 계산
-        // limitStart = (params.getPage() - 1) * params.getRecordSize();
 
         // 이전 페이지 존재 여부 확인
         hasPrev = startPage > 1;
@@ -253,7 +268,7 @@ public class WebtoonRepository {
         // 다음 페이지 존재 여부 확인
         hasNext = endPage < totalPageCount;
 
-        return findAllWebtoonResult(pageSize, page, startPage, endPage, offset,  hasNext, hasPrev, condition);
+        return findAllWebtoonResult(pageSize, page, startPage, endPage, offset,  hasNext, hasPrev, search, order);
     }
 
 }

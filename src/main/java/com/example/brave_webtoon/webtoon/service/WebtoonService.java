@@ -91,8 +91,8 @@ public class WebtoonService {
      * Admin Webtoon
      * @return
      */
-    public List<WebtoonResponseDto> findAllWebtoonList(int pageSize, int page, String title){
-        List<WebtoonResponseDto> result = webtoonRepository.findAllWebtoon(pageSize, page, title);
+    public List<WebtoonResponseDto> findAllWebtoonList(int pageSize, int page, String search, String order){
+        List<WebtoonResponseDto> result = webtoonRepository.findAllWebtoon(pageSize, page, search, order);
         return result;
     }
 
