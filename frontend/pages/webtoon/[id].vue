@@ -1,5 +1,9 @@
 <script lang="ts">
+import api from "@/mixin/api";
+import UIHelpers from "@/mixin/UIHelpers";
+
 export default {
+  mixins: [api, UIHelpers],
   data() {
     return {
       webtoonInfo: {
@@ -7,20 +11,25 @@ export default {
         title: "",
         img: "",
       },
+      pageData: {
+        page: 1,
+        itemsPerPage: 100,
+      },
       characterList: [],
     };
   },
   methods: {
     getWebtoonCharacter() {
-      this.$api
-        .get("/api/webtoonRoleList", {
-          params: {
-            id: this.webtoonInfo.id,
-            pageSize: 100,
-            offset: 0,
-          },
-        })
-        .then((response) => {
+      const filter = {
+        id: this.webtoonInfo.id,
+        pageSize: 100,
+        offset: 0,
+      };
+
+      this.sendAnonymousGet(
+        "/api/webtoonRoleList",
+        this.urlParamsFormatter(filter, this.pageData),
+        (response) => {
           let result = response.data[0];
 
           this.webtoonInfo = {
@@ -30,7 +39,8 @@ export default {
           };
 
           this.characterList = result.webtoonRoleEntityList;
-        });
+        }
+      );
     },
     goVotePage(id) {
       this.$router.push("/webtoon/vote/" + id);

@@ -1,5 +1,9 @@
 <script lang="ts">
+import api from "~/mixin/api";
+import UIHelpers from "~/mixin/UIHelpers";
+
 export default {
+  mixins: [api, UIHelpers],
   data() {
     return {
       characterInfo: {
@@ -16,6 +20,10 @@ export default {
       restVoteList: [],
       isAllVote: false,
       characterList: [],
+      pageData: {
+        page: 1,
+        itemsPerPage: 100,
+      },
     };
   },
   computed: {
@@ -28,9 +36,10 @@ export default {
   },
   methods: {
     async getWebtoonResult() {
-      const response = await this.$api
-        .get("/api/webtoonVote/result/" + this.characterInfo.id)
-        .then((response) => {
+      this.sendAnonymousGet(
+        `/api/webtoonVote/result/${this.characterInfo.id}`,
+        "",
+        (response) => {
           let result = response.data[0];
           let { title, uploadPath, name, webtoonId: id } = result;
           this.characterInfo = { ...this.characterInfo, name, uploadPath };
@@ -52,26 +61,27 @@ export default {
           this.mostVote = first;
           this.restVoteList = rest;
           return result;
-        });
+        }
+      );
     },
     async getWebtoonCharacter() {
-      const response = await this.$api
-        .get("/api/webtoonRoleList", {
-          params: {
-            id: this.webtoonInfo.id,
-            pageSize: 100,
-            offset: 0,
-          },
-        })
-        .then((response) => {
-          let result = response.data[0];
-          let { title, uploadPath: img } = result;
-          this.webtoonInfo = { ...this.webtoonInfo, title, img };
-          this.characterList = result.webtoonRoleEntityList;
-          return result;
-        });
+      const filter = {
+        id: this.webtoonInfo.id,
+      };
 
-      return response;
+      return new Promise((resolve, reject) => {
+        this.sendAnonymousGet(
+          "/api/webtoonRoleList",
+          this.urlParamsFormatter(filter, this.pageData),
+          (response) => {
+            let result = response.data[0];
+            let { title, uploadPath: img } = result;
+            this.webtoonInfo = { ...this.webtoonInfo, title, img };
+            this.characterList = result.webtoonRoleEntityList;
+            resolve(result);
+          }
+        );
+      });
     },
     goVotePage(id) {
       this.$router.push("/webtoon/vote/" + id);
