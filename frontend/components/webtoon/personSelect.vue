@@ -39,6 +39,7 @@ export default {
     left: 0;
     top: 0;
     background: #fff;
+    height: 16px;
 
     &:not(.v-selection-control--dirty) {
       border: 1px solid #e8e8e8;

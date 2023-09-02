@@ -1,20 +1,35 @@
 <script lang="ts">
+import validation from "~/constants/validation";
+
 export default {
   props: {
     placeholder: {
       type: String,
       default: "입력",
     },
+    modelValue: {
+      type: String,
+      default: null,
+    },
   },
   data() {
     return {
       isFocused: false,
-      searchValue: "",
     };
+  },
+  computed: {
+    value: {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit("update:modelValue", value);
+      },
+    },
   },
   methods: {
     search() {
-      this.$emit("search", this.searchValue);
+      this.$emit("search", this.value);
     },
   },
 };
@@ -26,7 +41,7 @@ export default {
     :placeholder="placeholder"
     @update:focused="isFocused = !isFocused"
     :class="{ focus: isFocused }"
-    v-model="searchValue"
+    v-model="value"
     @keyup.enter="search"
     hide-details
   >

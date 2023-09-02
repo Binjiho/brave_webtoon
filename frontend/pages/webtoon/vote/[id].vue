@@ -1,5 +1,9 @@
 <script lang="ts">
+import api from "~/mixin/api";
+import UIHelpers from "~/mixin/UIHelpers";
+
 export default {
+  mixins: [api, UIHelpers],
   data() {
     return {
       characterInfo: {
@@ -14,13 +18,15 @@ export default {
       voteList: null,
       newCelebrity: null,
       activeCelebrity: "",
+      celebrityName: "",
     };
   },
   methods: {
     getWebtoonCharacter() {
-      this.$api
-        .get("/api/webtoonVote/" + this.characterInfo.id)
-        .then((response) => {
+      this.sendAnonymousGet(
+        `/api/webtoonVote/${this.characterInfo.id}`,
+        "",
+        (response) => {
           let result = response.data[0];
           this.characterInfo = {
             ...this.characterInfo,
@@ -34,16 +40,21 @@ export default {
           };
 
           this.voteList = result.voteEntityList;
-        });
+        }
+      );
     },
-    searchCelebrity(person) {
-      this.$api.get("/api/person/" + person).then((response) => {
-        let result = response.data.items[0];
-        this.newCelebrity = {
-          personUrl: result.thumbnail,
-          personName: person,
-        };
-      });
+    searchCelebrity() {
+      this.sendAnonymousGet(
+        `/api/person/${this.celebrityName}`,
+        "",
+        (response) => {
+          let result = response.data.items[0];
+          this.newCelebrity = {
+            personUrl: result.thumbnail,
+            personName: this.celebrityName,
+          };
+        }
+      );
     },
     postVote() {
       if (typeof this.activeCelebrity === "boolean") {
@@ -55,34 +66,34 @@ export default {
         (v) => v.id === this.activeCelebrity
       );
 
-      this.$api
-        .post("/api/webtoonVote", {
-          webtoonId: this.webtoonInfo.id,
-          webtoonRoleId: this.characterInfo.id,
-          personName: findCelebrity.personName,
-          personUrl: findCelebrity.personUrl,
-        })
-        .then((response) => {
-          this.$root.vtoast.show({ message: "투표가 완료되었습니다" });
-          this.$router.replace(
-            `/webtoon/vote/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`
-          );
-        });
+      const data = {
+        webtoonId: this.webtoonInfo.id,
+        webtoonRoleId: this.characterInfo.id,
+        personName: findCelebrity.personName,
+        personUrl: findCelebrity.personUrl,
+      };
+
+      this.sendAnonymousPost(`/api/webtoonVote`, data, (response) => {
+        this.$root.vtoast.show({ message: "투표가 완료되었습니다" });
+        this.$router.replace(
+          `/webtoon/vote/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`
+        );
+      });
     },
     newVote() {
-      this.$api
-        .post("/api/webtoonVote", {
-          webtoonId: this.webtoonInfo.id,
-          webtoonRoleId: this.characterInfo.id,
-          personName: this.newCelebrity.personName,
-          personUrl: this.newCelebrity.personUrl,
-        })
-        .then((response) => {
-          this.$root.vtoast.show({ message: "투표가 완료되었습니다" });
-          this.$router.replace(
-            `/webtoon/vote/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`
-          );
-        });
+      const data = {
+        webtoonId: this.webtoonInfo.id,
+        webtoonRoleId: this.characterInfo.id,
+        personName: this.newCelebrity.personName,
+        personUrl: this.newCelebrity.personUrl,
+      };
+
+      this.sendAnonymousPost(`/api/webtoonVote`, data, (response) => {
+        this.$root.vtoast.show({ message: "투표가 완료되었습니다" });
+        this.$router.replace(
+          `/webtoon/vote/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`
+        );
+      });
     },
   },
   created() {
@@ -131,6 +142,7 @@ export default {
       <ui-input-search
         placeholder="연예인 이름 입력"
         @search="searchCelebrity"
+        v-model="celebrityName"
       ></ui-input-search>
     </div>
     <div class="celebrity-list"></div>
