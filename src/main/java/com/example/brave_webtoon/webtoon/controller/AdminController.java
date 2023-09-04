@@ -1,6 +1,7 @@
 package com.example.brave_webtoon.webtoon.controller;
 
 import com.example.brave_webtoon.webtoon.dto.*;
+import com.example.brave_webtoon.webtoon.dto.admin.VoteResponseDto;
 import com.example.brave_webtoon.webtoon.dto.admin.WebtoonResponseDto;
 import com.example.brave_webtoon.webtoon.dto.admin.WebtoonRoleResponseDto;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
@@ -91,25 +92,24 @@ public class AdminController {
     @Parameters({
             @Parameter(name="roleId", description = "webtoonRoleId", required = true)
     })
-    public List<VoteDto> getVoteList(
+    public List<VoteResponseDto> getVoteList(
             @RequestParam(value="roleId") Long roleId
     ){
-        List<VoteDto> result = webtoonService.findVoteList(roleId);
+        List<VoteResponseDto> result = webtoonService.findVoteList(roleId);
         return result;
     }
 
-//    @PostMapping("/admin/transPerson")
-//    @Operation(summary = "어드민 웹툰Role 투표 인물URL 변경", description = "어드민 웹툰Role 투표 인물URL 변경")
-//    @Parameters({
-//            @Parameter(name="voteId", description = "webtoonRoleId", required = true),
-//            @Parameter(name="deleteYn", description = "0:삭제안함, 1:삭제", required = true)
-//    })
-//    public Long postTransPerson(
-//            @PathVariable(value="id") Long id,
-//            @RequestParam(value="roleId") Long roleId,
-//            @RequestParam(value="deleteYn") int deleteYn)
-//    {
-//        return webtoonService.transPersonUrl(roleId, deleteYn);
-//    }
+    @PostMapping("/admin/voteList")
+    @Operation(summary = "어드민 웹툰Role 투표 인물URL 변경", description = "어드민 웹툰Role 투표 인물URL 변경")
+    @Parameters({
+            @Parameter(name="voteId", description = "voteId", required = true),
+            @Parameter(name="personUrl", description = "변경할 인물 이미지 URL", required = true)
+    })
+    public Long postTransPerson(
+            @RequestParam(value="voteId") Long voteId,
+            @RequestParam(value="personUrl") String personUrl)
+    {
+        return webtoonService.transPersonUrl(voteId, personUrl);
+    }
 
 }

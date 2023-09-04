@@ -2,6 +2,7 @@ package com.example.brave_webtoon.webtoon.repository;
 
 import com.example.brave_webtoon.webtoon.dto.*;
 
+import com.example.brave_webtoon.webtoon.dto.admin.VoteResponseDto;
 import com.example.brave_webtoon.webtoon.dto.admin.WebtoonResponseDto;
 import com.example.brave_webtoon.webtoon.dto.admin.WebtoonRoleResponseDto;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
@@ -181,19 +182,22 @@ public class WebtoonRoleRepository {
         }
     }
 
-    public List<VoteDto> findAllVoteList(Long roleId) {
+    public List<VoteResponseDto> findAllVoteList(Long roleId) {
         return queryFactory
                 .selectFrom(voteEntity)
                 .where(voteEntity.webtoonRoleEntity.id.eq(roleId))
+                .groupBy(voteEntity.personName)
+                .orderBy(voteEntity.personName.count().desc(), voteEntity.id.desc())
                 .transform(groupBy(voteEntity.personName).list(
                                 Projections.constructor(
-                                        VoteDto.class,
+                                        VoteResponseDto.class,
                                         voteEntity.id,
                                         voteEntity.webtoonEntity.id,
                                         voteEntity.webtoonRoleEntity.id,
                                         voteEntity.personName,
                                         voteEntity.personUrl,
-                                        voteEntity.deleteYn
+                                        voteEntity.deleteYn,
+                                        voteEntity.personName.count().as("cnt")
                                 )
                         )
                 );

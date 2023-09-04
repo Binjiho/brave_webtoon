@@ -1,6 +1,7 @@
 package com.example.brave_webtoon.webtoon.service;
 
 import com.example.brave_webtoon.webtoon.dto.*;
+import com.example.brave_webtoon.webtoon.dto.admin.VoteResponseDto;
 import com.example.brave_webtoon.webtoon.dto.admin.WebtoonResponseDto;
 import com.example.brave_webtoon.webtoon.dto.admin.WebtoonRoleResponseDto;
 import com.example.brave_webtoon.webtoon.entity.VoteEntity;
@@ -108,6 +109,7 @@ public class WebtoonService {
             WebtoonEntity webtoonEntity = WebtoonEntity.builder()
                     .id(optionalWebtoonEntity.get().getId())
                     .title(optionalWebtoonEntity.get().getTitle())
+                    .hit(optionalWebtoonEntity.get().getHit())
                     .uploadPath(optionalWebtoonEntity.get().getUploadPath())
                     .deleteYn(deleteYn)
                     .build();
@@ -132,6 +134,8 @@ public class WebtoonService {
                     .id(optionalWebtoonRoleEntity.get().getId())
                     .title(optionalWebtoonRoleEntity.get().getTitle())
                     .name(optionalWebtoonRoleEntity.get().getName())
+                    .hit(optionalWebtoonRoleEntity.get().getHit())
+                    .webtoonEntity(optionalWebtoonRoleEntity.get().getWebtoonEntity())
                     .role(optionalWebtoonRoleEntity.get().getRole())
                     .uploadPath(optionalWebtoonRoleEntity.get().getUploadPath())
                     .deleteYn(deleteYn)
@@ -141,8 +145,27 @@ public class WebtoonService {
         return result;
     }
 
-    public List<VoteDto> findVoteList(Long roleId){
-        List<VoteDto> result = webtoonRoleRepository.findAllVoteList(roleId);
+    public List<VoteResponseDto> findVoteList(Long roleId){
+        List<VoteResponseDto> result = webtoonRoleRepository.findAllVoteList(roleId);
+        return result;
+    }
+
+    @Transactional
+    public Long transPersonUrl(Long voteId, String personUrl){
+        Long result = 0L;
+        Optional<VoteEntity> optionalVoteEntity = Optional.ofNullable(voteRepository.findById(voteId).orElseThrow(() -> {
+            return new IllegalArgumentException("ID에 해당하는 웹툰Vote가 존재하지 않습니다");
+        }));
+        if (optionalVoteEntity.isPresent()){
+            VoteEntity voteEntity = VoteEntity.builder()
+                    .id(optionalVoteEntity.get().getId())
+                    .webtoonEntity(optionalVoteEntity.get().getWebtoonEntity())
+                    .webtoonRoleEntity(optionalVoteEntity.get().getWebtoonRoleEntity())
+                    .personName(optionalVoteEntity.get().getPersonName())
+                    .personUrl(personUrl)
+                    .build();
+            result = voteRepository.save(voteEntity).getId();
+        }
         return result;
     }
 
