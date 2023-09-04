@@ -2,6 +2,7 @@
   &.height-50 {
     .v-field--variant-outlined {
       --v-input-control-height: 50px;
+      --v-field-padding-bottom: 1px;
 
       .v-field__input {
         padding: 0 15px;

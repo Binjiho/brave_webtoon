@@ -1,17 +1,43 @@
 <script lang="ts">
 import UIConstants from "@/constants/UIConstants";
+import api from "~/mixin/api";
+import UIHelpers from "~/mixin/UIHelpers";
 
 export default {
+  mixins: [api, UIHelpers],
   data() {
     return {
       rules: {
         ...UIConstants.inputRules,
       },
       isValidLogin: false,
+      user: {
+        id: "",
+        pw: "",
+      },
     };
   },
   methods: {
-    userLogin() {},
+    userLogin() {
+      const data = {
+        userId: this.user.id,
+        userPw: this.user.pw,
+      };
+
+      this.sendAnonymousPost(
+        `/api/account/signIn`,
+        data,
+        (response) => {
+          const token = response.data.token;
+
+          if (!token) {
+            this.$root.vtoast.show({ message: response.data.failMsg });
+            return;
+          }
+        },
+        () => {}
+      );
+    },
   },
 };
 </script>
@@ -31,12 +57,14 @@ export default {
             placeholder="아이디"
             class="height-50"
             :rules="rules.input"
+            v-model="user.id"
           ></v-text-field>
         </li>
         <li>
           <ui-input-password
             placeholder="비밀번호"
             :rules="rules.password"
+            v-model="user.pw"
           ></ui-input-password>
         </li>
       </ul>

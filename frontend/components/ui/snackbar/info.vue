@@ -30,8 +30,8 @@ export default {
     bottom
     right
   >
-    <v-icon left>{{ icon }}</v-icon
-    >{{ message }}
+    <v-icon left v-if="icon">{{ icon }}</v-icon>
+    <p v-html="message"></p>
   </v-snackbar>
 </template>
 

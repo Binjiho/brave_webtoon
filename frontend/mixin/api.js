@@ -159,6 +159,9 @@ export default {
           }
         })
         .catch((error) => {
+          if (failureFunction) {
+            failureFunction(error);
+          }
           this.raiseError(
             this.getStatusCode(error),
             this.getStatusMessage(error)
@@ -186,6 +189,9 @@ export default {
           }
         })
         .catch((error) => {
+          if (failureFunction) {
+            failureFunction(error);
+          }
           this.raiseError(
             this.getStatusCode(error),
             this.getStatusMessage(error)
@@ -214,6 +220,9 @@ export default {
           }
         })
         .catch((error) => {
+          if (failureFunction) {
+            failureFunction(error);
+          }
           this.raiseError(
             this.getStatusCode(error),
             this.getStatusMessage(error)
@@ -242,6 +251,9 @@ export default {
           }
         })
         .catch((error) => {
+          if (failureFunction) {
+            failureFunction(error);
+          }
           this.raiseError(
             this.getStatusCode(error),
             this.getStatusMessage(error)
@@ -249,6 +261,10 @@ export default {
         });
     },
     raiseError(statusCode, message = null) {
+      if (statusCode === 500) {
+        this.$root.vtoast.show({ message: message });
+        return;
+      }
       throw showError({
         statusCode: statusCode,
         message: message,
@@ -275,8 +291,9 @@ export default {
       }
     },
     getStatusMessage(error) {
-      if (error.response) {
-        return error.response.statusText;
+      console.log(error);
+      if (error.response.data) {
+        return error.response.data.message;
       } else if (error.request) {
         return error.message;
       } else {

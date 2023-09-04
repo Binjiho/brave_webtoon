@@ -1,7 +1,17 @@
 <script lang="ts">
 import UIConstants from "@/constants/UIConstants";
+import api from "~/mixin/api";
+import UIHelpers from "~/mixin/UIHelpers";
+
+let VALID_ID = {
+  0: true,
+  1: false,
+  TRUE: 0,
+  FALSE: 1,
+};
 
 export default {
+  mixins: [api, UIHelpers],
   data() {
     return {
       rules: {
@@ -20,15 +30,50 @@ export default {
   },
   methods: {
     checkValidId() {
-      this.isOnlyId = true;
-      this.isValidId = false;
-      this.$root.vtoast.show({ message: "아이디가 중복 확인 되었습니다." });
+      const data = {
+        userId: this.user.id,
+      };
+
+      this.sendAnonymousPost(`/api/account/checkId`, data, (response) => {
+        let valid = response.data;
+
+        if (valid === VALID_ID.FALSE) {
+          this.$root.vtoast.show({ message: "중복된 아이디입니다." });
+          return;
+        }
+
+        this.isOnlyId = true;
+        this.isValidId = false;
+        this.$root.vtoast.show({ message: "아이디가 중복 확인 되었습니다." });
+      });
     },
     createAccount() {
-      this.$root.vtoast.show({
-        message: "회원가입이 완료되었습니다<br>로그인을 해주세요",
-      });
-      this.$router.push("/account/login");
+      if (!this.isOnlyId) {
+        this.$root.vtoast.show({ message: "아이디 중복 확인이 필요합니다." });
+        return;
+      }
+
+      const data = {
+        userId: this.user.id,
+        userPw: this.user.password,
+        name: this.user.name,
+        htel: this.user.phoneNumber,
+      };
+
+      this.sendAnonymousPost(
+        `/api/account/signUp`,
+        data,
+        (response) => {
+          this.$root.vtoast.show({
+            message: "회원가입이 완료되었습니다<br>로그인을 해주세요",
+          });
+          this.$router.push("/account/login");
+        },
+        () => {
+          this.isOnlyId = false;
+          this.isValidId = true;
+        }
+      );
     },
   },
 };
