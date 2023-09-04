@@ -24,21 +24,44 @@ export default {
     };
   },
   methods: {
-    search() {},
+    search() {
+      this.pageData.page = 1;
+      this.getWebtoonList();
+    },
     getWebtoonList() {
       const filter = {
         order: this.sortNumber,
-        search: "",
+        search: this.searchValue,
       };
 
       this.sendGet(
         "/api/admin/webtoonList",
-        this.urlParamsFormatter(filter, this.pageData),
+        this.urlParamsPageFormatter(filter, this.pageData),
         (response) => {
           this.webtoonList = response.data[0].webtoonEntityList;
           this.pageData.length = response.data[0].endPage;
         }
       );
+    },
+    changeWebtoonShow(item) {
+      let filter = new FormData();
+      filter.append("id", item.id);
+      filter.append("deleteYn", item.deleteYn === 1 ? 0 : 1);
+      filter.append("deleteYN", item.deleteYn === 1 ? 0 : 1);
+
+      this.sendPost(
+        "/api/admin/webtoonList",
+        filter,
+        (response) => {
+          this.getWebtoonList();
+        },
+        () => {},
+        "multipart/form-data"
+      );
+    },
+    changeSort() {
+      this.pageData.page = 1;
+      this.getWebtoonList();
     },
   },
   mounted() {
@@ -61,7 +84,11 @@ export default {
         <v-btn icon="custom:search" variant="text" @click="search"></v-btn>
       </template>
     </v-text-field>
-    <ui-tab-sort :list="sortList" v-model="sortNumber"></ui-tab-sort>
+    <ui-tab-sort
+      :list="sortList"
+      v-model="sortNumber"
+      @change="changeSort"
+    ></ui-tab-sort>
   </div>
   <v-table class="table">
     <thead>
@@ -77,12 +104,18 @@ export default {
       <tr v-for="item in webtoonList" :key="item.id">
         <td>{{ item.id }}</td>
         <td>
-          <v-switch class="big"></v-switch>
+          <v-switch
+            class="big"
+            :model-value="!item.deleteYn"
+            @update:modelValue="changeWebtoonShow(item)"
+          ></v-switch>
         </td>
         <td class="text-left">
-          <router-link to="/" class="text-overflow-1">{{
-            item.title
-          }}</router-link>
+          <router-link
+            :to="`/admin/webtoon/${item.id}`"
+            class="text-overflow-1"
+            >{{ item.title }}</router-link
+          >
         </td>
         <td>{{ formattedDate(item.createdDate) }}</td>
         <td>{{ item.hit }}회</td>

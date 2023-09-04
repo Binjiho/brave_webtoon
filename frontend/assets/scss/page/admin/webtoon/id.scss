@@ -1,0 +1,29 @@
+@import "@/assets/scss/page/admin/common.scss";
+
+.layout {
+  display: grid;
+  grid-template-columns: 370px auto;
+  margin-top: 47px;
+}
+
+.webtoon-info {
+  &__title {
+    color: #666;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+}
+
+.webtoon-item {
+  padding: 12px 14px;
+  background: #fff;
+}
+
+.table {
+  margin-top: 20px;
+}
+
+.v-pagination {
+  margin-top: 30px;
+}

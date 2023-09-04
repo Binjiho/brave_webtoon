@@ -16,5 +16,17 @@ export default {
       }
       return params;
     },
+    urlParamsPageFormatter(filter = {}, pageData) {
+      // page: 현재 페이지. itemsPerPage: 한 페이지당 크기
+      const { page, itemsPerPage } = pageData;
+      const params = { ...filter };
+      if (page && itemsPerPage) {
+        if (itemsPerPage > -1) {
+          params.pageSize = itemsPerPage;
+          params.page = page;
+        }
+      }
+      return params;
+    },
   },
 };

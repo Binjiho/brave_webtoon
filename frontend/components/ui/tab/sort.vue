@@ -11,6 +11,7 @@ export default {
   methods: {
     selectId(id) {
       this.$emit("update:modelValue", id);
+      this.$emit("change", id);
     },
   },
 };
