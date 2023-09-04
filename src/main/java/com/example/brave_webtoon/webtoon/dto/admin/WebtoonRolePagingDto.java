@@ -1,9 +1,9 @@
 package com.example.brave_webtoon.webtoon.dto.admin;
 
-import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
-import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
-import com.querydsl.core.annotations.QueryProjection;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class WebtoonResponseDto {
-
-    private List<WebtoonEntity> webtoonEntityList;
+public class WebtoonRolePagingDto {
+    private List<WebtoonTitleDto> webtoonTitle;
+    private List<WebtoonRoleResponseDto> webtoonRoleList;
     private Integer page;
     private Integer pageSize;
     private Integer startPage;

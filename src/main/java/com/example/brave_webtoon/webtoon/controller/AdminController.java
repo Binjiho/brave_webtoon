@@ -3,6 +3,7 @@ package com.example.brave_webtoon.webtoon.controller;
 import com.example.brave_webtoon.webtoon.dto.*;
 import com.example.brave_webtoon.webtoon.dto.admin.VoteResponseDto;
 import com.example.brave_webtoon.webtoon.dto.admin.WebtoonResponseDto;
+import com.example.brave_webtoon.webtoon.dto.admin.WebtoonRolePagingDto;
 import com.example.brave_webtoon.webtoon.dto.admin.WebtoonRoleResponseDto;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
 import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
@@ -60,16 +61,16 @@ public class AdminController {
     @GetMapping("/admin/webtoonList/{id}")
     @Operation(summary = "어드민 웹툰Role 리스트 화면", description = "어드민 웹툰Role 리스트를 화면에 출력")
     @Parameters({
-            @Parameter(name="id", description = "webtoonRoleId", required = true),
+            @Parameter(name="id", description = "webtoonId", required = true),
             @Parameter(name="pageSize", description = "페이징 사이즈", required = true),
             @Parameter(name="page", description = "페이징 시작 index", required = false)
     })
-    public List<WebtoonRoleResponseDto> getWebtoonRoleList(
+    public List<WebtoonRolePagingDto> getWebtoonRoleList(
             @PathVariable(value="id") Long id,
             @RequestParam(value="pageSize", defaultValue="10") int pageSize,
             @RequestParam(value="page", required = false, defaultValue="1") int page
     ){
-        List<WebtoonRoleResponseDto> result = webtoonService.findAdminAllWebtoonRoleList(id, pageSize, page);
+        List<WebtoonRolePagingDto> result = webtoonService.findAdminAllWebtoonRoleList(id, pageSize, page);
         return result;
     }
 

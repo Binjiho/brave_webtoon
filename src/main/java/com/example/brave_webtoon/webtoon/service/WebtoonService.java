@@ -3,6 +3,7 @@ package com.example.brave_webtoon.webtoon.service;
 import com.example.brave_webtoon.webtoon.dto.*;
 import com.example.brave_webtoon.webtoon.dto.admin.VoteResponseDto;
 import com.example.brave_webtoon.webtoon.dto.admin.WebtoonResponseDto;
+import com.example.brave_webtoon.webtoon.dto.admin.WebtoonRolePagingDto;
 import com.example.brave_webtoon.webtoon.dto.admin.WebtoonRoleResponseDto;
 import com.example.brave_webtoon.webtoon.entity.VoteEntity;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
@@ -118,8 +119,8 @@ public class WebtoonService {
         return result;
     }
 
-    public List<WebtoonRoleResponseDto> findAdminAllWebtoonRoleList(Long id, int pageSize, int page){
-        List<WebtoonRoleResponseDto> result = webtoonRoleRepository.findAdminAllWebtoonRoleList(id,pageSize,page);
+    public List<WebtoonRolePagingDto> findAdminAllWebtoonRoleList(Long id, int pageSize, int page){
+        List<WebtoonRolePagingDto> result = webtoonRoleRepository.findAdminAllWebtoonRoleList(id,pageSize,page);
         return result;
     }
 

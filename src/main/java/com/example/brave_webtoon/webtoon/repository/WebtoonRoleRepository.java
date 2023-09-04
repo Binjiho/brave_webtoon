@@ -2,11 +2,10 @@ package com.example.brave_webtoon.webtoon.repository;
 
 import com.example.brave_webtoon.webtoon.dto.*;
 
-import com.example.brave_webtoon.webtoon.dto.admin.VoteResponseDto;
-import com.example.brave_webtoon.webtoon.dto.admin.WebtoonResponseDto;
-import com.example.brave_webtoon.webtoon.dto.admin.WebtoonRoleResponseDto;
+import com.example.brave_webtoon.webtoon.dto.admin.*;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
 import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
@@ -95,7 +94,7 @@ public class WebtoonRoleRepository {
     /**
      * Admin
      */
-    public List<WebtoonRoleResponseDto> findAdminAllWebtoonRoleList(Long id, int pageSize, int page) {
+    public List<WebtoonRolePagingDto> findAdminAllWebtoonRoleList(Long id, int pageSize, int page) {
         List<WebtoonRoleEntity> total = null;
         int totalRecordCount = 0;
         total = queryFactory.selectFrom(webtoonRoleEntity)
@@ -110,19 +109,50 @@ public class WebtoonRoleRepository {
         return buildPaging(id, pageSize, page, totalRecordCount);
     }
 
-    public List<WebtoonRoleResponseDto> findAllWebtoonRoleResult(Long id, int pageSize, int page, int startPage, int endPage, int offset, boolean hasNext, boolean hasPrev){
-        List<WebtoonRoleEntity> content = queryFactory.selectFrom(webtoonRoleEntity)
+    public List<WebtoonRolePagingDto> findAllWebtoonRoleResult(Long id, int pageSize, int page, int startPage, int endPage, int offset, boolean hasNext, boolean hasPrev){
+        List<WebtoonRoleResponseDto> content = queryFactory
+                .selectFrom(webtoonRoleEntity)
                 .where(
-                        webtoonRoleEntity.webtoonEntity.id.eq(id),
-                        noOffsetBuilder(offset)
+                        webtoonRoleEntity.webtoonEntity.id.eq(id)
                 )
                 .orderBy(webtoonRoleEntity.hit.desc(), webtoonRoleEntity.id.desc())
+                .offset(offset)
                 .limit(pageSize)
-                .fetch();
+                .transform(
+                        groupBy(webtoonRoleEntity.id).list(
+                                Projections.constructor(WebtoonRoleResponseDto.class,
+                                        webtoonRoleEntity.id,
+                                        webtoonRoleEntity.name,
+                                        webtoonRoleEntity.role,
+                                        webtoonRoleEntity.deleteYn,
+                                        webtoonRoleEntity.hit,
+                                        webtoonRoleEntity.uploadPath
+                                )
+                        )
+                );
 
-        List<WebtoonRoleResponseDto> result = new ArrayList<>();
-        result.add(WebtoonRoleResponseDto.builder()
-                .webtoonRoleEntityList(content)
+        List<WebtoonTitleDto> title = queryFactory
+                .selectFrom(webtoonEntity)
+                .where(
+                        webtoonEntity.id.eq(id)
+                )
+                .transform(
+                        groupBy(webtoonEntity.id).list(
+                                Projections.constructor(WebtoonTitleDto.class,
+                                        webtoonEntity.id,
+                                        webtoonEntity.title,
+                                        webtoonEntity.hit,
+                                        webtoonEntity.deleteYn,
+                                        webtoonEntity.uploadPath,
+                                        webtoonEntity.createdDate
+                                )
+                        )
+                );
+
+        List<WebtoonRolePagingDto> result = new ArrayList<>();
+        result.add(WebtoonRolePagingDto.builder()
+                .webtoonTitle(title)
+                .webtoonRoleList(content)
                 .page(page)
                 .pageSize(pageSize)
                 .startPage(startPage)
@@ -134,7 +164,7 @@ public class WebtoonRoleRepository {
         return  result;
     }
 
-    private List<WebtoonRoleResponseDto> buildPaging(Long id, int pageSize, int page, int totalRecordCount) {
+    private List<WebtoonRolePagingDto> buildPaging(Long id, int pageSize, int page, int totalRecordCount) {
 
         int totalPageCount;
         int startPage;

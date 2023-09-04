@@ -1,24 +1,24 @@
 package com.example.brave_webtoon.webtoon.dto.admin;
 
-import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
-import com.querydsl.core.Tuple;
+import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class WebtoonRoleResponseDto {
+public class WebtoonTitleDto {
 
     private Long id;
-    private String name;
-    private String role;
-    private Integer deleteYn;
+    private String title;
     private Integer hit;
+    private Integer deleteYn;
     private String uploadPath;
+    private LocalDateTime createdDate;
 }
