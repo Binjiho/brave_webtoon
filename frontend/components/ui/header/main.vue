@@ -1,7 +1,15 @@
 <script>
 import router from "#app/plugins/router";
+import { useCounterStore } from "~/store/auth";
 
 export default {
+  setup() {
+    const store = useCounterStore();
+    const access_token = computed(() => store.access_token);
+    const user = computed(() => store.user);
+    const { logoutUser } = store;
+    return { access_token, user, logoutUser };
+  },
   props: {
     isUnderLine: {
       type: Boolean,
@@ -32,14 +40,23 @@ export default {
         </VBtn>
       </h1>
       <div class="account-wrap">
-        <v-btn variant="text" to="/admin" color="#9747fe" v-if="isUser"
-          >관리자 페이지 이동</v-btn
+        <v-btn variant="text" to="/account/login" v-if="!access_token"
+          >로그인</v-btn
         >
-        <v-btn variant="text" to="/account/login" v-if="!isUser">로그인</v-btn>
-        <v-btn variant="text" class="user-info" v-if="isUser">
-          <v-icon icon="custom:profileFill"></v-icon>
-          홍길동</v-btn
-        >
+        <v-menu v-if="access_token" open-on-hover offset="5">
+          <template v-slot:activator="{ props }">
+            <v-btn variant="text" class="user-info" v-bind="props">
+              <v-icon icon="custom:profileFill"></v-icon>
+              {{ user.name }}</v-btn
+            >
+          </template>
+          <v-list class="auth-list">
+            <v-list-item to="/admin" v-if="user.role === 'ADMIN'">
+              관리자 페이지 이동
+            </v-list-item>
+            <v-list-item @click="logoutUser"> 로그아웃 </v-list-item>
+          </v-list>
+        </v-menu>
       </div>
     </VContainer>
   </header>

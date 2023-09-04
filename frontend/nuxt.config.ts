@@ -37,6 +37,9 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["./store"],
   },
+  pinia: {
+    autoImports: ["defineStore", "acceptHMRUpdate"],
+  },
   vite: {
     plugins: [svgLoader()],
     css: {

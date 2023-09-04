@@ -2,9 +2,15 @@
 import UIConstants from "@/constants/UIConstants";
 import api from "~/mixin/api";
 import UIHelpers from "~/mixin/UIHelpers";
+import { useCounterStore } from "~/store/auth";
 
 export default {
   mixins: [api, UIHelpers],
+  setup() {
+    const store = useCounterStore();
+    const { loginUserSuccess } = store;
+    return { loginUserSuccess, store };
+  },
   data() {
     return {
       rules: {
@@ -34,6 +40,9 @@ export default {
             this.$root.vtoast.show({ message: response.data.failMsg });
             return;
           }
+
+          this.loginUserSuccess(response);
+          this.$router.replace("/");
         },
         () => {}
       );
