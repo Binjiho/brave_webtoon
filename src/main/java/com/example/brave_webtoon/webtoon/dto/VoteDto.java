@@ -1,5 +1,6 @@
 package com.example.brave_webtoon.webtoon.dto;
 
+import com.example.brave_webtoon.webtoon.entity.VoteEntity;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 

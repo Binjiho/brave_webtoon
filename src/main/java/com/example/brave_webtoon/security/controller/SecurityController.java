@@ -58,7 +58,7 @@ public class SecurityController {
      * [API] 사용자 정보를 기반으로 JWT를 발급하는 API
      * @return ApiResponseWrapper<ApiResponse> : 응답 결과 및 응답 코드 반환
      */
-    @PostMapping("/api/account/singIn")
+    @PostMapping("/account/singIn")
     @Operation(summary = "로그인 후 토큰 발급", description = "처음 /api/account/signIn으로 form 정보 넘기면 customAuthenticationFilter필터체크 후, 사용자 정보를 기반으로 JWT를 발급")
     @Parameters({
             @Parameter(name="userId", description = "유저아이디", required = true),

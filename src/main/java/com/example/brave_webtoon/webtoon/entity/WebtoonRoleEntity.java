@@ -1,5 +1,6 @@
 package com.example.brave_webtoon.webtoon.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.ColumnDefault;
@@ -26,6 +27,7 @@ public class WebtoonRoleEntity {
     @JoinColumn(name = "webtoon_id")
     private WebtoonEntity webtoonEntity;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "webtoonRoleEntity")
     private List<VoteEntity> voteEntityList;
 

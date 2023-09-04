@@ -2,12 +2,19 @@ package com.example.brave_webtoon.webtoon.repository;
 
 import com.example.brave_webtoon.webtoon.dto.*;
 
+import com.example.brave_webtoon.webtoon.dto.admin.WebtoonResponseDto;
+import com.example.brave_webtoon.webtoon.dto.admin.WebtoonRoleResponseDto;
+import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
 import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.brave_webtoon.webtoon.entity.QWebtoonEntity.webtoonEntity;
@@ -87,10 +94,109 @@ public class WebtoonRoleRepository {
     /**
      * Admin
      */
-    public List<WebtoonRoleEntity> findAllWebtoonRole(Long id) {
-        return queryFactory.selectFrom(webtoonRoleEntity)
-                .where(webtoonRoleEntity.webtoonEntity.id.eq(id), webtoonRoleEntity.deleteYn.lt(1))
+    public List<WebtoonRoleResponseDto> findAdminAllWebtoonRoleList(Long id, int pageSize, int page) {
+        List<WebtoonRoleEntity> total = null;
+        int totalRecordCount = 0;
+        total = queryFactory.selectFrom(webtoonRoleEntity)
+                .where(
+                        webtoonRoleEntity.webtoonEntity.id.eq(id)
+                )
                 .fetch();
+        if (total != null){
+            totalRecordCount = total.size();
+        }
+
+        return buildPaging(id, pageSize, page, totalRecordCount);
+    }
+
+    public List<WebtoonRoleResponseDto> findAllWebtoonRoleResult(Long id, int pageSize, int page, int startPage, int endPage, int offset, boolean hasNext, boolean hasPrev){
+        List<WebtoonRoleEntity> content = queryFactory.selectFrom(webtoonRoleEntity)
+                .where(
+                        webtoonRoleEntity.webtoonEntity.id.eq(id),
+                        noOffsetBuilder(offset)
+                )
+                .orderBy(webtoonRoleEntity.hit.desc(), webtoonRoleEntity.id.desc())
+                .limit(pageSize)
+                .fetch();
+
+        List<WebtoonRoleResponseDto> result = new ArrayList<>();
+        result.add(WebtoonRoleResponseDto.builder()
+                .webtoonRoleEntityList(content)
+                .page(page)
+                .pageSize(pageSize)
+                .startPage(startPage)
+                .endPage(endPage)
+                .hasNext(hasNext)
+                .hasPrev(hasPrev)
+                .build());
+
+        return  result;
+    }
+
+    private List<WebtoonRoleResponseDto> buildPaging(Long id, int pageSize, int page, int totalRecordCount) {
+
+        int totalPageCount;
+        int startPage;
+        int endPage;
+        int offset;
+        boolean hasNext = false;
+        boolean hasPrev = false;
+
+        // 전체 페이지 수 계산
+        totalPageCount = ((totalRecordCount - 1) / pageSize) + 1;
+
+        // 현재 페이지 번호가 전체 페이지 수보다 큰 경우, 현재 페이지 번호에 전체 페이지 수 저장
+        if (page > totalPageCount) {
+            page = totalPageCount;
+        }
+
+        // 첫 페이지 번호 계산
+        startPage = ( (page-1) / pageSize ) * pageSize + 1;
+
+        // 끝 페이지 번호 계산
+        endPage = (startPage + pageSize) - 1;
+
+        // 끝 페이지가 전체 페이지 수보다 큰 경우, 끝 페이지 전체 페이지 수 저장
+        if (endPage > totalPageCount) {
+            endPage = totalPageCount;
+        }
+
+        // OFFSET 계산
+        offset = (page-1) * pageSize;
+
+        // 이전 페이지 존재 여부 확인
+        hasPrev = startPage > 1;
+
+        // 다음 페이지 존재 여부 확인
+        hasNext = endPage < totalPageCount;
+
+        return findAllWebtoonRoleResult(id, pageSize, page, startPage, endPage, offset,  hasNext, hasPrev);
+    }
+
+    private BooleanExpression noOffsetBuilder(int offset) {
+        if (offset == 0) {
+            return null;
+        }else{
+            return webtoonRoleEntity.id.gt(offset);
+        }
+    }
+
+    public List<VoteDto> findAllVoteList(Long roleId) {
+        return queryFactory
+                .selectFrom(voteEntity)
+                .where(voteEntity.webtoonRoleEntity.id.eq(roleId))
+                .transform(groupBy(voteEntity.personName).list(
+                                Projections.constructor(
+                                        VoteDto.class,
+                                        voteEntity.id,
+                                        voteEntity.webtoonEntity.id,
+                                        voteEntity.webtoonRoleEntity.id,
+                                        voteEntity.personName,
+                                        voteEntity.personUrl,
+                                        voteEntity.deleteYn
+                                )
+                        )
+                );
     }
 
 }

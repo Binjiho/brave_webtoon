@@ -181,7 +181,6 @@ public class WebtoonRepository {
      * Admin
      */
     public List<WebtoonResponseDto> findAllWebtoon(int pageSize, int page, String search, String order) {
-        BooleanBuilder builder = new BooleanBuilder();
         List<WebtoonEntity> total = null;
         int totalRecordCount = 0;
         total = queryFactory.selectFrom(webtoonEntity)

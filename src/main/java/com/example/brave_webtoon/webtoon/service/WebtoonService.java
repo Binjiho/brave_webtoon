@@ -2,6 +2,7 @@ package com.example.brave_webtoon.webtoon.service;
 
 import com.example.brave_webtoon.webtoon.dto.*;
 import com.example.brave_webtoon.webtoon.dto.admin.WebtoonResponseDto;
+import com.example.brave_webtoon.webtoon.dto.admin.WebtoonRoleResponseDto;
 import com.example.brave_webtoon.webtoon.entity.VoteEntity;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
 import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -114,8 +116,8 @@ public class WebtoonService {
         return result;
     }
 
-    public List<WebtoonRoleEntity> findAllWebtoonRoleList(Long id){
-        List<WebtoonRoleEntity> result = webtoonRoleRepository.findAllWebtoonRole(id);
+    public List<WebtoonRoleResponseDto> findAdminAllWebtoonRoleList(Long id, int pageSize, int page){
+        List<WebtoonRoleResponseDto> result = webtoonRoleRepository.findAdminAllWebtoonRoleList(id,pageSize,page);
         return result;
     }
 
@@ -136,6 +138,11 @@ public class WebtoonService {
                     .build();
             result = webtoonRoleRepositoryImp.save(webtoonRoleEntity).getId();
         }
+        return result;
+    }
+
+    public List<VoteDto> findVoteList(Long roleId){
+        List<VoteDto> result = webtoonRoleRepository.findAllVoteList(roleId);
         return result;
     }
 
