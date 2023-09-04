@@ -16,6 +16,12 @@
     padding-top: 2px;
   }
 
+  tr {
+    &.active {
+      background: #efefef;
+    }
+  }
+
   th {
     font-size: 13px !important;
     font-weight: 700 !important;
@@ -44,9 +50,11 @@
       text-align: left !important;
     }
 
-    a {
+    .link {
       color: #000;
       text-decoration: unset;
+      text-align: left;
+      cursor: pointer;
 
       &:hover {
         color: $main-color;

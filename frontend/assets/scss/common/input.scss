@@ -1,6 +1,7 @@
 .v-text-field {
   &.height-50,
-  &.height-40 {
+  &.height-40,
+  &.height-small {
     .v-field--variant-outlined {
       --v-field-padding-bottom: 1px;
 
@@ -42,6 +43,16 @@
 
     .v-field__input {
       font-size: 14px;
+    }
+  }
+
+  &.height-small {
+    .v-field--variant-outlined {
+      --v-input-control-height: 24px;
+    }
+
+    .v-field__input {
+      font-size: 12px;
     }
   }
 }

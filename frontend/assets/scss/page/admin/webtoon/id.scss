@@ -2,8 +2,13 @@
 
 .layout {
   display: grid;
-  grid-template-columns: 370px auto;
+  grid-template-columns: 350px auto;
   margin-top: 47px;
+  gap: 40px;
+
+  .vote-info {
+    margin-top: 30px;
+  }
 }
 
 .webtoon-info {
@@ -18,12 +23,53 @@
 .webtoon-item {
   padding: 12px 14px;
   background: #fff;
-}
-
-.table {
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .v-pagination {
   margin-top: 30px;
+}
+
+.celebrity-info {
+  display: grid;
+  grid-template-columns: 100px auto;
+  gap: 20px;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    li {
+      display: flex;
+      font-size: 12px;
+      font-weight: 400;
+      align-items: center;
+      gap: 10px;
+      color: #111;
+
+      h5 {
+        width: 60px;
+        flex: 0 0 60px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #666666;
+      }
+    }
+  }
+}
+
+.btn-text-field {
+  display: grid;
+  grid-template-columns: auto 40px;
+  width: 100%;
+  align-items: center;
+  gap: 4px;
+
+  .v-btn {
+    height: 100% !important;
+    min-width: unset !important;
+    background: $main-color;
+    color: #fff;
+  }
 }

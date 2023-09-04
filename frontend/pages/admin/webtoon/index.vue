@@ -113,7 +113,7 @@ export default {
         <td class="text-left">
           <router-link
             :to="`/admin/webtoon/${item.id}`"
-            class="text-overflow-1"
+            class="text-overflow-1 link"
             >{{ item.title }}</router-link
           >
         </td>

@@ -25,25 +25,74 @@ export default {
       webtoonRoleList: [],
       pageData: {
         page: 1,
-        itemsPerPage: 20,
+        itemsPerPage: 10,
         length: 1,
       },
+      webtoonRoleId: null,
+      webtoonVoteList: [],
     };
   },
   methods: {
-    getWebtoonRoleList() {
-      this.sendGet(
+    async getWebtoonRoleList() {
+      return new Promise((resolve, reject) => {
+        this.sendGet(
+          `/api/admin/webtoonList/${this.webtoonId}`,
+          this.urlParamsPageFormatter(null, this.pageData),
+          (response) => {
+            this.webtoonRoleList = response.data[0].webtoonRoleEntityList;
+            this.webtoonRoleId = response.data[0].webtoonRoleEntityList[0].id;
+            resolve(response);
+          }
+        );
+      });
+    },
+    changeWebtoonRoleShow(item) {
+      let filter = new FormData();
+      filter.append("roleId", item.id);
+      filter.append("deleteYn", item.deleteYn === 1 ? 0 : 1);
+
+      this.sendPost(
         `/api/admin/webtoonList/${this.webtoonId}`,
-        null,
+        filter,
         (response) => {
-          console.log(response);
-          this.webtoonRoleList = response.data;
-        }
+          this.getWebtoonRoleList();
+        },
+        () => {},
+        "multipart/form-data"
+      );
+    },
+    getWebtoonVoteList() {
+      const filter = {
+        roleId: this.webtoonRoleId,
+      };
+      this.sendGet("/api/admin/voteList", filter, (response) => {
+        this.webtoonVoteList = response.data;
+      });
+    },
+    changeWebtoonVote(id) {
+      this.webtoonRoleId = id;
+      this.getWebtoonVoteList();
+    },
+    savePersonImage(item) {
+      let filter = new FormData();
+      filter.append("voteId", item.id);
+      filter.append("personUrl", item.personUrl);
+
+      this.sendPost(
+        "/api/admin/voteList/",
+        filter,
+        (response) => {
+          this.getWebtoonVoteList();
+        },
+        () => {},
+        "multipart/form-data"
       );
     },
   },
   mounted() {
-    this.getWebtoonRoleList();
+    this.getWebtoonRoleList().then(() => {
+      this.getWebtoonVoteList();
+    });
   },
 };
 </script>
@@ -66,17 +115,26 @@ export default {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in webtoonRoleList" :key="item.id">
+          <tr
+            v-for="item in webtoonRoleList"
+            :key="item.id"
+            :class="{ active: item.id === webtoonRoleId }"
+          >
             <td>{{ item.id }}</td>
             <td>
               <v-switch
                 class="big"
                 :model-value="!item.deleteYn"
-                @update:modelValue="changeWebtoonShow(item)"
+                @update:modelValue="changeWebtoonRoleShow(item)"
               ></v-switch>
             </td>
             <td class="text-left">
-              <p class="text-overflow-1">{{ item.name }}</p>
+              <p
+                class="text-overflow-1 link"
+                @click="changeWebtoonVote(item.id)"
+              >
+                {{ item.name }}
+              </p>
             </td>
             <td>{{ item.hit }}회</td>
           </tr>
@@ -87,6 +145,48 @@ export default {
         :length="pageData.length"
         @update:modelValue="getWebtoonRoleList()"
       ></v-pagination>
+    </div>
+    <div class="vote-info">
+      <v-table class="table">
+        <thead>
+          <tr>
+            <th width="60">순위</th>
+            <th class="text-left">연예인 정보</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, i) in webtoonVoteList" :key="item.id">
+            <td>{{ i + 1 }}</td>
+            <td class="text-left">
+              <div class="celebrity-info">
+                <webtoon-character :img="item.personUrl"> </webtoon-character>
+                <ul class="celebrity-info__list">
+                  <li>
+                    <h5>이름</h5>
+                    <p>{{ item.personName }}</p>
+                  </li>
+                  <li>
+                    <h5>투표 횟수</h5>
+                    <p>{{ item.cnt }}회</p>
+                  </li>
+                  <li>
+                    <h5>이미지 링크</h5>
+                    <div class="btn-text-field">
+                      <v-text-field
+                        v-model="item.personUrl"
+                        class="height-small"
+                        hide-details
+                      >
+                      </v-text-field>
+                      <v-btn @click="savePersonImage(item)">저장</v-btn>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </v-table>
     </div>
   </div>
 </template>
