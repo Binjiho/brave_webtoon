@@ -194,13 +194,12 @@ public class WebtoonRepository {
     }
 
     public List<WebtoonResponseDto> findAllWebtoonResult (int pageSize, int page, int startPage, int endPage, int offset, boolean hasNext, boolean hasPrev, String search, String order){
-
         List<WebtoonEntity> content = queryFactory.selectFrom(webtoonEntity)
                 .where(
-                        noOffsetBuilder(offset, "w"),
                         titleBuilder(search,"w")
                 )
                 .orderBy(orderBoolean(order), webtoonEntity.id.desc())
+                .offset(offset)
                 .limit(pageSize)
                 .fetch();
 
