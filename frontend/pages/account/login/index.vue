@@ -2,12 +2,12 @@
 import UIConstants from "@/constants/UIConstants";
 import api from "~/mixin/api";
 import UIHelpers from "~/mixin/UIHelpers";
-import { useCounterStore } from "~/store/auth";
+import { useUserStore } from "~/store/auth";
 
 export default {
   mixins: [api, UIHelpers],
   setup() {
-    const store = useCounterStore();
+    const store = useUserStore();
     const { loginUserSuccess } = store;
     return { loginUserSuccess, store };
   },

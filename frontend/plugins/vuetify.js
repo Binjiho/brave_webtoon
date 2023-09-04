@@ -58,6 +58,10 @@ export default defineNuxtPlugin((app) => {
         variant: "outlined",
         clearIcon: "custom:closeCircleDelete",
       },
+      VPagination: {
+        prevIcon: "custom:arrowLeftSLine",
+        nextIcon: "custom:arrowRightSLine",
+      },
     },
   });
 

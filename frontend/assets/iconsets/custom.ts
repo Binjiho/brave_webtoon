@@ -22,6 +22,7 @@ import closeCircleDelete from "assets/iconsets/icons/system/close-circle-delete.
 import profileFill from "assets/iconsets/icons/system/profile-fill.vue";
 import movieLine from "assets/iconsets/icons/system/movie-line.vue";
 import arrowLeftMLine from "assets/iconsets/icons/system/arrow-left-m-line.vue";
+import arrowRightMLine from "assets/iconsets/icons/system/arrow-right-m-line.vue";
 
 //vuetify
 import radioOff from "assets/iconsets/icons/vuetify/radio-off.vue";
@@ -32,6 +33,7 @@ import ratingOff from "assets/iconsets/icons/vuetify/rating-off.vue";
 import ratingOn from "assets/iconsets/icons/vuetify/rating-on.vue";
 
 const customSvgNameToComponent: any = {
+  arrowRightMLine,
   profileFill,
   movieLine,
   arrowLeftMLine,

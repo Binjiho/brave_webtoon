@@ -23,7 +23,7 @@ export default {
 <style scoped lang="scss">
 .v-application {
   background: #f2f5f7;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .v-main {

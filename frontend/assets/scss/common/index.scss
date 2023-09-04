@@ -24,6 +24,10 @@
   }
 }
 
+.text-overflow-1 {
+  @include textOverflow(100%, 1);
+}
+
 .block-tab {
   height: 52px;
 

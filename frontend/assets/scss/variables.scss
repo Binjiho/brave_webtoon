@@ -35,3 +35,15 @@ $header-height: 60px;
   border: none;
   display: block;
 }
+
+@mixin line($color: #000, $height: 12px, $margin: 6px, $width: 1px) {
+  content: "";
+  display: inline-block;
+  width: $width;
+  background: $color;
+  height: $height;
+  margin: 0 $margin;
+  vertical-align: middle;
+  max-width: $width;
+  flex: 0 0 $width;
+}

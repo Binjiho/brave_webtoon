@@ -20,6 +20,7 @@ import layout from "./default.vue";
   min-height: calc(100vh - $header-height);
   margin-top: $header-height;
   padding: 48px 40px;
+  min-width: 900px;
 }
 
 .side-bar {

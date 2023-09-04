@@ -1,0 +1,56 @@
+.filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+
+  .v-text-field {
+    background: #fff;
+    max-width: 350px;
+  }
+}
+
+.table {
+  .v-switch {
+    display: inline-block;
+    padding-top: 2px;
+  }
+
+  th {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #000 !important;
+    height: unset !important;
+    padding-top: 11px !important;
+    padding-bottom: 11px !important;
+    border-bottom: 1px solid #ddd !important;
+    text-align: center !important;
+
+    &.text-left {
+      text-align: left !important;
+    }
+  }
+
+  td {
+    font-size: 13px !important;
+    color: #000 !important;
+    height: unset !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    border-bottom: 1px solid #efefef !important;
+    text-align: center !important;
+
+    &.text-left {
+      text-align: left !important;
+    }
+
+    a {
+      color: #000;
+      text-decoration: unset;
+
+      &:hover {
+        color: $main-color;
+      }
+    }
+  }
+}

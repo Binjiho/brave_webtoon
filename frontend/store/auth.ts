@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useCounterStore = defineStore("counter", {
+export const useUserStore = defineStore("counter", {
   state: () => ({
     access_token: sessionStorage.getItem("accessToken"),
     user: JSON.parse(sessionStorage.getItem("user")),
@@ -8,6 +8,9 @@ export const useCounterStore = defineStore("counter", {
   getters: {
     getAccessToken: (state) => {
       return state.access_token;
+    },
+    getUser: (state) => {
+      return state.user;
     },
   },
   actions: {

@@ -1,9 +1,17 @@
-<script setup lang="ts">
+<script lang="ts">
 import Main from "@/pages/admin/webtoon/index.vue";
 
-definePageMeta({
-  layout: "admin",
-});
+export default {
+  setup() {
+    definePageMeta({
+      layout: "admin",
+      middleware: "is-admin",
+    });
+  },
+  components: {
+    Main,
+  },
+};
 </script>
 
 <template>

@@ -1,10 +1,10 @@
 <script>
 import router from "#app/plugins/router";
-import { useCounterStore } from "~/store/auth";
+import { useUserStore } from "~/store/auth";
 
 export default {
   setup() {
-    const store = useCounterStore();
+    const store = useUserStore();
     const access_token = computed(() => store.access_token);
     const user = computed(() => store.user);
     const { logoutUser } = store;

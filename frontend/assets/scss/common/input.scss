@@ -1,18 +1,47 @@
 .v-text-field {
-  &.height-50 {
+  &.height-50,
+  &.height-40 {
     .v-field--variant-outlined {
-      --v-input-control-height: 50px;
       --v-field-padding-bottom: 1px;
 
       .v-field__input {
         padding: 0 15px;
         display: flex;
         align-items: center;
+        min-height: unset;
+        height: var(--v-input-control-height);
       }
 
       input {
         height: 100%;
+        margin-top: 0;
       }
+
+      .v-field__append-inner {
+        .v-btn {
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  &.height-50 {
+    .v-field--variant-outlined {
+      --v-input-control-height: 50px;
+    }
+
+    .v-field__input {
+      font-size: 15px;
+    }
+  }
+
+  &.height-40 {
+    .v-field--variant-outlined {
+      --v-input-control-height: 40px;
+    }
+
+    .v-field__input {
+      font-size: 14px;
     }
   }
 }
