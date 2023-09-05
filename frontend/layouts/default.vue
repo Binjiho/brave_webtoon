@@ -43,6 +43,7 @@ export default {
   min-width: $min-layout;
   min-height: 100%;
   padding-top: $header-height !important;
+  padding-bottom: 100px !important;
   box-sizing: border-box;
 
   &.side {
