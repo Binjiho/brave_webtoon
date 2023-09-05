@@ -60,5 +60,10 @@
         color: $main-color;
       }
     }
+
+    &.align-top {
+      vertical-align: top !important;
+      padding-top: 12px !important;
+    }
   }
 }

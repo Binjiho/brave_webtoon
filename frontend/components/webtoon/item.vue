@@ -50,7 +50,7 @@ export default {
           <div class="character__img-wrap">
             <webtoon-character :img="item.personUrl"> </webtoon-character>
           </div>
-          <p>{{ item.personName }}</p>
+          <p>{{ item.personName || "?" }}</p>
         </li>
       </ul>
       <h2 class="webtoon-item__title">{{ item.title }}</h2>

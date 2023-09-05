@@ -24,6 +24,32 @@
   padding: 12px 14px;
   background: #fff;
   margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 100px auto;
+  gap: 20px;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+
+    li {
+      display: flex;
+      font-size: 13px;
+      font-weight: 400;
+      align-items: center;
+      gap: 14px;
+      color: #111;
+
+      h5 {
+        width: 70px;
+        flex: 0 0 70px;
+        font-size: 13px;
+        font-weight: 400;
+        color: #aaa;
+      }
+    }
+  }
 }
 
 .v-pagination {
@@ -38,22 +64,22 @@
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 4px;
 
     li {
       display: flex;
       font-size: 12px;
       font-weight: 400;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
       color: #111;
+      height: 28px;
 
       h5 {
-        width: 60px;
-        flex: 0 0 60px;
+        width: 70px;
+        flex: 0 0 70px;
         font-size: 12px;
-        font-weight: 500;
-        color: #666666;
+        font-weight: 400;
+        color: #aaa;
       }
     }
   }
@@ -69,7 +95,7 @@
   .v-btn {
     height: 100% !important;
     min-width: unset !important;
-    background: $main-color;
+    background: #a67ed9;
     color: #fff;
   }
 }

@@ -4,6 +4,12 @@ import UIHelpers from "~/mixin/UIHelpers";
 import value from "~/mixin/value";
 
 export default {
+  setup() {
+    definePageMeta({
+      layout: "admin",
+      middleware: "is-admin",
+    });
+  },
   mixins: [api, UIHelpers, value],
   data() {
     return {
@@ -18,7 +24,7 @@ export default {
       webtoonList: [],
       pageData: {
         page: 1,
-        itemsPerPage: 5,
+        itemsPerPage: 15,
         length: 1,
       },
     };
@@ -108,6 +114,7 @@ export default {
             class="big"
             :model-value="!item.deleteYn"
             @update:modelValue="changeWebtoonShow(item)"
+            color="#000"
           ></v-switch>
         </td>
         <td class="text-left">

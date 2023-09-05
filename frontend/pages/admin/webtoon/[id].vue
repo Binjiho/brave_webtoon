@@ -30,6 +30,7 @@ export default {
       },
       webtoonRoleId: null,
       webtoonVoteList: [],
+      webtoonInfo: {},
     };
   },
   methods: {
@@ -39,8 +40,11 @@ export default {
           `/api/admin/webtoonList/${this.webtoonId}`,
           this.urlParamsPageFormatter(null, this.pageData),
           (response) => {
-            this.webtoonRoleList = response.data[0].webtoonRoleEntityList;
-            this.webtoonRoleId = response.data[0].webtoonRoleEntityList[0].id;
+            const data = response.data[0];
+            this.webtoonRoleList = data.webtoonRoleList;
+            this.webtoonRoleId = data.webtoonRoleList[0].id;
+            this.webtoonInfo = data.webtoonTitle[0];
+            this.pageData.length = data.endPage;
             resolve(response);
           }
         );
@@ -103,7 +107,27 @@ export default {
     <div>
       <div class="webtoon-info">
         <h3 class="webtoon-info__title">웹툰 정보</h3>
-        <div class="webtoon-item"></div>
+        <div class="webtoon-item" v-if="webtoonInfo.title">
+          <webtoon-character :img="webtoonInfo.uploadPath"></webtoon-character>
+          <ul class="webtoon-item__list">
+            <li>
+              <h5>웹툰명</h5>
+              <p class="text-overflow-1">{{ webtoonInfo.title }}</p>
+            </li>
+            <li>
+              <h5>생성일</h5>
+              <p>{{ formattedDate(webtoonInfo.createdDate) }}</p>
+            </li>
+            <li>
+              <h5>총 투표 횟수</h5>
+              <p>{{ webtoonInfo.hit }}회</p>
+            </li>
+            <li>
+              <h5>노출</h5>
+              <p>{{ webtoonInfo.deleteYn ? "비공개" : "공개" }}</p>
+            </li>
+          </ul>
+        </div>
       </div>
       <v-table class="table">
         <thead>
@@ -126,6 +150,7 @@ export default {
                 class="big"
                 :model-value="!item.deleteYn"
                 @update:modelValue="changeWebtoonRoleShow(item)"
+                color="#000"
               ></v-switch>
             </td>
             <td class="text-left">
@@ -156,7 +181,7 @@ export default {
         </thead>
         <tbody>
           <tr v-for="(item, i) in webtoonVoteList" :key="item.id">
-            <td>{{ i + 1 }}</td>
+            <td class="align-top">{{ i + 1 }}</td>
             <td class="text-left">
               <div class="celebrity-info">
                 <webtoon-character :img="item.personUrl"> </webtoon-character>
@@ -187,6 +212,9 @@ export default {
           </tr>
         </tbody>
       </v-table>
+      <div class="not-info" v-if="!webtoonVoteList.length">
+        <p>정보가 없습니다</p>
+      </div>
     </div>
   </div>
 </template>

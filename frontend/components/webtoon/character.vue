@@ -11,7 +11,8 @@ export default {
 
 <template>
   <div class="webtoon-character">
-    <img :src="img" alt="" />
+    <img :src="img" alt="" v-if="img" />
+    <v-icon icon="custom:personFill" v-else></v-icon>
   </div>
 </template>
 

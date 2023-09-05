@@ -5,6 +5,8 @@
   max-height: 100%;
   border-radius: 3px;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 
   &:hover {
     img {
@@ -18,5 +20,15 @@
     height: calc(100% + 2px);
     margin-left: -1px;
     transition: 0.3s;
+  }
+
+  svg {
+    width: 100%;
+    height: fit-content;
+    color: #999;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
   }
 }
