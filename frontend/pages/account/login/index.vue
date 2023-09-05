@@ -25,6 +25,8 @@ export default {
   },
   methods: {
     userLogin() {
+      if (!this.isValidLogin) return;
+
       const data = {
         userId: this.user.id,
         userPw: this.user.pw,
@@ -74,6 +76,7 @@ export default {
             placeholder="비밀번호"
             :rules="rules.password"
             v-model="user.pw"
+            @keyup.enter="userLogin()"
           ></ui-input-password>
         </li>
       </ul>
