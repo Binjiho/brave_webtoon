@@ -1,9 +1,12 @@
 import httpRequest from "@/constants/httpRequest";
+import { useUserStore } from "~/store/auth";
 
 export default {
   methods: {
     async getAccessToken() {
-      return true;
+      const store = useUserStore();
+      const access_token = computed(() => store.access_token);
+      return access_token.value;
     },
     async sendPost(
       relativeUrl,
@@ -19,7 +22,8 @@ export default {
           requestData,
           successFunction,
           failureFunction,
-          contentsType
+          contentsType,
+          accessToken
         );
       }
     },
@@ -37,7 +41,8 @@ export default {
           requestData,
           successFunction,
           failureFunction,
-          contentsType
+          contentsType,
+          accessToken
         );
       }
     },
@@ -56,7 +61,8 @@ export default {
           requestData,
           successFunction,
           failureFunction,
-          contentsType
+          contentsType,
+          accessToken
         );
       }
     },
@@ -74,7 +80,8 @@ export default {
           requestData,
           successFunction,
           failureFunction,
-          contentsType
+          contentsType,
+          accessToken
         );
       }
     },
@@ -143,12 +150,14 @@ export default {
       requestData,
       successFunction = null,
       failureFunction = null,
-      contentsType = httpRequest.REQUEST_HEADER_CONTENTS_JSON
+      contentsType = httpRequest.REQUEST_HEADER_CONTENTS_JSON,
+      accessToken
     ) {
       this.$api
         .post(relativeUrl, requestData, {
           headers: {
             "Content-Type": contentsType,
+            Authorization: `Bearer ${accessToken}`,
           },
         })
         .then((response) => {
@@ -173,12 +182,14 @@ export default {
       requestData,
       successFunction = null,
       failureFunction = null,
-      contentsType = httpRequest.REQUEST_HEADER_CONTENTS_JSON
+      contentsType = httpRequest.REQUEST_HEADER_CONTENTS_JSON,
+      accessToken
     ) {
       this.$api
         .put(relativeUrl, requestData, {
           headers: {
             "Content-Type": contentsType,
+            Authorization: `Bearer ${accessToken}`,
           },
         })
         .then((response) => {
@@ -203,13 +214,15 @@ export default {
       requestData,
       successFunction = null,
       failureFunction = null,
-      contentsType = httpRequest.REQUEST_HEADER_CONTENTS_JSON
+      contentsType = httpRequest.REQUEST_HEADER_CONTENTS_JSON,
+      accessToken
     ) {
       this.$api
         .get(relativeUrl, {
           params: requestData,
           headers: {
             "Content-Type": contentsType,
+            Authorization: `Bearer ${accessToken}`,
           },
         })
         .then((response) => {
@@ -234,13 +247,15 @@ export default {
       requestData,
       successFunction = null,
       failureFunction = null,
-      contentsType = httpRequest.REQUEST_HEADER_CONTENTS_JSON
+      contentsType = httpRequest.REQUEST_HEADER_CONTENTS_JSON,
+      accessToken
     ) {
       this.$api
         .delete(relativeUrl, {
           data: requestData,
           headers: {
             "Content-Type": contentsType,
+            Authorization: `Bearer ${accessToken}`,
           },
         })
         .then((response) => {

@@ -24,6 +24,20 @@ export default {
   methods: {
     createWebtoon() {
       if (!this.isValidForm) return;
+
+      let data = new FormData();
+      data.append("url", this.webtoonUrl);
+
+      this.sendPost(
+        `/api/admin/crawl`,
+        data,
+        (response) => {
+          this.webtoonUrl = "";
+          this.$root.vtoast.show({ message: "웹툰을 생성했습니다" });
+        },
+        () => {},
+        "multipart/form-data"
+      );
     },
   },
   mounted() {},

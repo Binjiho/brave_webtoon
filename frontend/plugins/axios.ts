@@ -5,9 +5,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   let api = axios.create({
     baseURL: defaultUrl,
-    headers: {
-      common: {},
-    },
+    headers: {},
   });
   return {
     provide: {
