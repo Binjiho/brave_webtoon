@@ -19,10 +19,7 @@ export const useUserStore = defineStore("counter", {
       this.user = successData.data.userInfo;
 
       sessionStorage.setItem("user", JSON.stringify(successData.data.userInfo));
-      sessionStorage.setItem(
-        "accessToken",
-        JSON.stringify(successData.data.token)
-      );
+      sessionStorage.setItem("accessToken", successData.data.token);
     },
     logoutUser(successData) {
       sessionStorage.removeItem("user");

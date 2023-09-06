@@ -27,7 +27,7 @@ export default {
       };
 
       this.sendAnonymousGet(
-        "/api/webtoonRoleList",
+        "/api/webtoon/webtoonRoleList",
         this.urlParamsFormatter(filter, this.pageData),
         (response) => {
           let result = response.data[0];

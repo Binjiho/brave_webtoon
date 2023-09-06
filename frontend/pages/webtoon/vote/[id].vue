@@ -24,7 +24,7 @@ export default {
   methods: {
     getWebtoonCharacter() {
       this.sendAnonymousGet(
-        `/api/webtoonVote/${this.characterInfo.id}`,
+        `/api/webtoon/webtoonVote/${this.characterInfo.id}`,
         "",
         (response) => {
           let result = response.data[0];
@@ -73,7 +73,7 @@ export default {
         personUrl: findCelebrity.personUrl,
       };
 
-      this.sendAnonymousPost(`/api/webtoonVote`, data, (response) => {
+      this.sendAnonymousPost(`/api/webtoon/webtoonVote`, data, (response) => {
         this.$root.vtoast.show({ message: "투표가 완료되었습니다" });
         this.$router.replace(
           `/webtoon/vote/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`
@@ -88,7 +88,7 @@ export default {
         personUrl: this.newCelebrity.personUrl,
       };
 
-      this.sendAnonymousPost(`/api/webtoonVote`, data, (response) => {
+      this.sendAnonymousPost(`/api/webtoon/webtoonVote`, data, (response) => {
         this.$root.vtoast.show({ message: "투표가 완료되었습니다" });
         this.$router.replace(
           `/webtoon/vote/result?character=${this.characterInfo.id}&webtoon=${this.webtoonInfo.id}`

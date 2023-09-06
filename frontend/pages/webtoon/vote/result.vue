@@ -37,7 +37,7 @@ export default {
   methods: {
     async getWebtoonResult() {
       this.sendAnonymousGet(
-        `/api/webtoonVote/result/${this.characterInfo.id}`,
+        `/api/webtoon/webtoonVote/result/${this.characterInfo.id}`,
         "",
         (response) => {
           let result = response.data[0];
@@ -71,7 +71,7 @@ export default {
 
       return new Promise((resolve, reject) => {
         this.sendAnonymousGet(
-          "/api/webtoonRoleList",
+          "/api/webtoon/webtoonRoleList",
           this.urlParamsFormatter(filter, this.pageData),
           (response) => {
             let result = response.data[0];

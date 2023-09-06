@@ -23,7 +23,7 @@ export default {
 
       return new Promise((resolve, reject) => {
         this.sendAnonymousGet(
-          "/api/webtoonList",
+          "/api/webtoon/webtoonList",
           this.urlParamsFormatter(filter, this.pageData),
           (response) => {
             resolve(response);
@@ -54,7 +54,7 @@ export default {
       };
 
       this.sendAnonymousGet(
-        "/api/webtoonList",
+        "/api/webtoon/webtoonList",
         this.urlParamsFormatter(filter, this.pageData),
         (response) => {
           this.webtoonList = response.data[0].mainResponseDtoList;
