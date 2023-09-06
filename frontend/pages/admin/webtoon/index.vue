@@ -77,7 +77,11 @@ export default {
 </script>
 
 <template>
-  <admin-ui-title title="웹툰 리스트"></admin-ui-title>
+  <admin-ui-title title="웹툰 리스트">
+    <v-btn class="main-btn-40" width="140" to="/admin/webtoon/create"
+      >웹툰 생성</v-btn
+    >
+  </admin-ui-title>
   <div class="filter">
     <v-text-field
       placeholder="웹툰명 및 캐릭터 입력"

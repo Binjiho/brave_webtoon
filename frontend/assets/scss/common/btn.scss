@@ -77,3 +77,18 @@
   background: #fff;
   max-width: $max-layout;
 }
+
+.v-btn.right-arrow-btn {
+  height: unset !important;
+  color: #666;
+  .v-btn__content {
+    &::after {
+      content: "";
+      @include maskIcon(
+        "~/assets/iconsets/svg/system/arrow-right-s-line.svg",
+        12px
+      );
+      margin-left: 10px;
+    }
+  }
+}
