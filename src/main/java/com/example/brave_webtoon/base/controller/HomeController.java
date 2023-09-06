@@ -21,19 +21,19 @@ public class HomeController {
     public String helloWorld(){
         return "HelloWorld!";
     }
-    @GetMapping({"/","main"})
-    public String openMainPage(){
-        return "main";
-    }
 
-    @GetMapping("/api/login")
-    public String openLoginPage() {
-        return "admin/login";
-    }
+//    @GetMapping("/api/login")
+//    public String openLoginPage() {
+//        return "admin/login";
+//    }
 
-    @PostMapping("/crawl/save")
-    public String saveCrawl(@RequestParam String url) throws IOException {
-        webCrawlService.crawl(url);
-        return "redirect:/";
-    }
+//    @GetMapping({"/","main"})
+//    public String openMainPage(){
+//        return "main";
+//    }
+//    @PostMapping("/crawl/save")
+//    public String saveCrawl(@RequestParam String url) throws IOException {
+//        webCrawlService.crawl(url);
+//        return "redirect:/";
+//    }
 }

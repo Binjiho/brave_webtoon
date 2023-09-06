@@ -7,6 +7,7 @@ import com.example.brave_webtoon.webtoon.dto.admin.WebtoonRolePagingDto;
 import com.example.brave_webtoon.webtoon.dto.admin.WebtoonRoleResponseDto;
 import com.example.brave_webtoon.webtoon.entity.WebtoonEntity;
 import com.example.brave_webtoon.webtoon.entity.WebtoonRoleEntity;
+import com.example.brave_webtoon.webtoon.service.WebCrawlService;
 import com.example.brave_webtoon.webtoon.service.WebtoonService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +28,21 @@ import java.util.stream.Collectors;
 public class AdminController {
 
     private final WebtoonService webtoonService;
+    private final WebCrawlService webCrawlService;
+
+//    @GetMapping({"/admin/","/admin/crawl"})
+//    public String openMainPage(){
+//        return "main";
+//    }
+//    @PostMapping("/admin/crawl/save")
+//    @Operation(summary = "어드민 웹툰 리스트 화면", description = "어드민 웹툰 리스트를 화면에 출력")
+//    @Parameters({
+//            @Parameter(name="url", description = "웹툰 캐릭터 페이지 URL", required = true),
+//    })
+//    public String saveCrawl(@RequestParam String url) throws IOException {
+//        webCrawlService.crawl(url);
+//        return "redirect:/admin/crawl";
+//    }
 
     @GetMapping("/admin/webtoonList")
     @Operation(summary = "어드민 웹툰 리스트 화면", description = "어드민 웹툰 리스트를 화면에 출력")

@@ -28,7 +28,7 @@ public class MemberJoinService {
                     .userPw(bCryptPasswordEncoder.encode(memberDto.getUserPw()))
                     .htel(memberDto.getHtel())
                     .name(memberDto.getName())
-                    .role(Role.valueOf("ADMIN"))
+                    .role(Role.valueOf("USER"))
                     .build();
             memberRepository.save(memberEntity);
             return memberEntity.getId();
