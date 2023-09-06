@@ -13,41 +13,54 @@ export default {
       },
       pageData: {
         page: 1,
-        itemsPerPage: 100,
+        itemsPerPage: 10,
+        hasNext: true,
       },
       characterList: [],
     };
   },
   methods: {
-    getWebtoonCharacter() {
+    async getWebtoonCharacter() {
       const filter = {
         id: this.webtoonInfo.id,
         pageSize: 100,
         offset: 0,
       };
 
-      this.sendAnonymousGet(
-        "/api/webtoon/webtoonRoleList",
-        this.urlParamsFormatter(filter, this.pageData),
-        (response) => {
-          let result = response.data[0];
+      return new Promise((resolve, reject) => {
+        this.sendAnonymousGet(
+          "/api/webtoon/webtoonRoleList",
+          this.urlParamsFormatter(filter, this.pageData),
+          (response) => {
+            resolve(response);
+          }
+        );
+      });
+    },
+    async load({ side, done }) {
+      if (!this.pageData.hasNext) return done("error");
+      // Perform API call
+      const res = await this.getWebtoonCharacter();
+      this.pageData.page += 1;
 
-          this.webtoonInfo = {
-            ...this.webtoonInfo,
-            title: result.title,
-            img: result.uploadPath,
-          };
+      this.webtoonInfo = {
+        ...this.webtoonInfo,
+        title: res.data[0].title,
+        img: res.data[0].uploadPath,
+      };
 
-          this.characterList = result.webtoonRoleEntityList;
-        }
-      );
+      let list = res.data[0].webtoonRoleEntityList;
+      this.pageData.hasNext = res?.data[0]?.hasNext;
+
+      if (!list?.length) return done("error");
+      if (list[0]?.name === this.characterList[0]?.name) return done("error");
+
+      this.characterList.push(...list);
+      done("ok");
     },
     goVotePage(id) {
       this.$router.push("/webtoon/vote/" + id);
     },
-  },
-  created() {
-    this.getWebtoonCharacter();
   },
 };
 </script>
@@ -70,12 +83,18 @@ export default {
     <h3 class="webtoon-info__title">{{ webtoonInfo.title }}</h3>
     <p class="webtoon-info__text">하단의 캐릭터를 선택하여<br />투표해주세요</p>
   </div>
-  <ul class="character-list">
-    <li v-for="item in characterList" @click="goVotePage(item.id)">
-      <webtoon-character :img="item.uploadPath"></webtoon-character>
-      <p>{{ item.name }}</p>
-    </li>
-  </ul>
+  <v-infinite-scroll :items="characterList" @load="load" class="character-list">
+    <template
+      v-for="(item, index) in characterList"
+      :key="item.i"
+      @click="goVotePage(item.id)"
+    >
+      <div class="character-list__item">
+        <webtoon-character :img="item.uploadPath"></webtoon-character>
+        <p>{{ item.name }}</p>
+      </div>
+    </template>
+  </v-infinite-scroll>
 </template>
 
 <style lang="scss" scoped>

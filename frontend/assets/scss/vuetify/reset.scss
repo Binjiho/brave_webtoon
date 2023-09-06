@@ -211,6 +211,7 @@
 }
 
 .v-infinite-scroll {
+  overflow: visible !important;
   &__side {
     display: none;
   }
