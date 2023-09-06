@@ -4,6 +4,7 @@ import com.example.brave_webtoon.security.constant.AuthConstants;
 import com.example.brave_webtoon.security.util.TokenUtil;
 import io.jsonwebtoken.*;
 import lombok.NonNull;
+import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -23,6 +24,7 @@ import java.util.List;
  *
  * @fileName JwtAuthorizationFilter
  */
+@Log4j2
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
@@ -32,16 +34,18 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         // 1. 토큰이 필요하지 않은 API URL에 대해서 배열로 구성합니다.
         List<String> list = Arrays.asList(
-                "/",
-                "/swagger",
-                "/crawl",
-                "/api/login",
+                "/swagger-ui",
+                "/api-docs",
+                "/api/person/",
+                "/api/account/",
                 "/api/signIn",
+                "/crawl",
                 "m.chuing.net/db/webtoon/view/people.php" //crawllingSiteUrl
         );
 
         // 2. 토큰이 필요하지 않은 API URL의 경우 => 로직 처리 없이 다음 필터로 이동
         if (list.stream().anyMatch(obj -> request.getRequestURI().contains(obj)) ) {
+//            log.info("=========JwtAuthorizationFilter Not Need Token=========");
             chain.doFilter(request, response);
             return;
         }

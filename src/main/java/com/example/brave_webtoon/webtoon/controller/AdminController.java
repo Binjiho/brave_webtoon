@@ -34,15 +34,15 @@ public class AdminController {
 //    public String openMainPage(){
 //        return "main";
 //    }
-//    @PostMapping("/admin/crawl/save")
-//    @Operation(summary = "어드민 웹툰 리스트 화면", description = "어드민 웹툰 리스트를 화면에 출력")
-//    @Parameters({
-//            @Parameter(name="url", description = "웹툰 캐릭터 페이지 URL", required = true),
-//    })
-//    public String saveCrawl(@RequestParam String url) throws IOException {
-//        webCrawlService.crawl(url);
-//        return "redirect:/admin/crawl";
-//    }
+
+    @PostMapping("/admin/crawl")
+    @Operation(summary = "어드민 웹툰 리스트 화면", description = "어드민 웹툰 리스트를 화면에 출력")
+    @Parameters({
+            @Parameter(name="url", description = "웹툰 캐릭터 페이지 URL", required = true),
+    })
+    public void saveCrawl(@RequestParam String url) throws IOException {
+        webCrawlService.crawl(url);
+    }
 
     @GetMapping("/admin/webtoonList")
     @Operation(summary = "어드민 웹툰 리스트 화면", description = "어드민 웹툰 리스트를 화면에 출력")

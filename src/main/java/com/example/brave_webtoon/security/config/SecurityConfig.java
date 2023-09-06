@@ -45,12 +45,12 @@ public class SecurityConfig {
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        final String[] allowedUrls = {
-                "/",
-                "/swagger-ui/**",
-                "/swagger/**",
-                "/crawl/**"
-        };
+//        final String[] allowedUrls = {
+//                "/",
+//                "/swagger-ui/**",
+//                "/swagger/**",
+//                "/crawl/**"
+//        };
 
         http
                 // [STEP1] 서버에 인증정보를 저장하지 않기에 csrf를 사용하지 않는다.

@@ -54,8 +54,6 @@ public class WebCrawlService {
         String stateText = state.text().trim();
 
         String title = webtoonNmText.replaceAll(stateText,"");
-        System.out.println(title);
-        System.out.println(stateText);
 
         Elements titleImg = doc.select("div.swiper-wrapper > div > div > div > img[src]");
         String titleImgSrc = titleImg.attr("src").trim();
@@ -86,22 +84,19 @@ public class WebCrawlService {
         Elements elements = doc.select("div.people_base");
 
         elements.forEach(el -> {
-            System.out.println("==============================================================================");
+//            System.out.println("==============================================================================");
 
             Elements role = el.select("div.people_role");
             String roleText = role.text().trim();
             if(roleText.equals("특별출연")){
                 return;
             }
-            System.out.println(roleText);
 
             Elements name = el.select("div.people_name > a");
             String nameText = name.text().trim();
-            System.out.println(nameText);
 
             Elements img = el.select("img[src]");
             String imgSrc = img.attr("src").trim();
-            System.out.println(imgSrc);
 
             String uploadedRoleImageUrl="";
             try {
@@ -125,7 +120,7 @@ public class WebCrawlService {
                     .build());
 
         });
-        System.out.println("================================종료==============================================");
+//        System.out.println("================================종료==============================================");
     }
 
 
