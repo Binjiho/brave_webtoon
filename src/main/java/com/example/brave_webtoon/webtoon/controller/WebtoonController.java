@@ -22,7 +22,7 @@ public class WebtoonController {
 
     private final WebtoonService webtoonService;
 
-    @GetMapping("/webtoonList")
+    @GetMapping("/webtoon/webtoonList")
     @Operation(summary = "웹툰 리스트 화면", description = "웹툰 리스트를 화면에 출력")
     @Parameters({
             @Parameter(name="pageSize", description = "페이징 사이즈", required = true),
@@ -39,7 +39,7 @@ public class WebtoonController {
         return result;
     }
 
-    @GetMapping("/webtoonRoleList")
+    @GetMapping("/webtoon/webtoonRoleList")
     @Operation(summary = "웹툰 캐릭터 리스트 화면", description = "웹툰 캐릭터 리스트를 화면에 출력 with 더보기")
     @Parameters({
             @Parameter(name="id", description = "webtoonId", required = true),
@@ -56,7 +56,7 @@ public class WebtoonController {
         return result;
     }
 
-    @GetMapping("/webtoonVote/{id}")
+    @GetMapping("/webtoon/webtoonVote/{id}")
     @Operation(summary = "웹툰 캐릭터 상세 화면", description = "웹툰 캐릭터중 한명을 화면에 출력")
     @Parameters({
             @Parameter(name="id", description = "webtoonRoleId", required = true)
@@ -67,7 +67,7 @@ public class WebtoonController {
         return result;
     }
 
-    @PostMapping("/webtoonVote")
+    @PostMapping("/webtoon/webtoonVote")
     @Operation(summary = "웹툰 캐릭터 상세화면 투표하기", description = "웹툰 캐릭터중 한명과 연예인을 투표하기")
     @Parameters({
             @Parameter(name="webtoonId", description="webtoonId", required = true),
@@ -80,7 +80,7 @@ public class WebtoonController {
         webtoonService.saveVote(voteDto);
     }
 
-    @GetMapping("/webtoonVote/result/{id}")
+    @GetMapping("/webtoon/webtoonVote/result/{id}")
     @Operation(summary = "웹툰 캐릭터 투표 결과 화면", description = "웹툰 캐릭터중 한명의 투표결과를 화면에 출력")
     @Parameters({
             @Parameter(name="id", description = "webtoonRoleId", required = true)

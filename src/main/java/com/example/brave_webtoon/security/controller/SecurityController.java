@@ -69,17 +69,17 @@ public class SecurityController {
     public void generateJWT() {
     }
 
-    @PostMapping("/generateToken")
-    @Operation(summary = "토큰 발급", description = "사용자 정보를 기반으로 JWT를 발급")
-    @Parameters({
-            @Parameter(name="userId", description = "유저아이디", required = true),
-            @Parameter(name="userPw", description = "유저비밀번호", required = true)
-    })
-    public String generateJWT(@RequestBody MemberDto memberDto) {
-
-        String resultToken = TokenUtil.generateJwtToken(memberDto);
-
-        return resultToken;
-    }
+//    @PostMapping("/generateToken")
+//    @Operation(summary = "토큰 발급", description = "사용자 정보를 기반으로 JWT를 발급")
+//    @Parameters({
+//            @Parameter(name="userId", description = "유저아이디", required = true),
+//            @Parameter(name="userPw", description = "유저비밀번호", required = true)
+//    })
+//    public String generateJWT(@RequestBody MemberDto memberDto) {
+//
+//        String resultToken = TokenUtil.generateJwtToken(memberDto);
+//
+//        return resultToken;
+//    }
 
 }

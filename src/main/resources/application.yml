@@ -3,6 +3,7 @@ server:
 
 spring:
   profiles:
+    active: dev #real
     include:
       - db
       - env
@@ -61,6 +62,7 @@ springdoc:
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
   swagger-ui:
+#    enabled: false
     path: swagger-ui.html            # Swagger UI 경로 => localhost/swagger-ui.html
     tags-sorter: alpha            # alpha: 알파벳 순 태그 정렬, method: HTTP Method 순 정렬
     operations-sorter: alpha

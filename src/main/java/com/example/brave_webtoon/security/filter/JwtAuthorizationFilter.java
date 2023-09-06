@@ -39,6 +39,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 "/api/person/",
                 "/api/account/",
                 "/api/signIn",
+                "/api/webtoon",
                 "/crawl",
                 "m.chuing.net/db/webtoon/view/people.php" //crawllingSiteUrl
         );

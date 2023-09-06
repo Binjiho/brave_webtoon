@@ -1,0 +1,6 @@
+# Swagger springdoc-ui Configuration
+springdoc:
+  swagger-ui:
+    enabled: false
+  cache:
+    disabled: true
