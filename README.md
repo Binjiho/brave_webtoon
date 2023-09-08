@@ -49,36 +49,32 @@
 
 ## 🛠️ 주요 기능
 
-### Front - 웹툰 캐릭터에 맞는 배우 추가 및 투표
+### 웹툰 검색 기능
 
-어쩌구 저쩌구 했다
+![match_sumnail.png](frontend/assets/image/webtoon_main.gif)
 
-어쩌구 저쩌구 했다
+무한 스크롤을 적용하여 UX에 집중했습니다.<br>
+상단 검색바를 통해 웹툰을 검색할 수 있습니다.
 
-어쩌구 저쩌구 했다
+### 배우 투표 기능
 
-### Front - 종합 투표 결과 보기
+![match_sumnail.png](frontend/assets/image/webtoon_vote.gif)
 
-어쩌구 저쩌구 했다
+유저가 배우를 직접 입력하여 추가할 수 있으며 기존의 배우에게 투표할 수 있습니다.<br>
+투표 후에는 결과값을 바로 볼 수 있고 다른 캐릭터를 투표하도록 유도했습니다.
 
-어쩌구 저쩌구 했다
+### 어드민 - 웹툰 관리
 
-어쩌구 저쩌구 했다
+![match_sumnail.png](frontend/assets/image/admin_webtoon_main.gif)
 
-### Front - 웹툰 투표 1위 썸네일 사용
+웹툰을 `최신순`, `오래된순`, `투표많은순`, `투표적은순`으로 정렬할 수 있으며 검색 기능이 있습니다.<br>
+해당 웹툰을 `노출`&`비노출` 할 수 있습니다.
 
-어쩌구 저쩌구 했다
+### 어드민 - 웹툰 생성
 
-어쩌구 저쩌구 했다
+![match_sumnail.png](frontend/assets/image/admin_webtoon_create.gif)
 
-어쩌구 저쩌구 했다
-
-### admin - 웹툰 캐릭터 크롤링하여 생성하기
-
-어쩌구 저쩌구 했다
-
-어쩌구 저쩌구 했다
-
-어쩌구 저쩌구 했다
+웹툰을 크롤링을 통해 생성합니다. <br>
+해당 웹툰의 정보와 캐릭터를 가져옵니다.
 
 ## 📂 폴더 구조
