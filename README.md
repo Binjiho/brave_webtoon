@@ -1,3 +1,5 @@
+# Match
+
 ![match_sumnail.png](frontend/assets/image/match_sumnail.png)
 
 ### 💭 이 웹툰 주인공에 ooo 배우가 잘 어울리던데..
@@ -11,6 +13,9 @@
 직접 캐스팅 디렉터가 되어 배우를 투표해보세요!
 
 나만 알고 있기 아까운 배우도 추천해주세요
+
+<br>
+<br>
 
 ## 📃 소개
 
@@ -43,38 +48,39 @@
 - **Frontend Developer & Design - [임재희](https://github.com/limjaehee)**
 - **Backend Developer - [박지호](https://github.com/Binjiho)**
 
-### 참고 링크
+### 기타
 
 - [팀 노션](https://www.notion.so/a4f860882cc146698d15c5751a4a4978?v=6658d070136b4066bd3f4febaf624ab1&pvs=4)
+
+<br>
+<br>
 
 ## 🛠️ 주요 기능
 
 ### 웹툰 검색 기능
 
-![match_sumnail.png](frontend/assets/image/webtoon_main.gif)
+> 무한 스크롤을 적용하여 UX에 집중했습니다.<br>
+> 상단 검색바를 통해 웹툰을 검색할 수 있습니다.
 
-무한 스크롤을 적용하여 UX에 집중했습니다.<br>
-상단 검색바를 통해 웹툰을 검색할 수 있습니다.
+![match_sumnail.png](frontend/assets/image/webtoon_main.gif)
 
 ### 배우 투표 기능
 
-![match_sumnail.png](frontend/assets/image/webtoon_vote.gif)
+> 유저가 배우를 직접 입력하여 추가할 수 있으며 기존의 배우에게 투표할 수 있습니다.<br>
+> 투표 후에는 결과값을 바로 볼 수 있고 다른 캐릭터를 투표하도록 유도했습니다.
 
-유저가 배우를 직접 입력하여 추가할 수 있으며 기존의 배우에게 투표할 수 있습니다.<br>
-투표 후에는 결과값을 바로 볼 수 있고 다른 캐릭터를 투표하도록 유도했습니다.
+![match_sumnail.png](frontend/assets/image/webtoon_vote.gif)
 
 ### 어드민 - 웹툰 관리
 
-![match_sumnail.png](frontend/assets/image/admin_webtoon_main.gif)
+> 웹툰을 `최신순`, `오래된순`, `투표많은순`, `투표적은순`으로 정렬할 수 있으며 검색 기능이 있습니다.<br>
+> 해당 웹툰을 `노출`&`비노출` 할 수 있습니다.
 
-웹툰을 `최신순`, `오래된순`, `투표많은순`, `투표적은순`으로 정렬할 수 있으며 검색 기능이 있습니다.<br>
-해당 웹툰을 `노출`&`비노출` 할 수 있습니다.
+![match_sumnail.png](frontend/assets/image/admin_webtoon_main.gif)
 
 ### 어드민 - 웹툰 생성
 
+> 웹툰을 크롤링을 통해 생성합니다. <br>
+> 해당 웹툰의 정보와 캐릭터를 가져옵니다.
+
 ![match_sumnail.png](frontend/assets/image/admin_webtoon_create.gif)
-
-웹툰을 크롤링을 통해 생성합니다. <br>
-해당 웹툰의 정보와 캐릭터를 가져옵니다.
-
-## 📂 폴더 구조
