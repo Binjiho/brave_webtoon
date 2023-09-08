@@ -97,6 +97,7 @@
   .character-list {
     gap: 16px;
     display: flex;
+    flex-direction: row;
 
     &__item {
       width: 84px;
