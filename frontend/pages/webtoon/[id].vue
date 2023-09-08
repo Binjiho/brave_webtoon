@@ -84,12 +84,8 @@ export default {
     <p class="webtoon-info__text">하단의 캐릭터를 선택하여<br />투표해주세요</p>
   </div>
   <v-infinite-scroll :items="characterList" @load="load" class="character-list">
-    <template
-      v-for="(item, index) in characterList"
-      :key="item.i"
-      @click="goVotePage(item.id)"
-    >
-      <div class="character-list__item">
+    <template v-for="(item, index) in characterList" :key="item.i">
+      <div class="character-list__item" @click="goVotePage(item.id)">
         <webtoon-character :img="item.uploadPath"></webtoon-character>
         <p>{{ item.name }}</p>
       </div>
