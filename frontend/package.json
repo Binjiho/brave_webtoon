@@ -2,7 +2,7 @@
   "name": "frontend",
   "private": true,
   "scripts": {
-    "dev": "nuxt dev --port 9001",
+    "dev": "nuxt dev --host 0.0.0.0 --port 9001",
     "build": "nuxt build",
     "start": "nuxt start --port 9001",
     "generate": "nuxt generate"
