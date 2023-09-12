@@ -1,5 +1,4 @@
-FROM node:16-alpine
-#FROM node:18-alpine
+FROM node:18-alpine
 #RUN mkdir /frontend
 
 # 동작을 수행할 파일 위치 지정 (해당 위치에 파일이 복사, 도커 컨테이너 접근 시 해당 폴더에 바로 접근)

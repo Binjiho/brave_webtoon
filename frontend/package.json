@@ -2,7 +2,7 @@
   "name": "frontend",
   "private": true,
   "scripts": {
-    "dev": "nuxt dev --host 0.0.0.0 --port 9001",
+    "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 nuxt dev --host 0.0.0.0",
     "build": "nuxt build",
     "start": "nuxt start --port 9001",
     "generate": "nuxt generate"
@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@types/node": "^18",
-    "nuxt": "^3.4.2",
+    "nuxt": "^3.4.3-rc.13",
     "prettier": "^2.8.8"
   },
   "overrides": {
