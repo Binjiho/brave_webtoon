@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 nuxt dev --host 0.0.0.0",
     "build": "nuxt build",
-    "start": "nuxt start --port 9001",
+    "start": "nuxt start",
     "generate": "nuxt generate"
   },
   "dependencies": {

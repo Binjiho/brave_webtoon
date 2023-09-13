@@ -3,18 +3,17 @@ version: '3.3'
 services:
   backend:
     build: ./.
-    container_name: backend
-    expose:
-      - 9002
+    container_name: backend_blue
+#    expose:
+#      - 9002
     ports:
       - 9002:9002
     environment:
       - HOST=0.0.0.0
-#      spring.datasource.url: "jdbc:mysql://busan-real-db.ceuuonjcjyne.ap-northeast-2.rds.amazonaws.com:3306/project?useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Seoul"
 
   frontend:
     build: ./frontend
-    container_name: frontend
+    container_name: frontend_blue
     ports:
       - 9001:9001
       - 24678:24678

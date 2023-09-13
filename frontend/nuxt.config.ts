@@ -3,13 +3,6 @@ import vuetify from "vite-plugin-vuetify";
 import svgLoader from "vite-svg-loader";
 
 export default defineNuxtConfig({
-  // nitro: {
-  //   routeRules: {
-  //     "/api/**": {
-  //       proxy: "http://127.0.0.1:9002/api/**"
-  //     },
-  //   }
-  // },
   head: {
     title: "frontend",
     meta: [
@@ -27,6 +20,9 @@ export default defineNuxtConfig({
   },
   devServer: {
     port: 9001,
+  },
+  axios: {
+      baseURL: 'http://127.0.0.1:9001',
   },
   ssr: false,
   target: "static",
@@ -60,7 +56,6 @@ export default defineNuxtConfig({
       proxy: {
         "/api": {
           target: "http://host.docker.internal:9002/",
-          // target: "http://127.0.0.1:9002/",
           changeOrigin: true,
           secure: false,
         },
