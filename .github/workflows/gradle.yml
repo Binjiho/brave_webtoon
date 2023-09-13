@@ -66,11 +66,12 @@ jobs:
 
       - name: docker Hub push
         run: |
-          cd /
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}/backend:latest
-          cd ./frontend
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}/frontend:latest
-          
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}:latest
+#          cd /
+#          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}/backend:latest
+#          cd ./frontend
+#          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}/frontend:latest
+
 #  deploy:
 #    needs: build
 #    runs-on: ubuntu-latest
