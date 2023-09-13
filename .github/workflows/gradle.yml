@@ -54,11 +54,10 @@ jobs:
 
       - name: docker FE image build
         run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}/backend .
           cd ./frontend
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}/frontend .
-          cd ..
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}/backend .
-
+          
       - name: DockerHub Login
         uses: docker/login-action@v2.2.0
         with:
