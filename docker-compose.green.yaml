@@ -4,8 +4,10 @@ services:
   backend:
     build: ./.
     container_name: backend_green
+    expose:
+      - 9003
     ports:
-      - 9002:9002
+      - 9003:9003
     environment:
       - HOST=0.0.0.0
 
@@ -14,7 +16,7 @@ services:
     container_name: frontend_green
     ports:
       - 9004:9001
-      - 24678:24678
+#      - 24678:24678
     volumes:
       - ./frontend:/frontend
     environment:
