@@ -69,55 +69,56 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}:backend
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}:frontend
 
-#  deploy:
-#    needs: build
-#    runs-on: ubuntu-latest
-#    env:
-#      deploy-directory: ./deploy
-#    steps:
-#      - name: Get Github Actions IP
-#        id: ip
-#        uses: haythem/public-ip@v1.2
-#
-#      - name: Configure AWS Credentials For GitHub Actions
-#        uses: aws-actions/configure-aws-credentials@v2
-#        with:
-#          aws-access-key-id: ${{ secrets.AWS_IAM_PUBLIC }}
-#          aws-secret-access-key: ${{ secrets.AWS_IAM_PRIVATE }}
-#          aws-region: ap-northeast-2
-#
-#      - name: Add Github Actions IP to Security group
-#        run: |
-#          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
-#
-#      - name: DockerImagePull
-#        uses: appleboy/ssh-action@v1.0.0
-#        with:
-#          host: ${{ secrets.AWS_EC2_PUBLIC_DNS }} # EC2 인스턴스 퍼블릭 DNS
-#          username: ec2-user
-#          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }} # pem 키
-#          port: 22
-#          timeout: 40s
-#          script_stop: true
-#          script: |
-#            echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-#            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}:latest || exit 1
-#
-#      - name: Deploy sh
-#        uses: appleboy/ssh-action@v1.0.0
-#        with:
-#          host: ${{ secrets.AWS_EC2_PUBLIC_DNS }} # EC2 인스턴스 퍼블릭 DNS
-#          username: ec2-user
-#          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }} # pem 키
-#          port: 22
-#          timeout: 40s
-#          script_stop: true
-#          script: |
-#            pwd
-#            ls
-#            cd /home/ec2-user/deploy/deploy
-#            sh deploy.sh
-#
-#      - name: Remove Github Actions IP From Security Group
-#        run: |
-#          aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      deploy-directory: ./deploy
+    steps:
+      - name: Get Github Actions IP
+        id: ip
+        uses: haythem/public-ip@v1.2
+
+      - name: Configure AWS Credentials For GitHub Actions
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_IAM_PUBLIC }}
+          aws-secret-access-key: ${{ secrets.AWS_IAM_PRIVATE }}
+          aws-region: ap-northeast-2
+
+      - name: Add Github Actions IP to Security group
+        run: |
+          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
+      - name: DockerImagePull
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.AWS_EC2_PUBLIC_DNS }} # EC2 인스턴스 퍼블릭 DNS
+          username: ec2-user
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }} # pem 키
+          port: 22
+          timeout: 40s
+          script_stop: true
+          script: |
+            echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}:backend || exit 1
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}:frontend || exit 1
+
+      - name: Deploy sh
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.AWS_EC2_PUBLIC_DNS }} # EC2 인스턴스 퍼블릭 DNS
+          username: ec2-user
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }} # pem 키
+          port: 22
+          timeout: 40s
+          script_stop: true
+          script: |
+            pwd
+            ls
+            cd /home/ec2-user/deploy
+            sh deploy.sh
+
+      - name: Remove Github Actions IP From Security Group
+        run: |
+          aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32

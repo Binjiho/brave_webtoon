@@ -4,10 +4,10 @@ services:
   backend:
     build: ./.
     container_name: backend_green
-    expose:
-      - 9003
+#    expose:
+#      - 9003
     ports:
-      - 9003:9003
+      - 9003:9002
     environment:
       - HOST=0.0.0.0
 
@@ -16,11 +16,12 @@ services:
     container_name: frontend_green
     ports:
       - 9004:9001
-      - 24670:24678
+      - 24679:24678
     volumes:
       - ./frontend:/frontend
     environment:
       - HOST=0.0.0.0
+      - API_URL=http://host.docker.internal:9003/
     stdin_open: true
     tty: true
     depends_on:

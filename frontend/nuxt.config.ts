@@ -55,7 +55,8 @@ export default defineNuxtConfig({
     server: {
       proxy: {
         "/api": {
-          target: "http://host.docker.internal:9002/",
+          target: process.env.API_URL,
+          // target: "http://host.docker.internal:9002/",
           changeOrigin: true,
           secure: false,
         },

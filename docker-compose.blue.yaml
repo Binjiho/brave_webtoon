@@ -2,17 +2,18 @@ version: '3.3'
 
 services:
   backend:
-    build: ./.
+#    build: ./.
+    image: backend
     container_name: backend_blue
-    expose:
-      - 9002
+
     ports:
       - 9002:9002
     environment:
       - HOST=0.0.0.0
 
   frontend:
-    build: ./frontend
+#    build: ./frontend
+    image: frontend
     container_name: frontend_blue
     ports:
       - 9001:9001
@@ -21,6 +22,7 @@ services:
       - ./frontend:/frontend
     environment:
       - HOST=0.0.0.0
+      - API_URL=http://host.docker.internal:9002/
     stdin_open: true
     tty: true
     depends_on:
