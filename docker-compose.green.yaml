@@ -21,8 +21,9 @@ services:
     volumes:
       - ./frontend:/frontend
     environment:
-      - HOST=0.0.0.0
-      - API_URL=http://host.docker.internal:9003/
+      - HOST=0.0.0.
+      - API_URL=http://localhost:9002/ #linux
+#      - API_URL=http://host.docker.internal:9003/
     stdin_open: true
     tty: true
     depends_on:
