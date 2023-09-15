@@ -3,7 +3,7 @@ version: '3.3'
 services:
   backend:
 #    build: ./.
-    image: backend
+    image: jiyu1948/brave_webtoon:backend
     container_name: backend_blue
 
     ports:
@@ -13,7 +13,7 @@ services:
 
   frontend:
 #    build: ./frontend
-    image: frontend
+    image: jiyu1948/brave_webtoon:frontend
     container_name: frontend_blue
     ports:
       - 9001:9001
