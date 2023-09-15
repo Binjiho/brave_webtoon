@@ -20,6 +20,13 @@ export default defineNuxtConfig({
   },
   devServer: {
     port: 9001,
+    open: true, // opens browser window automatically
+    hmr: {
+      clientPort: 24600,
+      Port: 24600,
+      protocol: 'ws',
+      host: 'localhost',
+    },
   },
   axios: {
       baseURL: 'http://127.0.0.1:9001',
@@ -44,6 +51,9 @@ export default defineNuxtConfig({
     autoImports: ["defineStore", "acceptHMRUpdate"],
   },
   vite: {
+    server: {
+      watch: { usePolling: true },
+    },
     plugins: [svgLoader()],
     css: {
       preprocessorOptions: {
@@ -61,6 +71,12 @@ export default defineNuxtConfig({
           secure: false,
         },
       },
+//       hmr: {
+//         clientPort: 24600,
+//         Port: 24600,
+//         protocol: 'ws',
+//         host: process.env.NUXT_URL,
+//       }
     },
   },
 });

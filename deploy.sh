@@ -30,7 +30,7 @@ sleep 10
 echo ">>BEFORE_COMPOSE_COLOR = ${BEFORE_COMPOSE_COLOR}"
 echo ">>AFTER_COMPOSE_COLOR = ${AFTER_COMPOSE_COLOR}"
 
-EXIST_AFTER=$(docker-compose -f docker-compose.${AFTER_COMPOSE_COLOR}.yaml ps | grep ${AFTER_COMPOSE_COLOR})
+EXIST_AFTER=$(docker ps | grep ${AFTER_COMPOSE_COLOR})
 
 if [ -n "$EXIST_AFTER" ]; then
         echo ">> nginx conf fix AND nginx reload"

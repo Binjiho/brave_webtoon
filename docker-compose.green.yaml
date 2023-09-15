@@ -2,7 +2,8 @@ version: '3.3'
 
 services:
   backend:
-    image: jiyu1948/brave_webtoon:backend
+    build: ./.
+#    image: jiyu1948/brave_webtoon:backend
     container_name: backend_green
 
     ports:
@@ -11,15 +12,16 @@ services:
       - HOST=0.0.0.0
 
   frontend:
-    image: jiyu1948/brave_webtoon:frontend
+    build: ./frontend
+#    image: jiyu1948/brave_webtoon:frontend
     container_name: frontend_green
     ports:
       - 9004:9001
-      - 24679:24678
+      - 24600:24600
     volumes:
       - ./frontend:/frontend
     environment:
-      - HOST=0.0.0.
+      - HOST=0.0.0.0
 #     - API_URL=http://172.17.0.1:9003/ #linux
       - API_URL=http://host.docker.internal:9003/
     stdin_open: true
