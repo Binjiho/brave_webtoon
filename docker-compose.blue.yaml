@@ -22,7 +22,7 @@ services:
 #      - ./frontend:/frontend
     environment:
       - HOST=0.0.0.0
-#      - API_URL=http://localhost:9002/ #linux
+#     - API_URL=http://172.17.0.1:9002/ #linux
       - API_URL=http://host.docker.internal:9002/
     stdin_open: true
     tty: true
