@@ -2,7 +2,6 @@ version: '3.3'
 
 services:
   backend:
-#    build: ./.
     image: jiyu1948/brave_webtoon:backend
     container_name: backend_green
 
@@ -12,7 +11,6 @@ services:
       - HOST=0.0.0.0
 
   frontend:
-#    build: ./frontend
     image: jiyu1948/brave_webtoon:frontend
     container_name: frontend_green
     ports:
