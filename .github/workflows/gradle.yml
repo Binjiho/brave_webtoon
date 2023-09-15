@@ -90,17 +90,17 @@ jobs:
         run: |
           aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
 
-      - name: DockerImagePull
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.AWS_EC2_PUBLIC_DNS }}
-          username: ec2-user
-          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
-          port: 22
-          timeout: 40s
-          script_stop: true
-          script: |
-            echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+#      - name: DockerImagePull
+#        uses: appleboy/ssh-action@v1.0.0
+#        with:
+#          host: ${{ secrets.AWS_EC2_PUBLIC_DNS }}
+#          username: ec2-user
+#          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+#          port: 22
+#          timeout: 40s
+#          script_stop: true
+#          script: |
+#            echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 #            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}:backend || exit 1
 #            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}:frontend || exit 1
 
