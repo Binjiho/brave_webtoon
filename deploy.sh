@@ -34,8 +34,7 @@ EXIST_AFTER=$(docker ps | grep ${AFTER_COMPOSE_COLOR})
 
 if [ -n "$EXIST_AFTER" ]; then
         echo ">> nginx conf fix AND nginx reload"
-        echo "set \$service_url http://localhost:${CONTAINER_PORT};" | sudo tee /etc/nginx/conf.d/service-url.inc
-#        echo "set \$service_url http://127.0.0.1:${CONTAINER_PORT};" | sudo tee /etc/nginx/conf.d/service-url.inc
+        echo "set \$service_url http://127.0.0.1:${CONTAINER_PORT};" | sudo tee /etc/nginx/conf.d/service-url.inc
         sudo service nginx reload
 
         echo ">> 이전 컨테이너 종료"
