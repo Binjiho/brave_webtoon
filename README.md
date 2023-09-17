@@ -23,7 +23,7 @@
 
 ### 개발기간
 
-2023년 07월 31일 ~ 2023년 09월 07일
+2023년 08월 ~ 2023년 09월
 
 ### 기술 스택
 
@@ -36,14 +36,14 @@
     <img src="https://img.shields.io/badge/githubactions-2088FF?style=flat&logo=githubactions&logoColor=white"/>
 </div>
 
-| 분야           | 사용 기술                   | 비고 |
-| -------------- | --------------------------- | ---- |
-| FrontEnd       | Nuxt.js, javascript         |
-| BackEnd        | Java, SpringBoot            |
-| Database       | Aws RDS, Mysql              |
-| Cloud Services | Aws ec2                     |
-| TOOL           | IntelliJ, JetBrains, Notion |
-| DESIGN         | Figma                       |
+| 분야           | 사용 기술                           | 비고 |
+| -------------- |---------------------------------| ---- |
+| FrontEnd       | Nuxt.js, javascript             |
+| BackEnd        | Java, SpringBoot, JPA, QueryDSL |
+| Database       | Aws RDS, Mysql                  |
+| Cloud Services | Aws ec2, Aws loadbalancer       |
+| TOOL           | IntelliJ, JetBrains, Notion     |
+| DESIGN         | Figma                           |
 
 ### 팀원
 
