@@ -18,7 +18,7 @@ export default {
     sharePage() {
       const shareObject = {
         title: this.title,
-        text: "webtoon.com",
+        text: "matchwt.com",
         url: window.location.href,
       };
 
