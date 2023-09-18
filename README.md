@@ -1,4 +1,5 @@
 # Match
+### [사이트 바로가기](https://www.matchwt.com)
 
 ![match_sumnail.png](frontend/assets/image/match_sumnail.png)
 
@@ -44,6 +45,11 @@
 | Cloud Services | Aws ec2, Aws loadbalancer       |
 | TOOL           | IntelliJ, JetBrains, Notion     |
 | DESIGN         | Figma                           |
+
+### 아키텍쳐 구조
+<div style="display: flex; gap: 5px;">
+    <img src="https://github.com/Binjiho/brave_webtoon/assets/49053985/98c240f8-d27a-4a51-9425-9e391c141252"/>
+</div>
 
 ### 팀원
 

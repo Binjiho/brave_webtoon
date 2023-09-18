@@ -106,10 +106,11 @@ public class WebtoonRepository {
                 .from(webtoonEntity)
                 .leftJoin(webtoonEntity.webtoonRoleEntityList, webtoonRoleEntity)
                 .where(
-                        noOffsetBuilder(offset, "wr"),
+//                        noOffsetBuilder(offset, "wr"),
                         webtoonEntity.id.eq(webtoonId)
                 )
                 .orderBy(webtoonRoleEntity.id.asc())
+                .offset(offset)
                 .limit(pageSize+1) //hasNext를 구하기 위해 +1
                 .transform(
                         groupBy(webtoonEntity.id).list(
