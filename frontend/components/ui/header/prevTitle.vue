@@ -23,6 +23,15 @@ export default {
     onScroll(e) {
       this.windowScrollTop = e.target.scrollingElement.scrollTop;
     },
+    back() {
+      const lastPath = this.$router.options.history.state.back;
+
+      if (lastPath) {
+        this.$router.back();
+      }
+
+      this.$router.replace("/");
+    },
   },
 };
 </script>
@@ -39,7 +48,7 @@ export default {
   >
     <VContainer class="header__inner">
       <div class="header__left-area">
-        <VBtn class="prev-btn" @click="$router.back()"></VBtn>
+        <VBtn class="prev-btn" @click="back()"></VBtn>
       </div>
       <div class="header__center-area">
         <h2 class="title">{{ title }}</h2>
