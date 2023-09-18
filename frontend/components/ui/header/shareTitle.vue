@@ -18,7 +18,6 @@ export default {
     sharePage() {
       const shareObject = {
         title: this.title,
-        text: "matchwt.com",
         url: window.location.href,
       };
 
